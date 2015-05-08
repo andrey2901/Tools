@@ -1,9 +1,9 @@
 package ua.com.hedgehogsoft;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,9 +13,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class Cards
 {
@@ -39,6 +41,8 @@ public class Cards
    {
       f = new JFrame("Cards");
 
+      f.setLayout(new BorderLayout());
+
       wordLabel = new JLabel("", JLabel.CENTER);
 
       startButton = new JButton(startButtonName);
@@ -55,9 +59,13 @@ public class Cards
 
       f.add(wordLabel, BorderLayout.CENTER);
 
-      Panel buttonPanel = new Panel();
+      JPanel buttonPanel = new JPanel();
 
-      Panel functionButtonPanel = new Panel();
+      buttonPanel.setLayout(new BorderLayout());
+
+      buttonPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
+
+      JPanel functionButtonPanel = new JPanel();
 
       functionButtonPanel.add(startButton, BorderLayout.WEST);
 
@@ -65,7 +73,7 @@ public class Cards
 
       buttonPanel.add(functionButtonPanel, BorderLayout.NORTH);
 
-      Panel exitButtonPanel = new Panel();
+      JPanel exitButtonPanel = new JPanel();
 
       exitButtonPanel.add(exitButton);
 
