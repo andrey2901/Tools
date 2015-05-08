@@ -107,12 +107,14 @@ public class Cards
       public void actionPerformed(ActionEvent e)
       {
          System.out.println(stopButtonName);
+
          if (timer != null)
          {
             timer.cancel();
 
             timer = null;
          }
+
          if (startButton.getText().equals(pauseButtonName))
          {
             startButton.setText(startButtonName);
