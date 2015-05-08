@@ -32,6 +32,8 @@ public class Cards
    private ActionListener stopAction = new StopAction();
    private ActionListener pauseAction = new PauseAction();
    private JFrame f = null;
+   private ChangeWordsTask task = null;
+   private ChangeWordsTaskState state = null;
 
    public Cards()
    {
@@ -97,7 +99,16 @@ public class Cards
 
          timer = new Timer();
 
-         timer.schedule(new ChangeWordsTask(), 0, 1000);
+         if (state == null)
+         {
+            task = new ChangeWordsTask();
+         }
+         else
+         {
+            task = new ChangeWordsTask(state);
+         }
+
+         timer.schedule(task, 0, 1000);
       }
    }
 
@@ -113,6 +124,16 @@ public class Cards
             timer.cancel();
 
             timer = null;
+         }
+
+         if (state != null)
+         {
+            state = null;
+         }
+
+         if (task != null)
+         {
+            task = null;
          }
 
          if (startButton.getText().equals(pauseButtonName))
@@ -144,6 +165,10 @@ public class Cards
          timer.cancel();
 
          timer = null;
+
+         state = task.getState();
+
+         task = null;
       }
    }
 
@@ -153,8 +178,6 @@ public class Cards
       public void actionPerformed(ActionEvent e)
       {
          System.out.println(exitButtonName);
-
-         timer.cancel();
 
          System.exit(0);
       }
@@ -174,6 +197,17 @@ public class Cards
          keys = new ArrayList<String>(dictionary.keySet());
 
          Collections.shuffle(keys);
+      }
+
+      ChangeWordsTask(ChangeWordsTaskState state)
+      {
+         dictionary = state.getDictionary();
+
+         keys = state.getKeys();
+
+         word = state.getWord();
+
+         counter = state.getCounter();
       }
 
       @Override
@@ -220,6 +254,47 @@ public class Cards
 
             word = null;
          }
+      }
+
+      private ChangeWordsTaskState getState()
+      {
+         return new ChangeWordsTaskState(dictionary, keys, word, counter);
+      }
+   }
+
+   private class ChangeWordsTaskState
+   {
+      Map<String, String> dictionary = null;
+      List<String> keys = null;
+      String word = null;
+      int counter = 0;
+
+      ChangeWordsTaskState(Map<String, String> dictionary, List<String> keys, String word, int counter)
+      {
+         this.dictionary = dictionary;
+         this.keys = keys;
+         this.word = word;
+         this.counter = counter;
+      }
+
+      public Map<String, String> getDictionary()
+      {
+         return dictionary;
+      }
+
+      public List<String> getKeys()
+      {
+         return keys;
+      }
+
+      public String getWord()
+      {
+         return word;
+      }
+
+      public int getCounter()
+      {
+         return counter;
       }
    }
 
