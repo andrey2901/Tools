@@ -6,14 +6,15 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 public class StopAction extends AbstractListener
 {
    private JButton startButton = null;
 
-   public StopAction(JLabel wordLabel, Map<String, String> dictionary, JButton startButton)
+   public StopAction(JLabel wordLabel, JProgressBar prgBar, Map<String, String> dictionary, JButton startButton)
    {
-      super(wordLabel, dictionary, null);
+      super(wordLabel, prgBar, dictionary, null);
 
       this.startButton = startButton;
    }
@@ -48,8 +49,10 @@ public class StopAction extends AbstractListener
 
       startButton.removeActionListener(start_pauseListener);
 
-      startButton.addActionListener(new StartAction(wordLabel, dictionary, state));
+      startButton.addActionListener(new StartAction(wordLabel, prgBar, dictionary, state));
 
       wordLabel.setText("");
+
+      prgBar.setValue(0);
    }
 }

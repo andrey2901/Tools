@@ -1,6 +1,8 @@
 package ua.com.hedgehogsoft.task;
 
 import java.awt.Font;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.Labels;
 
@@ -18,10 +21,17 @@ public class ChangeWordsTask extends TimerTask implements Labels
    private List<String> keys = null;
    private String word = null;
    private int counter = 0;
+   private double progressBarStep = 0.0;
+   private JProgressBar prgBar = null;
 
-   public ChangeWordsTask(JLabel wordLabel, Map<String, String> dictionary, ChangeWordsTaskState state)
+   public ChangeWordsTask(JLabel wordLabel,
+                          JProgressBar prgBar,
+                          Map<String, String> dictionary,
+                          ChangeWordsTaskState state)
    {
       this.wordLabel = wordLabel;
+
+      this.prgBar = prgBar;
 
       this.dictionary = dictionary;
 
@@ -30,6 +40,8 @@ public class ChangeWordsTask extends TimerTask implements Labels
          keys = new ArrayList<String>(this.dictionary.keySet());
 
          Collections.shuffle(keys);
+
+         progressBarStep = new BigDecimal(100 / keys.size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
       }
       else
       {
@@ -38,6 +50,8 @@ public class ChangeWordsTask extends TimerTask implements Labels
          word = state.getWord();
 
          counter = state.getCounter();
+
+         progressBarStep = state.getProgressBarStep();
       }
 
    }
@@ -81,12 +95,14 @@ public class ChangeWordsTask extends TimerTask implements Labels
          wordLabel.setText(translation);
 
          word = null;
+
+         prgBar.setValue((int) (progressBarStep * counter));
       }
    }
 
    public ChangeWordsTaskState getState()
    {
-      return new ChangeWordsTaskState(keys, word, counter);
+      return new ChangeWordsTaskState(keys, word, counter, progressBarStep);
    }
 
    private Font getFontSize(String word)

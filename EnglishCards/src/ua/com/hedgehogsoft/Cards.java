@@ -13,6 +13,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 
 import ua.com.hedgehogsoft.listener.ExitAction;
@@ -27,6 +28,7 @@ public class Cards implements Labels
    private JButton startButton = null;
    private JButton stopButton = null;
    private JButton exitButton = null;
+   private JProgressBar prgBar = null;
    private ChangeWordsTaskState state = null;
 
    public Cards()
@@ -35,19 +37,37 @@ public class Cards implements Labels
 
       JFrame f = new JFrame(mainFrameTitle);
 
+      /*-------------------------------Word Label Panel-------------------------------*/
+      JPanel wordLabelControlPanel = new JPanel();
+
+      wordLabelControlPanel.setLayout(new BorderLayout());
+
       wordLabel = new JLabel("", JLabel.CENTER);
 
+      prgBar = new JProgressBar();
+
+      prgBar.setSize(wordLabelControlPanel.getWidth(), 30);
+
+      prgBar.setStringPainted(true);
+
+      wordLabelControlPanel.add(wordLabel, BorderLayout.CENTER);
+
+      wordLabelControlPanel.add(prgBar, BorderLayout.SOUTH);
+      /*----------------------------End Of Word Label Panel----------------------------*/
+
+      /*----------------------------Buttons initialization-----------------------------*/
       startButton = new JButton(startButtonName);
 
-      startButton.addActionListener(new StartAction(wordLabel, dictionary, state));
+      startButton.addActionListener(new StartAction(wordLabel, prgBar, dictionary, state));
 
       stopButton = new JButton(stopButtonName);
 
-      stopButton.addActionListener(new StopAction(wordLabel, dictionary, startButton));
+      stopButton.addActionListener(new StopAction(wordLabel, prgBar, dictionary, startButton));
 
       exitButton = new JButton(exitButtonName);
 
       exitButton.addActionListener(new ExitAction());
+      /*-------------------------End Of Buttons initialization--------------------------*/
 
       /*-------------------------------Pass Control Panel-------------------------------*/
       JPanel passControlPanel = new JPanel();
@@ -180,7 +200,7 @@ public class Cards implements Labels
 
       f.setLayout(new BorderLayout());
 
-      f.add(wordLabel, BorderLayout.CENTER);
+      f.add(wordLabelControlPanel, BorderLayout.CENTER);
 
       f.add(settingsPanel, BorderLayout.EAST);
 
@@ -205,7 +225,7 @@ public class Cards implements Labels
          public void run()
          {
             @SuppressWarnings("unused")
-            final Cards clock = new Cards();
+            final Cards cards = new Cards();
          }
       });
    }
