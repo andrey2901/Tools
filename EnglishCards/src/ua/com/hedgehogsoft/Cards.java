@@ -35,6 +35,10 @@ public class Cards
    private String directTranslationRadioButtonName = "Direct";
    private String reverseTranslationRadioButtonName = "Reverse";
    private String translationDirectionControlTitledBorderName = "Translation";
+   private String simpleListConfigurationRadioButtonName = "Simple";
+   private String translatedListConfigurationRadioButtonName = "With translation";
+   private String doubleListConfigurationRadioButtonName = "Double view";
+   private String listConfigurationControlTitledBorderName = "List Configuration";
    private JLabel wordLabel = null;
    private JButton startButton = null;
    private JButton stopButton = null;
@@ -112,6 +116,38 @@ public class Cards
       translationDirectionControlPanel.setBorder(BorderFactory.createTitledBorder(translationDirectionControlTitledBorderName));
       /*---------------------End Of Translation Direction Control Panel---------------------*/
 
+      /*------------------------List Configuration Control Panel------------------------*/
+
+      JPanel listConfigurationControlPanel = new JPanel();
+
+      listConfigurationControlPanel.setLayout(new BoxLayout(listConfigurationControlPanel, BoxLayout.Y_AXIS));
+
+      JRadioButton simpleListConfigurationRadioButton = new JRadioButton(simpleListConfigurationRadioButtonName);
+
+      simpleListConfigurationRadioButton.setSelected(true);
+
+      JRadioButton translatedListConfigurationRadioButton = new JRadioButton(translatedListConfigurationRadioButtonName);
+
+      JRadioButton doubleListConfigurationRadioButton = new JRadioButton(doubleListConfigurationRadioButtonName);
+
+      ButtonGroup listConfigurationControlGroup = new ButtonGroup();
+
+      listConfigurationControlGroup.add(simpleListConfigurationRadioButton);
+
+      listConfigurationControlGroup.add(translatedListConfigurationRadioButton);
+
+      listConfigurationControlGroup.add(doubleListConfigurationRadioButton);
+
+      listConfigurationControlPanel.add(simpleListConfigurationRadioButton);
+
+      listConfigurationControlPanel.add(translatedListConfigurationRadioButton);
+
+      listConfigurationControlPanel.add(doubleListConfigurationRadioButton);
+
+      listConfigurationControlPanel.setBorder(BorderFactory.createTitledBorder(listConfigurationControlTitledBorderName));
+
+      /*---------------------End Of List Configuration Control Panel--------------------*/
+
       /*-------------------------------Settings Control Panel-------------------------------*/
       JPanel settingsPanel = new JPanel();
 
@@ -120,6 +156,8 @@ public class Cards
       settingsPanel.add(passControlPanel);
 
       settingsPanel.add(translationDirectionControlPanel);
+
+      settingsPanel.add(listConfigurationControlPanel);
 
       settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
       /*----------------------------End Of Settings Control Panel----------------------------*/
