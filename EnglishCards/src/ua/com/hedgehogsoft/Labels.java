@@ -24,4 +24,5 @@ public interface Labels
    String translatedListConfigurationRadioButtonName = "With translation";
    String doubleListConfigurationRadioButtonName = "Double view";
    String listConfigurationControlTitledBorderName = "List Configuration";
+   String shuffleCheckBoxName = "Shuffle";
 }

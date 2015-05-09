@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -125,8 +126,19 @@ public class Cards implements Labels
       listConfigurationControlPanel.add(doubleListConfigurationRadioButton);
 
       listConfigurationControlPanel.setBorder(BorderFactory.createTitledBorder(listConfigurationControlTitledBorderName));
-
       /*---------------------End Of List Configuration Control Panel--------------------*/
+
+      /*-------------------------------Shuffle Control Panel-------------------------------*/
+      JPanel shuffleControlPanel = new JPanel();
+
+      shuffleControlPanel.setLayout(new BoxLayout(shuffleControlPanel, BoxLayout.Y_AXIS));
+
+      JCheckBox shuffleCheckBox = new JCheckBox(shuffleCheckBoxName);
+
+      shuffleCheckBox.setSelected(true);
+
+      shuffleControlPanel.add(shuffleCheckBox);
+      /*----------------------------End Of Shuffle Control Panel---------------------------*/
 
       /*-------------------------------Settings Control Panel-------------------------------*/
       JPanel settingsPanel = new JPanel();
@@ -138,6 +150,8 @@ public class Cards implements Labels
       settingsPanel.add(translationDirectionControlPanel);
 
       settingsPanel.add(listConfigurationControlPanel);
+
+      settingsPanel.add(shuffleControlPanel);
 
       settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
       /*----------------------------End Of Settings Control Panel----------------------------*/
