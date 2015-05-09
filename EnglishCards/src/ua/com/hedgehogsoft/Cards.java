@@ -14,10 +14,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class Cards
 {
@@ -26,6 +29,12 @@ public class Cards
    private String stopButtonName = "Stop";
    private String pauseButtonName = "Pause";
    private String exitButtonName = "Exit";
+   private String singlePassRadioButtonName = "Single";
+   private String nonStopPassRadioButtonName = "Non-stop";
+   private String passControlTitledBorderName = "Pass";
+   private String directTranslationRadioButtonName = "Direct";
+   private String reverseTranslationRadioButtonName = "Reverse";
+   private String translationDirectionControlTitledBorderName = "Translation";
    private JLabel wordLabel = null;
    private JButton startButton = null;
    private JButton stopButton = null;
@@ -41,8 +50,6 @@ public class Cards
    {
       f = new JFrame("Cards");
 
-      f.setLayout(new BorderLayout());
-
       wordLabel = new JLabel("", JLabel.CENTER);
 
       startButton = new JButton(startButtonName);
@@ -57,8 +64,67 @@ public class Cards
 
       exitButton.addActionListener(new ExitAction());
 
-      f.add(wordLabel, BorderLayout.CENTER);
+      /*-------------------------------Pass Control Panel-------------------------------*/
+      JPanel passControlPanel = new JPanel();
 
+      passControlPanel.setLayout(new BoxLayout(passControlPanel, BoxLayout.Y_AXIS));
+
+      JRadioButton singlePassRadioButton = new JRadioButton(singlePassRadioButtonName);
+
+      singlePassRadioButton.setSelected(true);
+
+      JRadioButton nonStopPassRadioButton = new JRadioButton(nonStopPassRadioButtonName);
+
+      ButtonGroup passControlGroup = new ButtonGroup();
+
+      passControlGroup.add(singlePassRadioButton);
+
+      passControlGroup.add(nonStopPassRadioButton);
+
+      passControlPanel.add(singlePassRadioButton);
+
+      passControlPanel.add(nonStopPassRadioButton);
+
+      passControlPanel.setBorder(BorderFactory.createTitledBorder(passControlTitledBorderName));
+      /*----------------------------End Of Pass Control Panel----------------------------*/
+
+      /*------------------------Translation Direction Control Panel------------------------*/
+      JPanel translationDirectionControlPanel = new JPanel();
+
+      translationDirectionControlPanel.setLayout(new BoxLayout(translationDirectionControlPanel, BoxLayout.Y_AXIS));
+
+      JRadioButton directTranslationRadioButton = new JRadioButton(directTranslationRadioButtonName);
+
+      directTranslationRadioButton.setSelected(true);
+
+      JRadioButton reverseTranslationRadioButton = new JRadioButton(reverseTranslationRadioButtonName);
+
+      ButtonGroup translationDirectionControlGroup = new ButtonGroup();
+
+      translationDirectionControlGroup.add(directTranslationRadioButton);
+
+      translationDirectionControlGroup.add(reverseTranslationRadioButton);
+
+      translationDirectionControlPanel.add(directTranslationRadioButton);
+
+      translationDirectionControlPanel.add(reverseTranslationRadioButton);
+
+      translationDirectionControlPanel.setBorder(BorderFactory.createTitledBorder(translationDirectionControlTitledBorderName));
+      /*---------------------End Of Translation Direction Control Panel---------------------*/
+
+      /*-------------------------------Settings Control Panel-------------------------------*/
+      JPanel settingsPanel = new JPanel();
+
+      settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
+
+      settingsPanel.add(passControlPanel);
+
+      settingsPanel.add(translationDirectionControlPanel);
+
+      settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
+      /*----------------------------End Of Settings Control Panel----------------------------*/
+
+      /*-------------------------------Button Control Panel-------------------------------*/
       JPanel buttonPanel = new JPanel();
 
       buttonPanel.setLayout(new BorderLayout());
@@ -78,6 +144,13 @@ public class Cards
       exitButtonPanel.add(exitButton);
 
       buttonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
+      /*----------------------------End Of Button Control Panel----------------------------*/
+
+      f.setLayout(new BorderLayout());
+
+      f.add(wordLabel, BorderLayout.CENTER);
+
+      f.add(settingsPanel, BorderLayout.EAST);
 
       f.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -87,9 +160,9 @@ public class Cards
 
       f.setSize(900, 500);
 
-      f.setVisible(true);
-
       f.setLocationRelativeTo(null);
+
+      f.setVisible(true);
    }
 
    private class StartAction implements ActionListener
