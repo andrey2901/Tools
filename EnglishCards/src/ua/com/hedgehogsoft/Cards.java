@@ -3,6 +3,7 @@ package ua.com.hedgehogsoft;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -70,7 +71,7 @@ public class Cards implements Labels
       /*-------------------------------Pass Control Panel-------------------------------*/
       JPanel passControlPanel = new JPanel();
 
-      passControlPanel.setLayout(new BoxLayout(passControlPanel, BoxLayout.Y_AXIS));
+      passControlPanel.setLayout(new GridLayout(2, 1));
 
       JRadioButton singlePassRadioButton = new JRadioButton(singlePassRadioButtonName);
 
@@ -94,7 +95,7 @@ public class Cards implements Labels
       /*------------------------Translation Direction Control Panel------------------------*/
       JPanel translationDirectionControlPanel = new JPanel();
 
-      translationDirectionControlPanel.setLayout(new BoxLayout(translationDirectionControlPanel, BoxLayout.Y_AXIS));
+      translationDirectionControlPanel.setLayout(new GridLayout(2, 1));
 
       JRadioButton directTranslationRadioButton = new JRadioButton(directTranslationRadioButtonName);
 
@@ -119,7 +120,7 @@ public class Cards implements Labels
 
       JPanel listConfigurationControlPanel = new JPanel();
 
-      listConfigurationControlPanel.setLayout(new BoxLayout(listConfigurationControlPanel, BoxLayout.Y_AXIS));
+      listConfigurationControlPanel.setLayout(new GridLayout(3, 1));
 
       JRadioButton simpleListConfigurationRadioButton = new JRadioButton(simpleListConfigurationRadioButtonName);
 
@@ -149,7 +150,7 @@ public class Cards implements Labels
       /*-------------------------------Shuffle Control Panel-------------------------------*/
       JPanel shuffleControlPanel = new JPanel();
 
-      shuffleControlPanel.setLayout(new BoxLayout(shuffleControlPanel, BoxLayout.Y_AXIS));
+      shuffleControlPanel.setLayout(new GridLayout(2, 1));
 
       JRadioButton onceShuffleRadioButton = new JRadioButton(onceShuffleRadioButtonName);
 
@@ -173,7 +174,7 @@ public class Cards implements Labels
       /*----------------------------Time Interval Control Panel----------------------------*/
       JPanel timeIntervalControlPanel = new JPanel();
 
-      timeIntervalControlPanel.setLayout(new BoxLayout(timeIntervalControlPanel, BoxLayout.X_AXIS));
+      timeIntervalControlPanel.setLayout(new GridLayout(1, 2));
 
       Integer[] intervals = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
@@ -192,7 +193,7 @@ public class Cards implements Labels
 
       JPanel dictionaryControlPanel = new JPanel();
 
-      dictionaryControlPanel.setLayout(new BoxLayout(dictionaryControlPanel, BoxLayout.X_AXIS));
+      dictionaryControlPanel.setLayout(new GridLayout(1, 1));
 
       JButton chooseDictionaryButton = new JButton(chooseDictionaryButtonName);
 
@@ -255,6 +256,8 @@ public class Cards implements Labels
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       mainFrame.setSize(900, 500);
+
+      mainFrame.setResizable(false);
 
       mainFrame.setLocationRelativeTo(null);
 
