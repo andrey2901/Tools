@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +19,6 @@ import javax.swing.JRadioButton;
 import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.listener.StopAction;
-import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 
 public class Cards implements Labels
 {
@@ -29,13 +28,12 @@ public class Cards implements Labels
    private JButton stopButton = null;
    private JButton exitButton = null;
    private JProgressBar prgBar = null;
-   private ChangeWordsTaskState state = null;
 
    public Cards()
    {
       dictionary = new ProviderManager().getProvider().getWords();
 
-      JFrame f = new JFrame(mainFrameTitle);
+      JFrame mainFrame = new JFrame(mainFrameTitle);
 
       /*-------------------------------Word Label Panel-------------------------------*/
       JPanel wordLabelControlPanel = new JPanel();
@@ -58,7 +56,7 @@ public class Cards implements Labels
       /*----------------------------Buttons initialization-----------------------------*/
       startButton = new JButton(startButtonName);
 
-      startButton.addActionListener(new StartAction(wordLabel, prgBar, dictionary, state));
+      startButton.addActionListener(new StartAction(wordLabel, prgBar, dictionary, null));
 
       stopButton = new JButton(stopButtonName);
 
@@ -153,12 +151,54 @@ public class Cards implements Labels
 
       shuffleControlPanel.setLayout(new BoxLayout(shuffleControlPanel, BoxLayout.Y_AXIS));
 
-      JCheckBox shuffleCheckBox = new JCheckBox(shuffleCheckBoxName);
+      JRadioButton onceShuffleRadioButton = new JRadioButton(onceShuffleRadioButtonName);
 
-      shuffleCheckBox.setSelected(true);
+      onceShuffleRadioButton.setSelected(true);
 
-      shuffleControlPanel.add(shuffleCheckBox);
+      JRadioButton eachPassShuffleRadioButton = new JRadioButton(eachPassShuffleRadioButtonName);
+
+      ButtonGroup shuffleControlGroup = new ButtonGroup();
+
+      shuffleControlGroup.add(onceShuffleRadioButton);
+
+      shuffleControlGroup.add(eachPassShuffleRadioButton);
+
+      shuffleControlPanel.add(onceShuffleRadioButton);
+
+      shuffleControlPanel.add(eachPassShuffleRadioButton);
+
+      shuffleControlPanel.setBorder(BorderFactory.createTitledBorder(shuffleControlTitledBorderName));
       /*----------------------------End Of Shuffle Control Panel---------------------------*/
+
+      /*----------------------------Time Interval Control Panel----------------------------*/
+      JPanel timeIntervalControlPanel = new JPanel();
+
+      timeIntervalControlPanel.setLayout(new BoxLayout(timeIntervalControlPanel, BoxLayout.X_AXIS));
+
+      Integer[] intervals = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+      JComboBox<Integer> list = new JComboBox<Integer>(intervals);
+
+      JLabel timeUnitLabel = new JLabel(timeUnitLabelText);
+
+      timeIntervalControlPanel.add(list);
+
+      timeIntervalControlPanel.add(timeUnitLabel);
+
+      timeIntervalControlPanel.setBorder(BorderFactory.createTitledBorder(timeIntervalControlTitledBorderName));
+      /*-------------------------End Of Time Interval Control Panel------------------------*/
+
+      /*-----------------------------Dictionary Control Panel---------------------------*/
+
+      JPanel dictionaryControlPanel = new JPanel();
+
+      dictionaryControlPanel.setLayout(new BoxLayout(dictionaryControlPanel, BoxLayout.X_AXIS));
+
+      JButton chooseDictionaryButton = new JButton(chooseDictionaryButtonName);
+
+      dictionaryControlPanel.add(chooseDictionaryButton);
+
+      /*-------------------------End Of Dictionary Control Panel------------------------*/
 
       /*-------------------------------Settings Control Panel-------------------------------*/
       JPanel settingsPanel = new JPanel();
@@ -172,6 +212,10 @@ public class Cards implements Labels
       settingsPanel.add(listConfigurationControlPanel);
 
       settingsPanel.add(shuffleControlPanel);
+
+      settingsPanel.add(timeIntervalControlPanel);
+
+      settingsPanel.add(dictionaryControlPanel);
 
       settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
       /*----------------------------End Of Settings Control Panel----------------------------*/
@@ -198,23 +242,23 @@ public class Cards implements Labels
       buttonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
       /*----------------------------End Of Button Control Panel----------------------------*/
 
-      f.setLayout(new BorderLayout());
+      mainFrame.setLayout(new BorderLayout());
 
-      f.add(wordLabelControlPanel, BorderLayout.CENTER);
+      mainFrame.add(wordLabelControlPanel, BorderLayout.CENTER);
 
-      f.add(settingsPanel, BorderLayout.EAST);
+      mainFrame.add(settingsPanel, BorderLayout.EAST);
 
-      f.add(buttonPanel, BorderLayout.SOUTH);
+      mainFrame.add(buttonPanel, BorderLayout.SOUTH);
 
-      f.pack();
+      mainFrame.pack();
 
-      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      f.setSize(900, 500);
+      mainFrame.setSize(900, 500);
 
-      f.setLocationRelativeTo(null);
+      mainFrame.setLocationRelativeTo(null);
 
-      f.setVisible(true);
+      mainFrame.setVisible(true);
    }
 
    public static void main(String[] args)
