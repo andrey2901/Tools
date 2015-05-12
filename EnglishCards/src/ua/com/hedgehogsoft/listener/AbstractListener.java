@@ -1,55 +1,38 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionListener;
-import java.util.Map;
-import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-
+import ua.com.hedgehogsoft.Cards;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 
+/**
+ * The class(interface) <code>AbstractListener</code> TODO: reorganize the
+ * structure of application: the input argument of the constructor should be a
+ * JFrame (in our case this is main frame of application).
+ * 
+ * @author Andrey
+ * @version 1.00 10 мая 2015 г.
+ */
 public abstract class AbstractListener implements ActionListener, Labels
 {
-   protected JLabel wordLabel = null;
-   protected JProgressBar prgBar = null;
-   protected Map<String, String> dictionary = null;
+   protected Cards cards = null;
    protected ChangeWordsTaskState state = null;
-   protected Timer timer = null;
    protected ChangeWordsTask task = null;
 
-   public AbstractListener(JLabel wordLabel,
-                           JProgressBar prgBar,
-                           Map<String, String> dictionary,
-                           ChangeWordsTaskState state)
+   public AbstractListener(Cards cards, ChangeWordsTaskState state)
    {
-      this.wordLabel = wordLabel;
-      this.prgBar = prgBar;
-      this.dictionary = dictionary;
+      this.cards = cards;
       this.state = state;
    }
 
-   public AbstractListener(JLabel wordLabel,
-                           JProgressBar prgBar,
-                           Map<String, String> dictionary,
-                           ChangeWordsTaskState state,
-                           Timer timer,
-                           ChangeWordsTask task)
+   public AbstractListener(Cards cards, ChangeWordsTaskState state, ChangeWordsTask task)
    {
-      this.wordLabel = wordLabel;
-      this.prgBar = prgBar;
-      this.dictionary = dictionary;
+      this.cards = cards;
       this.state = state;
-      this.timer = timer;
       this.task = task;
-   }
-
-   public Timer getTimer()
-   {
-      return timer;
    }
 
    public TimerTask getTask()

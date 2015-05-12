@@ -4,10 +4,9 @@ import java.awt.event.ActionEvent;
 
 public class ExitAction extends AbstractListener
 {
-
    public ExitAction()
    {
-      super(null, null, null, null);
+      super(null, null);
    }
 
    @Override
@@ -17,5 +16,4 @@ public class ExitAction extends AbstractListener
 
       System.exit(0);
    }
-
 }

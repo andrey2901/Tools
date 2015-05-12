@@ -13,20 +13,25 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.Labels;
+import ua.com.hedgehogsoft.task.config.TaskConfig;
+import ua.com.hedgehogsoft.task.config.enums.PassConfig;
+import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 
 public class ChangeWordsTask extends TimerTask implements Labels
 {
    private JLabel wordLabel = null;
+   private JProgressBar prgBar = null;
    private Map<String, String> dictionary = null;
    private List<String> keys = null;
    private String word = null;
    private int counter = 0;
    private double progressBarStep = 0.0;
-   private JProgressBar prgBar = null;
+   private TaskConfig taskConfig = null;
 
    public ChangeWordsTask(JLabel wordLabel,
                           JProgressBar prgBar,
                           Map<String, String> dictionary,
+                          ChangeWordsTaskSettings settings,
                           ChangeWordsTaskState state)
    {
       this.wordLabel = wordLabel;
@@ -53,56 +58,23 @@ public class ChangeWordsTask extends TimerTask implements Labels
 
          progressBarStep = state.getProgressBarStep();
       }
-
+      this.taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
    }
 
    @Override
    public void run()
    {
-      if (word == null)
-      {
-         if (counter < keys.size())
-         {
-            word = keys.get(counter);
-
-            wordLabel.setFont(getFontSize(word));
-
-            wordLabel.setText(word);
-
-            word = keys.get(counter++);
-         }
-         else
-         {
-            counter = 0;
-            /*
-             * if (timer != null) { timer.cancel(); timer = null; } if
-             * (startButton.getText().equals(pauseButtonName)) {
-             * startButton.setText(startButtonName);
-             * 
-             * startButton.removeActionListener(pauseAction);
-             * 
-             * startButton.addActionListener(startAction); }
-             * wordLabel.setText("");
-             */
-         }
-      }
-      else
-      {
-         String translation = dictionary.get(word);
-
-         wordLabel.setFont(getFontSize(translation));
-
-         wordLabel.setText(translation);
-
-         word = null;
-
-         prgBar.setValue((int) (progressBarStep * counter));
-      }
+      simpleListTask();
    }
 
    public ChangeWordsTaskState getState()
    {
       return new ChangeWordsTaskState(keys, word, counter, progressBarStep);
+   }
+
+   public TaskConfig getTaskConfig()
+   {
+      return taskConfig;
    }
 
    private Font getFontSize(String word)
@@ -115,5 +87,78 @@ public class ChangeWordsTask extends TimerTask implements Labels
       }
 
       return new Font("Serif", Font.BOLD, wordLabel.getSize().width / fontSize);
+   }
+
+   private void simpleListTask()
+   {
+      switch (taskConfig.getTranslationDirection())
+      {
+         case DIRECT:
+         {
+            directTranslationDirectionTask();
+            break;
+         }
+
+         case REVERSE:
+         {
+            reverseTranslationDirectionTask();
+            break;
+         }
+      }
+   }
+
+   private void directTranslationDirectionTask()
+   {
+      if (counter < keys.size())
+      {
+         word = keys.get(counter++);
+
+         wordLabel.setFont(getFontSize(word));
+
+         wordLabel.setText(word);
+
+         prgBar.setValue((int) (progressBarStep * counter));
+      }
+      else
+      {
+         if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
+         {
+            counter = 0;
+
+            if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
+            {
+               Collections.shuffle(keys);
+            }
+         }
+         if (taskConfig.getPassConfig() == PassConfig.SINGLE)
+         {
+            taskConfig.getStopMessage().send();
+         }
+      }
+   }
+
+   private void reverseTranslationDirectionTask()
+   {
+      if (counter < keys.size())
+      {
+         word = keys.get(counter++);
+
+         String translation = dictionary.get(word);
+
+         wordLabel.setFont(getFontSize(translation));
+
+         wordLabel.setText(translation);
+
+         prgBar.setValue((int) (progressBarStep * counter));
+      }
+      else
+      {
+         counter = 0;
+
+         if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
+         {
+            Collections.shuffle(keys);
+         }
+      }
    }
 }

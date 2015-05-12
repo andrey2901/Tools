@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.Map;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,15 +22,27 @@ import javax.swing.JRadioButton;
 import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.listener.StopAction;
+import ua.com.hedgehogsoft.task.StopTaskMessage;
 
 public class Cards implements Labels
 {
    private Map<String, String> dictionary = null;
    private JLabel wordLabel = null;
+   private JProgressBar prgBar = null;
    private JButton startButton = null;
    private JButton stopButton = null;
    private JButton exitButton = null;
-   private JProgressBar prgBar = null;
+   private JRadioButton singlePassRadioButton = null;
+   private JRadioButton nonStopPassRadioButton = null;
+   private JRadioButton directTranslationRadioButton = null;
+   private JRadioButton reverseTranslationRadioButton = null;
+   private JRadioButton simpleListConfigurationRadioButton = null;
+   private JRadioButton translatedListConfigurationRadioButton = null;
+   private JRadioButton doubleListConfigurationRadioButton = null;
+   private JRadioButton onceShuffleRadioButton = null;
+   private JRadioButton eachPassShuffleRadioButton = null;
+   private JComboBox<Integer> list = null;
+   private StopTaskMessage stopMessage = null;
 
    public Cards()
    {
@@ -55,29 +69,34 @@ public class Cards implements Labels
       /*----------------------------End Of Word Label Panel----------------------------*/
 
       /*----------------------------Buttons initialization-----------------------------*/
-      startButton = new JButton(startButtonName);
+      startButton = new StartButton(startButtonName, this);
 
-      startButton.addActionListener(new StartAction(wordLabel, prgBar, dictionary, null));
+      startButton.addActionListener(new StartAction(this, null));
 
       stopButton = new JButton(stopButtonName);
 
-      stopButton.addActionListener(new StopAction(wordLabel, prgBar, dictionary, startButton));
+      stopButton.addActionListener(new StopAction(this));
 
       exitButton = new JButton(exitButtonName);
 
       exitButton.addActionListener(new ExitAction());
       /*-------------------------End Of Buttons initialization--------------------------*/
 
+      /*----------------------------Stop Task Message initialization-----------------------------*/
+      stopMessage = new StopTaskMessage();
+      stopMessage.addObserver((Observer) startButton);
+      /*-------------------------End Of Stop Task Message initialization--------------------------*/
+
       /*-------------------------------Pass Control Panel-------------------------------*/
       JPanel passControlPanel = new JPanel();
 
       passControlPanel.setLayout(new GridLayout(2, 1));
 
-      JRadioButton singlePassRadioButton = new JRadioButton(singlePassRadioButtonName);
+      singlePassRadioButton = new JRadioButton(singlePassRadioButtonName);
 
       singlePassRadioButton.setSelected(true);
 
-      JRadioButton nonStopPassRadioButton = new JRadioButton(nonStopPassRadioButtonName);
+      nonStopPassRadioButton = new JRadioButton(nonStopPassRadioButtonName);
 
       ButtonGroup passControlGroup = new ButtonGroup();
 
@@ -97,11 +116,11 @@ public class Cards implements Labels
 
       translationDirectionControlPanel.setLayout(new GridLayout(2, 1));
 
-      JRadioButton directTranslationRadioButton = new JRadioButton(directTranslationRadioButtonName);
+      directTranslationRadioButton = new JRadioButton(directTranslationRadioButtonName);
 
       directTranslationRadioButton.setSelected(true);
 
-      JRadioButton reverseTranslationRadioButton = new JRadioButton(reverseTranslationRadioButtonName);
+      reverseTranslationRadioButton = new JRadioButton(reverseTranslationRadioButtonName);
 
       ButtonGroup translationDirectionControlGroup = new ButtonGroup();
 
@@ -122,13 +141,13 @@ public class Cards implements Labels
 
       listConfigurationControlPanel.setLayout(new GridLayout(3, 1));
 
-      JRadioButton simpleListConfigurationRadioButton = new JRadioButton(simpleListConfigurationRadioButtonName);
+      simpleListConfigurationRadioButton = new JRadioButton(simpleListConfigurationRadioButtonName);
 
       simpleListConfigurationRadioButton.setSelected(true);
 
-      JRadioButton translatedListConfigurationRadioButton = new JRadioButton(translatedListConfigurationRadioButtonName);
+      translatedListConfigurationRadioButton = new JRadioButton(translatedListConfigurationRadioButtonName);
 
-      JRadioButton doubleListConfigurationRadioButton = new JRadioButton(doubleListConfigurationRadioButtonName);
+      doubleListConfigurationRadioButton = new JRadioButton(doubleListConfigurationRadioButtonName);
 
       ButtonGroup listConfigurationControlGroup = new ButtonGroup();
 
@@ -152,11 +171,11 @@ public class Cards implements Labels
 
       shuffleControlPanel.setLayout(new GridLayout(2, 1));
 
-      JRadioButton onceShuffleRadioButton = new JRadioButton(onceShuffleRadioButtonName);
+      onceShuffleRadioButton = new JRadioButton(onceShuffleRadioButtonName);
 
       onceShuffleRadioButton.setSelected(true);
 
-      JRadioButton eachPassShuffleRadioButton = new JRadioButton(eachPassShuffleRadioButtonName);
+      eachPassShuffleRadioButton = new JRadioButton(eachPassShuffleRadioButtonName);
 
       ButtonGroup shuffleControlGroup = new ButtonGroup();
 
@@ -178,7 +197,7 @@ public class Cards implements Labels
 
       Integer[] intervals = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-      JComboBox<Integer> list = new JComboBox<Integer>(intervals);
+      list = new JComboBox<Integer>(intervals);
 
       JLabel timeUnitLabel = new JLabel(timeUnitLabelText);
 
@@ -275,5 +294,39 @@ public class Cards implements Labels
             final Cards cards = new Cards();
          }
       });
+   }
+
+   public Map<String, String> getDictionary()
+   {
+      return dictionary;
+   }
+
+   public JLabel getWordLabel()
+   {
+      return wordLabel;
+   }
+
+   public JProgressBar getPrgBar()
+   {
+      return prgBar;
+   }
+
+   public JComponent[] getSettingComponents()
+   {
+      return new JComponent[] { singlePassRadioButton,
+                               nonStopPassRadioButton,
+                               directTranslationRadioButton,
+                               reverseTranslationRadioButton,
+                               simpleListConfigurationRadioButton,
+                               translatedListConfigurationRadioButton,
+                               doubleListConfigurationRadioButton,
+                               onceShuffleRadioButton,
+                               eachPassShuffleRadioButton,
+                               list };
+   }
+
+   public StopTaskMessage getStopMessage()
+   {
+      return stopMessage;
    }
 }

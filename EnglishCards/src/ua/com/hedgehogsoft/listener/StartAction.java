@@ -1,27 +1,29 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
-import java.util.Map;
 import java.util.Timer;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-
+import ua.com.hedgehogsoft.Cards;
+import ua.com.hedgehogsoft.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
+import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 
 public class StartAction extends AbstractListener
 {
-   public StartAction(JLabel wordLabel, JProgressBar prgBar, Map<String, String> dictionary, ChangeWordsTaskState state)
+   public StartAction(Cards cards, ChangeWordsTaskState state)
    {
-      super(wordLabel, prgBar, dictionary, state);
+      super(cards, state);
+
+      cards.getWordLabel().setText("");
+
+      cards.getPrgBar().setValue(0);
    }
 
    @Override
    public void actionPerformed(ActionEvent e)
    {
-      JButton startButton = (JButton) e.getSource();
+      StartButton startButton = (StartButton) e.getSource();
 
       System.out.println(startButtonName);
 
@@ -29,12 +31,21 @@ public class StartAction extends AbstractListener
 
       startButton.setText(pauseButtonName);
 
-      Timer timer = new Timer();
+      startButton.setTimer(new Timer());
 
-      ChangeWordsTask task = new ChangeWordsTask(wordLabel, prgBar, dictionary, state);
+      Timer timer = startButton.getTimer();
 
-      startButton.addActionListener(new PauseAction(wordLabel, prgBar, dictionary, state, timer, task));
+      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(cards.getStopMessage(),
+                                                                     cards.getSettingComponents());
 
-      timer.schedule(task, 0, 1000);
+      ChangeWordsTask task = new ChangeWordsTask(cards.getWordLabel(),
+                                                 cards.getPrgBar(),
+                                                 cards.getDictionary(),
+                                                 settings,
+                                                 state);
+
+      startButton.addActionListener(new PauseAction(cards, state, task));
+
+      timer.schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
    }
 }
