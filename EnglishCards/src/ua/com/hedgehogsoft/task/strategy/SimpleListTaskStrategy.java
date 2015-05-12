@@ -55,19 +55,7 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
       }
       else
       {
-         if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
-         {
-            counter = 0;
-
-            if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
-            {
-               Collections.shuffle(keys);
-            }
-         }
-         if (taskConfig.getPassConfig() == PassConfig.SINGLE)
-         {
-            taskConfig.getStopMessage().send();
-         }
+         postprocess();
       }
    }
 
@@ -87,19 +75,26 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
       }
       else
       {
-         if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
-         {
-            counter = 0;
+         postprocess();
+      }
+   }
 
-            if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
-            {
-               Collections.shuffle(keys);
-            }
-         }
-         if (taskConfig.getPassConfig() == PassConfig.SINGLE)
+   private void postprocess()
+   {
+      prgBar.setValue(100);
+
+      if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
+      {
+         counter = 0;
+
+         if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
-            taskConfig.getStopMessage().send();
+            Collections.shuffle(keys);
          }
+      }
+      if (taskConfig.getPassConfig() == PassConfig.SINGLE)
+      {
+         taskConfig.getStopMessage().send();
       }
    }
 }
