@@ -1,6 +1,5 @@
 package ua.com.hedgehogsoft.task.strategy;
 
-import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -8,8 +7,6 @@ import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
-import ua.com.hedgehogsoft.task.config.enums.PassConfig;
-import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 
 public class TranslatedListTaskStrategy extends AbstractTaskStrategy
 {
@@ -24,64 +21,51 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
    }
 
    @Override
-   public void execute()
+   protected void directTranslationDirectionTask()
    {
-      switch (taskConfig.getTranslationDirection())
+      if (counter < keys.size())
       {
-         case DIRECT:
+         if (word == null)
          {
-            directTranslationDirectionTask();
-            break;
-         }
-
-         case REVERSE:
-         {
-            reverseTranslationDirectionTask();
-            break;
-         }
-      }
-   }
-
-   private void directTranslationDirectionTask()
-   {
-      if (word == null)
-      {
-         if (counter < keys.size())
-         {
-            word = keys.get(counter++);
+            word = keys.get(counter);
 
             wordLabel.setFont(getFontSize(word));
 
             wordLabel.setText(word);
 
-            prgBar.setValue((int) (progressBarStep * (counter - 0.5)));
+            prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
          }
          else
          {
-            postprocess();
+            String translation = dictionary.get(word);
+
+            wordLabel.setFont(getFontSize(translation));
+
+            wordLabel.setText(translation);
+
+            word = null;
+
+            counter++;
+
+            prgBar.setValue((int) (progressBarStep * counter));
+
+            checkForFinishElement();
          }
       }
       else
       {
-         String translation = dictionary.get(word);
-
-         wordLabel.setFont(getFontSize(translation));
-
-         wordLabel.setText(translation);
-
-         word = null;
-
-         prgBar.setValue((int) (progressBarStep * counter));
+         processSinglePassTask();
       }
    }
 
-   private void reverseTranslationDirectionTask()
+   @Override
+   protected void reverseTranslationDirectionTask()
    {
-      if (word == null)
+      if (counter < keys.size())
       {
-         if (counter < keys.size())
+         if (word == null)
          {
-            word = keys.get(counter++);
+            word = keys.get(counter);
 
             String translation = dictionary.get(word);
 
@@ -89,41 +73,26 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
 
             wordLabel.setText(translation);
 
-            prgBar.setValue((int) (progressBarStep * (counter - 0.5)));
+            prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
          }
          else
          {
-            postprocess();
+            wordLabel.setFont(getFontSize(word));
+
+            wordLabel.setText(word);
+
+            word = null;
+
+            counter++;
+
+            prgBar.setValue((int) (progressBarStep * counter));
+
+            checkForFinishElement();
          }
       }
       else
       {
-         wordLabel.setFont(getFontSize(word));
-
-         wordLabel.setText(word);
-
-         word = null;
-
-         prgBar.setValue((int) (progressBarStep * counter));
-      }
-   }
-
-   private void postprocess()
-   {
-      prgBar.setValue(100);
-
-      if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
-      {
-         counter = 0;
-
-         if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
-         {
-            Collections.shuffle(keys);
-         }
-      }
-      if (taskConfig.getPassConfig() == PassConfig.SINGLE)
-      {
-         taskConfig.getStopMessage().send();
+         processSinglePassTask();
       }
    }
 }

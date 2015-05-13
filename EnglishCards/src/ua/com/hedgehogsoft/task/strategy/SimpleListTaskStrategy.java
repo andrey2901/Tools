@@ -1,6 +1,5 @@
 package ua.com.hedgehogsoft.task.strategy;
 
-import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -8,8 +7,6 @@ import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
-import ua.com.hedgehogsoft.task.config.enums.PassConfig;
-import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 
 public class SimpleListTaskStrategy extends AbstractTaskStrategy
 {
@@ -23,25 +20,7 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
    }
 
    @Override
-   public void execute()
-   {
-      switch (taskConfig.getTranslationDirection())
-      {
-         case DIRECT:
-         {
-            directTranslationDirectionTask();
-            break;
-         }
-
-         case REVERSE:
-         {
-            reverseTranslationDirectionTask();
-            break;
-         }
-      }
-   }
-
-   private void directTranslationDirectionTask()
+   protected void directTranslationDirectionTask()
    {
       if (counter < keys.size())
       {
@@ -52,14 +31,17 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
          wordLabel.setText(word);
 
          prgBar.setValue((int) (progressBarStep * counter));
+
+         checkForFinishElement();
       }
       else
       {
-         postprocess();
+         processSinglePassTask();
       }
    }
 
-   private void reverseTranslationDirectionTask()
+   @Override
+   protected void reverseTranslationDirectionTask()
    {
       if (counter < keys.size())
       {
@@ -72,29 +54,12 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
          wordLabel.setText(translation);
 
          prgBar.setValue((int) (progressBarStep * counter));
+
+         checkForFinishElement();
       }
       else
       {
-         postprocess();
-      }
-   }
-
-   private void postprocess()
-   {
-      prgBar.setValue(100);
-
-      if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
-      {
-         counter = 0;
-
-         if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
-         {
-            Collections.shuffle(keys);
-         }
-      }
-      if (taskConfig.getPassConfig() == PassConfig.SINGLE)
-      {
-         taskConfig.getStopMessage().send();
+         processSinglePassTask();
       }
    }
 }

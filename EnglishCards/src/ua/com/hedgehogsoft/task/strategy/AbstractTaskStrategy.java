@@ -15,6 +15,8 @@ import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettingsResolver;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
+import ua.com.hedgehogsoft.task.config.enums.PassConfig;
+import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 
 public abstract class AbstractTaskStrategy implements ITaskStrategy
 {
@@ -60,6 +62,29 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
       this.taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
    }
 
+   protected abstract void directTranslationDirectionTask();
+
+   protected abstract void reverseTranslationDirectionTask();
+
+   @Override
+   public void execute()
+   {
+      switch (taskConfig.getTranslationDirection())
+      {
+         case DIRECT:
+         {
+            directTranslationDirectionTask();
+            break;
+         }
+
+         case REVERSE:
+         {
+            reverseTranslationDirectionTask();
+            break;
+         }
+      }
+   }
+
    protected Font getFontSize(String word)
    {
       int fontSize = 5;
@@ -70,6 +95,37 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
       }
 
       return new Font("Serif", Font.BOLD, wordLabel.getSize().width / fontSize);
+   }
+
+   protected void processNonStopPassTask()
+   {
+      if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
+      {
+         counter = 0;
+
+         if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
+         {
+            Collections.shuffle(keys);
+         }
+      }
+   }
+
+   protected void processSinglePassTask()
+   {
+      if (taskConfig.getPassConfig() == PassConfig.SINGLE)
+      {
+         taskConfig.getStopMessage().send();
+      }
+   }
+
+   protected void checkForFinishElement()
+   {
+      if (counter == keys.size())
+      {
+         prgBar.setValue(100);
+
+         processNonStopPassTask();
+      }
    }
 
    @Override
