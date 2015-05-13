@@ -10,12 +10,23 @@ import ua.com.hedgehogsoft.provider.Provider;
 
 public class PlainTextProvider implements Provider
 {
+   String path = null;
+
+   public PlainTextProvider()
+   {
+      path = "classpath:../../../EnglishCards/resource/dictionary.txt";
+   }
+
+   public PlainTextProvider(String path)
+   {
+      this.path = path;
+   }
 
    @Override
    public Map<String, String> getWords()
    {
       Map<String, String> dictionary = new HashMap<String, String>();
-      try (BufferedReader br = new BufferedReader(new FileReader("classpath:../../../EnglishCards/resource/dictionary.txt")))
+      try (BufferedReader br = new BufferedReader(new FileReader(path)))
       {
          String currentLine = null;
 

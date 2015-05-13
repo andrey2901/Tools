@@ -23,6 +23,15 @@ public class ProviderManager
 
    public Provider getProvider()
    {
+      provider = new PlainTextProvider();
+
+      return provider;
+   }
+
+   public Provider getProvider(String path)
+   {
+      provider = new PlainTextProvider(path);
+
       return provider;
    }
 }
