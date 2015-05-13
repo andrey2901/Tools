@@ -23,8 +23,6 @@ public class ProviderManager
 
    public Provider getProvider()
    {
-      provider = new PlainTextProvider();
-
       return provider;
    }
 
