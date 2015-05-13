@@ -15,9 +15,12 @@ public class StartAction extends AbstractListener
    {
       super(cards, state);
 
-      cards.getWordLabel().setText("");
+      if (state == null)
+      {
+         cards.getWordLabel().setText("");
 
-      cards.getPrgBar().setValue(0);
+         cards.getPrgBar().setValue(0);
+      }
    }
 
    @Override
