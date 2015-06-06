@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 public class Timer
 {
@@ -105,36 +108,45 @@ public class Timer
          }
          timeLabel.setText(initialTime);
 
-         StringBuilder results = new StringBuilder();
+         String[] columnNames = { "Circle", "Circle time", "Common time" };
 
-         String whitespace = "      ";
-
-         String nextLine = "\n";
+         Object[][] data = new String[circleTimes.size()][3];
 
          for (int i = 0; i < circleTimes.size(); i++)
          {
-            results.append(i + 1).append('.');
+            data[i][0] = Integer.toString(i + 1) + ".";
 
             if (i == 0)
             {
-               results.append(whitespace);
-               results.append(circleTimes.get(i));
-               results.append(whitespace);
-               results.append(circleTimes.get(i));
-               results.append(nextLine);
-
+               data[i][1] = circleTimes.get(i);
             }
             else
             {
-               results.append(whitespace);
-               results.append(getCircleTime(circleTimes.get(i), circleTimes.get(i - 1)));
-               results.append(whitespace);
-               results.append(circleTimes.get(i));
-               results.append(nextLine);
+               data[i][1] = getCircleTime(circleTimes.get(i), circleTimes.get(i - 1));
+
+            }
+            data[i][2] = circleTimes.get(i);
+         }
+
+         JTable table = new JTable(data, columnNames);
+
+         TableColumn column = null;
+
+         for (int i = 0; i < columnNames.length; i++)
+         {
+            column = table.getColumnModel().getColumn(i);
+
+            if (i == 0)
+            {
+               column.setPreferredWidth(30);
+            }
+            else
+            {
+               column.setPreferredWidth(150);
             }
          }
 
-         JOptionPane.showMessageDialog(f, results, "Results", JOptionPane.PLAIN_MESSAGE);
+         JOptionPane.showMessageDialog(f, new JScrollPane(table), "Results", JOptionPane.PLAIN_MESSAGE);
       }
    }
 
