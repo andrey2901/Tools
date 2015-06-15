@@ -18,7 +18,7 @@ public class BeatsControlPanel extends JPanel implements Observer
    public BeatsControlPanel(final BeatsInterval beatsInterval)
    {
       this.beatsInterval = beatsInterval;
-      beatsSlider = new JSlider(JSlider.HORIZONTAL, 0, 120, 60);
+      beatsSlider = new JSlider(JSlider.HORIZONTAL, 5, 120, 60);
       beatsSlider.setMajorTickSpacing(5);
       beatsSlider.setMinorTickSpacing(1);
       beatsSlider.setPaintTicks(true);
@@ -32,7 +32,7 @@ public class BeatsControlPanel extends JPanel implements Observer
          @Override
          public void mouseReleased(MouseEvent e)
          {
-            beatsInterval.setValue(beatsSlider.getValue() / 60.0);
+            beatsInterval.setValue(60.0 / beatsSlider.getValue());
          }
       });
    }
