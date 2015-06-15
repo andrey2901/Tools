@@ -34,11 +34,15 @@ public class Metronome
 
       controlPanel.setLayout(new BorderLayout());
 
+      IntervalsControlPanel intervalsControlPanel = new IntervalsControlPanel(beatsInterval);
+
       BeatsControlPanel beatsControlPanel = new BeatsControlPanel(beatsInterval);
+
+      beatsInterval.addObserver(intervalsControlPanel);
 
       beatsInterval.addObserver(beatsControlPanel);
 
-      controlPanel.add(new IntervalsControlPanel(beatsInterval), BorderLayout.NORTH);
+      controlPanel.add(intervalsControlPanel, BorderLayout.NORTH);
 
       controlPanel.add(beatsControlPanel, BorderLayout.SOUTH);
 
@@ -50,7 +54,7 @@ public class Metronome
       {
          Thread metronom = null;
 
-         /** TODO Uses deprecated methods*/
+         /** TODO Uses deprecated methods */
          @SuppressWarnings("deprecation")
          @Override
          public void actionPerformed(ActionEvent e)
