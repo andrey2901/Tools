@@ -21,7 +21,9 @@ import javax.swing.table.TableColumn;
 
 public class Timer
 {
+   long prevTime = 0l;
    private JFrame f = null;
+   private StopWatch watch = null;
    private java.util.Timer timer = null;
    private JLabel timeLabel = null;
    private JButton startButton = null;
@@ -81,11 +83,16 @@ public class Timer
          {
             timer = new java.util.Timer();
          }
+         if (watch == null)
+         {
+            watch = new StopWatch();
+         }
          String[] values = timeLabel.getText().split(":");
          int minutes = Integer.valueOf(values[0]);
          int seconds = Integer.valueOf(values[1]);
          int centiseconds = Integer.valueOf(values[2]);
          timer.schedule(new UpdateUITask(minutes, seconds, centiseconds), 0, 10);
+         watch.start();
       }
    }
 
@@ -99,6 +106,11 @@ public class Timer
          {
             timer.cancel();
             timer = null;
+         }
+         if (watch != null)
+         {
+            watch = null;
+            prevTime = 0;
          }
          if (startButton.getText().equals(nextCircleButtonName))
          {
@@ -185,25 +197,23 @@ public class Timer
       @Override
       public void run()
       {
-         EventQueue.invokeLater(new Runnable()
+         long currentTime = watch.getTime();
+         long difTime = currentTime - prevTime;
+         prevTime = currentTime;
+         centiseconds += (int) Math.round(difTime / 10);
+
+         if (centiseconds > 99)
          {
-            @Override
-            public void run()
+            seconds++;
+            if (seconds > 59)
             {
-               String time = getTime(minutes, seconds, centiseconds++);
-               timeLabel.setText(time);
-               if (centiseconds > 99)
-               {
-                  seconds++;
-                  if (seconds > 59)
-                  {
-                     minutes++;
-                     seconds = 0;
-                  }
-                  centiseconds = 0;
-               }
+               minutes++;
+               seconds -= 60;
             }
-         });
+            centiseconds -= 100;
+         }
+         String time = getTime(minutes, seconds, centiseconds);
+         timeLabel.setText(time);
       }
    }
 
