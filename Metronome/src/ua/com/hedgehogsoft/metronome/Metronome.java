@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 
 public class Metronome
 {
+   private Timer timer = null;
+
    public void init()
    {
       JFrame mainFrame = new JFrame("Metronome");
@@ -24,9 +27,9 @@ public class Metronome
 
       mainFrame.setResizable(true);
 
-      BeatsInterval beatsInterval = new BeatsInterval();
+      final BeatsInterval beatsInterval = new BeatsInterval();
 
-      final Pendulum p = new Pendulum(300, beatsInterval);
+      final Pendulum p = new Pendulum(300);
 
       mainFrame.add(p, BorderLayout.CENTER);
 
@@ -48,35 +51,31 @@ public class Metronome
 
       mainFrame.add(controlPanel, BorderLayout.NORTH);
 
+      final MidiPlayer synthesizer = new MidiPlayer();
+
       final JButton startButton = new JButton("Start");
 
       startButton.addActionListener(new ActionListener()
       {
-         Thread metronom = null;
-
-         /** TODO Uses deprecated methods */
-         @SuppressWarnings("deprecation")
          @Override
          public void actionPerformed(ActionEvent e)
          {
             if (e.getActionCommand() == "Start")
             {
-               if (metronom == null)
+               if (timer == null)
                {
-                  metronom = new Thread(p);
-
-                  metronom.start();
+                  timer = new java.util.Timer();
                }
-               else
-               {
-                  metronom.resume();
-               }
-               startButton.setText("Pause");
+               timer.schedule(new UpdateUITask(300, beatsInterval, synthesizer, p), 0, 10);
+               startButton.setText("Stop");
             }
-            if (e.getActionCommand() == "Pause")
+            if (e.getActionCommand() == "Stop")
             {
-               metronom.suspend();
-
+               if (timer != null)
+               {
+                  timer.cancel();
+                  timer = null;
+               }
                startButton.setText("Start");
             }
          }
