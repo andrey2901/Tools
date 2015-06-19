@@ -66,7 +66,7 @@ public class Metronome
                {
                   timer = new java.util.Timer();
                }
-               timer.schedule(new UpdateUITask(300, beatsInterval, synthesizer, p), 0, 10);
+               timer.schedule(new UpdateUITask(300, beatsInterval, synthesizer, p, new Calibrator().calibrate()), 0, 10);
                startButton.setText("Stop");
             }
             if (e.getActionCommand() == "Stop")

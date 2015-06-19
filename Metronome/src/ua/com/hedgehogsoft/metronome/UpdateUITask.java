@@ -12,20 +12,22 @@ public class UpdateUITask extends TimerTask
    double angleAccel, angleVelocity = 0, dt;
    double prevTime = 0;
    int prevSign = 0;
+   private double factor = 0;
 
-   public UpdateUITask(int length, BeatsInterval beatsInterval, MidiPlayer player, Pendulum panel)
+   public UpdateUITask(int length, BeatsInterval beatsInterval, MidiPlayer player, Pendulum panel, double factor)
    {
       this.length = length;
       this.beatsInterval = beatsInterval;
       this.player = player;
       this.panel = panel;
+      this.factor = factor;
    }
 
    @Override
    public void run()
    {
 
-      dt = 0.181 / beatsInterval.getValue();
+      dt = factor / beatsInterval.getValue();
       // Get angle acceleration from tangential acceleration
       // Tangential acceleration: ma = mg*sin A => a = g * sin A
       // Angle acceleration = a / R => g * sin A / R
