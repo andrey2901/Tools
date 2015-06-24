@@ -21,7 +21,6 @@ import javax.swing.table.TableColumn;
 
 public class Timer
 {
-   long prevTime = 0l;
    private JFrame f = null;
    private StopWatch watch = null;
    private java.util.Timer timer = null;
@@ -110,7 +109,6 @@ public class Timer
          if (watch != null)
          {
             watch = null;
-            prevTime = 0;
          }
          if (startButton.getText().equals(nextCircleButtonName))
          {
@@ -197,10 +195,7 @@ public class Timer
       @Override
       public void run()
       {
-         long currentTime = watch.getTime();
-         long difTime = currentTime - prevTime;
-         prevTime = currentTime;
-         centiseconds += (int) Math.round(difTime / 10);
+         centiseconds += (int) Math.round(watch.getCicleTime() / 10);
 
          if (centiseconds > 99)
          {
