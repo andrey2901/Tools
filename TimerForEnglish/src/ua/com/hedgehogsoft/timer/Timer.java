@@ -90,7 +90,7 @@ public class Timer
          int minutes = Integer.valueOf(values[0]);
          int seconds = Integer.valueOf(values[1]);
          int centiseconds = Integer.valueOf(values[2]);
-         timer.schedule(new UpdateUITask(minutes, seconds, centiseconds), 0, 10);
+         timer.schedule(new UpdateUITask(minutes, seconds, centiseconds), 0, 20);
          watch.start();
       }
    }
@@ -165,7 +165,15 @@ public class Timer
       @Override
       public void actionPerformed(ActionEvent e)
       {
-         circleTimes.add(timeLabel.getText());
+         long millis = watch.getElapsedTime();
+
+         long minutes = (millis / (1000 * 60)) % 60;
+
+         long seconds = (millis / 1000) % 60;
+
+         long centiseconds = millis % 1000 / 10;
+
+         circleTimes.add(String.format("%02d:%02d:%02d", minutes, seconds, centiseconds));
       }
    }
 
