@@ -32,8 +32,11 @@ public class PlainTextProvider implements Provider
 
          while ((currentLine = br.readLine()) != null)
          {
-            String[] words = currentLine.split(":");
-            dictionary.put(words[0], words[1]);
+            if (!currentLine.isEmpty())
+            {
+               String[] words = currentLine.split(":");
+               dictionary.put(words[0], words[1]);
+            }
          }
 
       }
