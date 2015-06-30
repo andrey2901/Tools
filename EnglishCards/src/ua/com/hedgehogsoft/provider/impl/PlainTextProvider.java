@@ -23,28 +23,49 @@ public class PlainTextProvider implements Provider
    }
 
    @Override
-   public Map<String, String> getWords()
+   public Map<String, Map<String, String>> getWords()
    {
-      Map<String, String> dictionary = new HashMap<String, String>();
+      Map<String, Map<String, String>> dictionary = new HashMap<String, Map<String, String>>();
+
+      Map<String, String> block = null;
+
       try (BufferedReader br = new BufferedReader(new FileReader(path)))
       {
          String currentLine = null;
 
          while ((currentLine = br.readLine()) != null)
          {
-            if (!currentLine.isEmpty() && currentLine.endsWith(";"))
+            if (!currentLine.isEmpty())
             {
-               String[] words = currentLine.split(":");
-               dictionary.put(words[0], words[1].substring(0, words[1].length() - 1));
+               if (currentLine.startsWith("[") && currentLine.endsWith("]"))
+               {
+                  block = new HashMap<String, String>();
+
+                  dictionary.put(currentLine.substring(1, currentLine.length() - 1), block);
+               }
+               else if (currentLine.endsWith(";"))
+               {
+                  if (block == null)
+                  {
+                     block = new HashMap<String, String>();
+
+                     dictionary.put(null, block);
+                  }
+
+                  String[] words = currentLine.split(":");
+
+                  block.put(words[0], words[1].substring(0, words[1].length() - 1));
+               }
             }
          }
 
       }
+
       catch (IOException e)
       {
          e.printStackTrace();
       }
+
       return dictionary;
    }
-
 }

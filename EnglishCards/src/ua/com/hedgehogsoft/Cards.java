@@ -52,7 +52,7 @@ public class Cards implements Labels
 
    public Cards()
    {
-      dictionary = new ProviderManager().getProvider().getWords();
+      dictionary = new Dictionary(new ProviderManager().getProvider()).getAllBlocks();
 
       final JFrame mainFrame = new JFrame(mainFrameTitle);
 
@@ -218,7 +218,7 @@ public class Cards implements Labels
 
       JPanel dictionaryControlPanel = new JPanel();
 
-      dictionaryControlPanel.setLayout(new GridLayout(1, 1));
+      dictionaryControlPanel.setLayout(new GridLayout(2, 1));
 
       JButton chooseDictionaryButton = new JButton(chooseDictionaryButtonName);
 
@@ -240,11 +240,15 @@ public class Cards implements Labels
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                File file = fc.getSelectedFile();
-               dictionary = new ProviderManager().getProvider(file.getAbsolutePath()).getWords();
+               dictionary = new Dictionary(new ProviderManager().getProvider(file.getAbsolutePath())).getAllBlocks();
             }
          }
       });
 
+      JButton blocksButton = new JButton("Blocks...");
+      
+      dictionaryControlPanel.add(blocksButton);
+      
       /*-------------------------End Of Dictionary Control Panel------------------------*/
 
       /*-------------------------------Settings Control Panel-------------------------------*/
@@ -301,7 +305,7 @@ public class Cards implements Labels
 
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      mainFrame.setSize(900, 500);
+      mainFrame.setSize(900, 520);
 
       mainFrame.setResizable(false);
 

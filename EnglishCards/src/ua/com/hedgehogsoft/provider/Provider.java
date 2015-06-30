@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface Provider
 {
-   Map<String, String> getWords();
+   Map<String, Map<String, String>> getWords();
 }
