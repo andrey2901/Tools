@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.StartAction;
@@ -226,9 +228,13 @@ public class Cards implements Labels
       {
          JFileChooser fc = new JFileChooser();
 
+         FileFilter filter = new FileNameExtensionFilter("TXT file", new String[] { "txt", "TXT" });
+
          @Override
          public void actionPerformed(ActionEvent e)
          {
+            fc.setFileFilter(filter);
+
             int returnVal = fc.showOpenDialog(mainFrame);
 
             if (returnVal == JFileChooser.APPROVE_OPTION)
