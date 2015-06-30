@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observer;
 
@@ -14,14 +16,18 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -32,7 +38,8 @@ import ua.com.hedgehogsoft.task.StopTaskMessage;
 
 public class Cards implements Labels
 {
-   private Map<String, String> dictionary = null;
+   private Dictionary dictionary = null;
+   private Map<String, String> words = null;
    private JLabel wordLabel = null;
    private JProgressBar prgBar = null;
    private JButton startButton = null;
@@ -52,7 +59,9 @@ public class Cards implements Labels
 
    public Cards()
    {
-      dictionary = new Dictionary(new ProviderManager().getProvider()).getAllBlocks();
+      dictionary = new Dictionary(new ProviderManager().getProvider());
+
+      words = dictionary.getAllBlocks();
 
       final JFrame mainFrame = new JFrame(mainFrameTitle);
 
@@ -240,15 +249,69 @@ public class Cards implements Labels
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                File file = fc.getSelectedFile();
-               dictionary = new Dictionary(new ProviderManager().getProvider(file.getAbsolutePath())).getAllBlocks();
+
+               dictionary = new Dictionary(new ProviderManager().getProvider(file.getAbsolutePath()));
+
+               words = dictionary.getAllBlocks();
             }
          }
       });
 
-      JButton blocksButton = new JButton("Blocks...");
-      
+      JButton blocksButton = new JButton(chooseBlockDictionaryButtonName);
+
       dictionaryControlPanel.add(blocksButton);
-      
+
+      blocksButton.addActionListener(new ActionListener()
+      {
+         @Override
+         public void actionPerformed(ActionEvent e)
+         {
+            CheckBoxGroup blocksGroup = new CheckBoxGroup();
+
+            int count = dictionary.getBlockNames().size();
+
+            blocksGroup.setLayout(new GridLayout(count, 1));
+
+            for (String name : dictionary.getBlockNames())
+            {
+               blocksGroup.add(new JCheckBox(name));
+            }
+
+            JButton okay = new JButton(okButtonName);
+
+            okay.addActionListener(new ActionListener()
+            {
+               @Override
+               public void actionPerformed(ActionEvent e)
+               {
+                  if (blocksGroup.getSelectedItems().size() > 0)
+                  {
+                     words = new HashMap<String, String>();
+
+                     for (String selection : blocksGroup.getSelectedItems())
+                     {
+                        words.putAll(dictionary.getBlock(selection));
+                     }
+                  }
+                  Window w = SwingUtilities.getWindowAncestor((JButton) e.getSource());
+
+                  if (w != null)
+                  {
+                     w.dispose();
+                  }
+               }
+            });
+            JOptionPane.showOptionDialog(null,
+                                         new JScrollPane(blocksGroup),
+                                         chooseBlockDictionaryWindowName,
+                                         JOptionPane.OK_OPTION,
+                                         JOptionPane.QUESTION_MESSAGE,
+                                         null,
+                                         new Object[] { okay },
+                                         okay);
+         }
+      });
+
       /*-------------------------End Of Dictionary Control Panel------------------------*/
 
       /*-------------------------------Settings Control Panel-------------------------------*/
@@ -329,7 +392,7 @@ public class Cards implements Labels
 
    public Map<String, String> getDictionary()
    {
-      return dictionary;
+      return words;
    }
 
    public JLabel getWordLabel()
@@ -345,15 +408,15 @@ public class Cards implements Labels
    public JComponent[] getSettingComponents()
    {
       return new JComponent[] { singlePassRadioButton,
-                               nonStopPassRadioButton,
-                               directTranslationRadioButton,
-                               reverseTranslationRadioButton,
-                               simpleListConfigurationRadioButton,
-                               translatedListConfigurationRadioButton,
-                               doubleListConfigurationRadioButton,
-                               onceShuffleRadioButton,
-                               eachPassShuffleRadioButton,
-                               list };
+                                nonStopPassRadioButton,
+                                directTranslationRadioButton,
+                                reverseTranslationRadioButton,
+                                simpleListConfigurationRadioButton,
+                                translatedListConfigurationRadioButton,
+                                doubleListConfigurationRadioButton,
+                                onceShuffleRadioButton,
+                                eachPassShuffleRadioButton,
+                                list };
    }
 
    public StopTaskMessage getStopMessage()

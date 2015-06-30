@@ -30,4 +30,8 @@ public interface Labels
    String timeUnitLabelText = "s";
    String timeIntervalControlTitledBorderName = "Interval";
    String chooseDictionaryButtonName = "Dictionary...";
+   String chooseBlockDictionaryButtonName = "Blocks...";
+   String chooseBlockDictionaryWindowName = "Blocks";
+   String okButtonName = "Ok";
+   String cancelButtonName = "Cancel";
 }

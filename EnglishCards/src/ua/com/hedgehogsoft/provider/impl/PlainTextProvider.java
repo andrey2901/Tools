@@ -49,7 +49,7 @@ public class PlainTextProvider implements Provider
                   {
                      block = new HashMap<String, String>();
 
-                     dictionary.put(null, block);
+                     dictionary.put("Default", block);
                   }
 
                   String[] words = currentLine.split(":");
