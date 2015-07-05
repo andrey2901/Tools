@@ -41,6 +41,7 @@ public class Cards implements Labels
    private Dictionary dictionary = null;
    private Map<String, String> words = null;
    private JLabel wordLabel = null;
+   private JLabel blockLabel = null;
    private JProgressBar prgBar = null;
    private JButton startButton = null;
    private JButton stopButton = null;
@@ -72,13 +73,23 @@ public class Cards implements Labels
 
       wordLabel = new JLabel("", JLabel.CENTER);
 
+      blockLabel =  new JLabel("Block: ", JLabel.CENTER);
+
+      blockLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+
       prgBar = new JProgressBar();
 
       prgBar.setSize(wordLabelControlPanel.getWidth(), 30);
 
       prgBar.setStringPainted(true);
 
-      wordLabelControlPanel.add(wordLabel, BorderLayout.CENTER);
+      JPanel wordsPanel = new JPanel(new BorderLayout());
+
+      wordsPanel.add(blockLabel, BorderLayout.NORTH);
+
+      wordsPanel.add(wordLabel, BorderLayout.CENTER);
+
+      wordLabelControlPanel.add(wordsPanel, BorderLayout.CENTER);
 
       wordLabelControlPanel.add(prgBar, BorderLayout.SOUTH);
       /*----------------------------End Of Word Label Panel----------------------------*/
