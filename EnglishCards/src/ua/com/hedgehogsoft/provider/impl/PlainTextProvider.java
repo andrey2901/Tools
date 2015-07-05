@@ -3,7 +3,7 @@ package ua.com.hedgehogsoft.provider.impl;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import ua.com.hedgehogsoft.provider.Provider;
@@ -25,7 +25,7 @@ public class PlainTextProvider implements Provider
    @Override
    public Map<String, Map<String, String>> getWords()
    {
-      Map<String, Map<String, String>> dictionary = new HashMap<String, Map<String, String>>();
+      Map<String, Map<String, String>> dictionary = new LinkedHashMap<String, Map<String, String>>();
 
       Map<String, String> block = null;
 
@@ -39,7 +39,7 @@ public class PlainTextProvider implements Provider
             {
                if (currentLine.startsWith("[") && currentLine.endsWith("]"))
                {
-                  block = new HashMap<String, String>();
+                  block = new LinkedHashMap<String, String>();
 
                   dictionary.put(currentLine.substring(1, currentLine.length() - 1), block);
                }
@@ -47,7 +47,7 @@ public class PlainTextProvider implements Provider
                {
                   if (block == null)
                   {
-                     block = new HashMap<String, String>();
+                     block = new LinkedHashMap<String, String>();
 
                      dictionary.put("Default", block);
                   }

@@ -53,6 +53,7 @@ public class Cards implements Labels
    private JRadioButton simpleListConfigurationRadioButton = null;
    private JRadioButton translatedListConfigurationRadioButton = null;
    private JRadioButton doubleListConfigurationRadioButton = null;
+   private JRadioButton nonShuffleRadioButton = null;
    private JRadioButton onceShuffleRadioButton = null;
    private JRadioButton eachPassShuffleRadioButton = null;
    private JComboBox<Integer> list = null;
@@ -195,19 +196,25 @@ public class Cards implements Labels
       /*-------------------------------Shuffle Control Panel-------------------------------*/
       JPanel shuffleControlPanel = new JPanel();
 
-      shuffleControlPanel.setLayout(new GridLayout(2, 1));
+      shuffleControlPanel.setLayout(new GridLayout(3, 1));
+
+      nonShuffleRadioButton = new JRadioButton(nonShuffleRadioButtonName);
+
+      nonShuffleRadioButton.setSelected(true);
 
       onceShuffleRadioButton = new JRadioButton(onceShuffleRadioButtonName);
-
-      onceShuffleRadioButton.setSelected(true);
 
       eachPassShuffleRadioButton = new JRadioButton(eachPassShuffleRadioButtonName);
 
       ButtonGroup shuffleControlGroup = new ButtonGroup();
 
+      shuffleControlGroup.add(nonShuffleRadioButton);
+
       shuffleControlGroup.add(onceShuffleRadioButton);
 
       shuffleControlGroup.add(eachPassShuffleRadioButton);
+
+      shuffleControlPanel.add(nonShuffleRadioButton);
 
       shuffleControlPanel.add(onceShuffleRadioButton);
 
@@ -379,7 +386,7 @@ public class Cards implements Labels
 
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      mainFrame.setSize(900, 520);
+      mainFrame.setSize(900, 534);
 
       mainFrame.setResizable(false);
 

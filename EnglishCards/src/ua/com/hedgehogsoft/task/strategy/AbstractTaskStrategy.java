@@ -41,11 +41,16 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
       this.dictionary = dictionary;
 
+      this.taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
+
       if (state == null)
       {
          keys = new ArrayList<String>(this.dictionary.keySet());
 
-         Collections.shuffle(keys);
+         if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE)
+         {
+            Collections.shuffle(keys);
+         }
 
          progressBarStep = new BigDecimal(100 / keys.size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
       }
@@ -59,7 +64,6 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
          progressBarStep = state.getProgressBarStep();
       }
-      this.taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
    }
 
    protected abstract void directTranslationDirectionTask();
