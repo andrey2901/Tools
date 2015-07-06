@@ -3,10 +3,10 @@ package ua.com.hedgehogsoft.listener;
 import java.awt.event.ActionListener;
 import java.util.TimerTask;
 
-import ua.com.hedgehogsoft.Cards;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
+import ua.com.hedgehogsoft.view.MainFrame;
 
 /**
  * The class(interface) <code>AbstractListener</code> TODO: reorganize the
@@ -18,19 +18,19 @@ import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
  */
 public abstract class AbstractListener implements ActionListener, Labels
 {
-   protected Cards cards = null;
+   protected MainFrame mainFrame = null;
    protected ChangeWordsTaskState state = null;
    protected ChangeWordsTask task = null;
 
-   public AbstractListener(Cards cards, ChangeWordsTaskState state)
+   public AbstractListener(MainFrame mainFrame, ChangeWordsTaskState state)
    {
-      this.cards = cards;
+      this.mainFrame = mainFrame;
       this.state = state;
    }
 
-   public AbstractListener(Cards cards, ChangeWordsTaskState state, ChangeWordsTask task)
+   public AbstractListener(MainFrame mainFrame, ChangeWordsTaskState state, ChangeWordsTask task)
    {
-      this.cards = cards;
+      this.mainFrame = mainFrame;
       this.state = state;
       this.task = task;
    }

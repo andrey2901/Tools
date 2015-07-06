@@ -1,22 +1,23 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
-import ua.com.hedgehogsoft.Cards;
+
 import ua.com.hedgehogsoft.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
+import ua.com.hedgehogsoft.view.MainFrame;
 
 public class PauseAction extends AbstractListener
 {
 
-   public PauseAction(Cards cards, ChangeWordsTaskState state)
+   public PauseAction(MainFrame mainFrame, ChangeWordsTaskState state)
    {
-      super(cards, state);
+      super(mainFrame, state);
    }
 
-   public PauseAction(Cards cards, ChangeWordsTaskState state, ChangeWordsTask task)
+   public PauseAction(MainFrame mainFrame, ChangeWordsTaskState state, ChangeWordsTask task)
    {
-      super(cards, state, task);
+      super(mainFrame, state, task);
    }
 
    @Override
@@ -34,7 +35,7 @@ public class PauseAction extends AbstractListener
 
       startButton.setTimer(null);
 
-      startButton.addActionListener(new StartAction(cards, task.getState()));
+      startButton.addActionListener(new StartAction(mainFrame, task.getState()));
    }
 
 }

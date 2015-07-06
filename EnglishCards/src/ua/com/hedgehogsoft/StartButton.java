@@ -9,18 +9,19 @@ import javax.swing.JButton;
 
 import ua.com.hedgehogsoft.listener.AbstractListener;
 import ua.com.hedgehogsoft.listener.StartAction;
+import ua.com.hedgehogsoft.view.MainFrame;
 
 public class StartButton extends JButton implements Observer, Labels
 {
    private static final long serialVersionUID = 2553030150325461637L;
    private Timer timer = null;
-   private Cards cards = null;
+   private MainFrame mainFrame = null;
 
-   public StartButton(String text, Cards cards)
+   public StartButton(String text, MainFrame mainFrame)
    {
       super(text);
 
-      this.cards = cards;
+      this.mainFrame = mainFrame;
    }
 
    @Override
@@ -45,7 +46,7 @@ public class StartButton extends JButton implements Observer, Labels
 
       this.setText(startButtonName);
 
-      this.addActionListener(new StartAction(cards, null));
+      this.addActionListener(new StartAction(mainFrame, null));
    }
 
    public Timer getTimer()

@@ -1,13 +1,14 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
-import ua.com.hedgehogsoft.Cards;
+
+import ua.com.hedgehogsoft.view.MainFrame;
 
 public class StopAction extends AbstractListener
 {
-   public StopAction(Cards cards)
+   public StopAction(MainFrame mainFrame)
    {
-      super(cards, null);
+      super(mainFrame, null);
    }
 
    @Override
@@ -15,6 +16,6 @@ public class StopAction extends AbstractListener
    {
       System.out.println(stopButtonName);
 
-      cards.getStopMessage().send();
+      mainFrame.getStopMessage().send();
    }
 }

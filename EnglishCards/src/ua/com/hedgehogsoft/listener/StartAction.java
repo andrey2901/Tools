@@ -3,23 +3,23 @@ package ua.com.hedgehogsoft.listener;
 import java.awt.event.ActionEvent;
 import java.util.Timer;
 
-import ua.com.hedgehogsoft.Cards;
 import ua.com.hedgehogsoft.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
+import ua.com.hedgehogsoft.view.MainFrame;
 
 public class StartAction extends AbstractListener
 {
-   public StartAction(Cards cards, ChangeWordsTaskState state)
+   public StartAction(MainFrame mainFrame, ChangeWordsTaskState state)
    {
-      super(cards, state);
+      super(mainFrame, state);
 
       if (state == null)
       {
-         cards.getWordLabel().setText("");
+         mainFrame.getWordLabel().setText("");
 
-         cards.getPrgBar().setValue(0);
+         mainFrame.getPrgBar().setValue(0);
       }
    }
 
@@ -38,16 +38,16 @@ public class StartAction extends AbstractListener
 
       Timer timer = startButton.getTimer();
 
-      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(cards.getStopMessage(),
-                                                                     cards.getSettingComponents());
+      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
+            mainFrame.getSettingComponents());
 
-      ChangeWordsTask task = new ChangeWordsTask(cards.getWordLabel(),
-                                                 cards.getPrgBar(),
-                                                 cards.getDictionary(),
+      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(),
+            mainFrame.getPrgBar(),
+            mainFrame.getWords(),
                                                  settings,
                                                  state);
 
-      startButton.addActionListener(new PauseAction(cards, state, task));
+      startButton.addActionListener(new PauseAction(mainFrame, state, task));
 
       timer.schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
    }
