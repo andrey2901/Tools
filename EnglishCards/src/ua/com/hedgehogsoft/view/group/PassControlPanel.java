@@ -14,6 +14,16 @@ public class PassControlPanel extends AbstractRadioButtonGroupPanel
    @Override
    public void setExamMode()
    {
-      setExamMode(singlePassRadioButtonName);
+      for (int i = 0; i < radioButtons.length; i++)
+      {
+         if (radioButtons[i].getText() == singlePassRadioButtonName)
+         {
+            radioButtons[i].setSelected(true);
+         }
+         else
+         {
+            radioButtons[i].setEnabled(false);
+         }
+      }
    }
 }

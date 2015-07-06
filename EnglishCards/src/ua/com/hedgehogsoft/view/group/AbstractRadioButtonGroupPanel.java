@@ -54,24 +54,9 @@ public abstract class AbstractRadioButtonGroupPanel extends JPanel implements La
       return result;
    }
 
-   abstract void setExamMode();
+   public abstract void setExamMode();
 
-   protected void setExamMode(String radioButtonName)
-   {
-      for (int i = 0; i < radioButtons.length; i++)
-      {
-         if (radioButtons[i].getText() == radioButtonName)
-         {
-            radioButtons[i].setSelected(true);
-         }
-         else
-         {
-            radioButtons[i].setEnabled(false);
-         }
-      }
-   }
-
-   protected void unsetExamMode()
+   public void unsetExamMode()
    {
       for (int i = 0; i < radioButtons.length; i++)
       {

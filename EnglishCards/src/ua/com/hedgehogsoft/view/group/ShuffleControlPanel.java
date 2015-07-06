@@ -12,7 +12,19 @@ public class ShuffleControlPanel extends AbstractRadioButtonGroupPanel
    }
 
    @Override
-   void setExamMode()
+   public void setExamMode()
    {
+      for (int i = 0; i < radioButtons.length; i++)
+      {
+         if (radioButtons[i].getText() == nonShuffleRadioButtonName)
+         {
+            radioButtons[i].setSelected(true);
+         }
+
+         if (radioButtons[i].getText() == eachPassShuffleRadioButtonName)
+         {
+            radioButtons[i].setEnabled(false);
+         }
+      }
    }
 }

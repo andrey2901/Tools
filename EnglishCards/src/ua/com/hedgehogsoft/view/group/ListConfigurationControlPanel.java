@@ -13,7 +13,19 @@ public class ListConfigurationControlPanel extends AbstractRadioButtonGroupPanel
    }
 
    @Override
-   void setExamMode()
+   public void setExamMode()
    {
+      for (int i = 0; i < radioButtons.length; i++)
+      {
+         if (radioButtons[i].getText() == simpleListConfigurationRadioButtonName)
+         {
+            radioButtons[i].setSelected(true);
+         }
+
+         if (radioButtons[i].getText() == doubleListConfigurationRadioButtonName)
+         {
+            radioButtons[i].setEnabled(false);
+         }
+      }
    }
 }

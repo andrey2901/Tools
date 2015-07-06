@@ -12,7 +12,7 @@ public class TranslationDirectionControlPanel extends AbstractRadioButtonGroupPa
    }
 
    @Override
-   void setExamMode()
+   public void setExamMode()
    {
 
    }

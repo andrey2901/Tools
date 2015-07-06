@@ -3,18 +3,22 @@ package ua.com.hedgehogsoft.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Map;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+
 import ua.com.hedgehogsoft.Dictionary;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.ProviderManager;
@@ -43,6 +47,7 @@ public class MainFrame extends JFrame implements Labels
    private JButton stopButton = null;
    private JButton exitButton = null;
    private JComboBox<Integer> listIntervals = null;
+   private JCheckBox examModeButton = null;
    private StopTaskMessage stopMessage = null;
    private AbstractRadioButtonGroupPanel passControlPanel = null;
    private AbstractRadioButtonGroupPanel translationDirectionControlPanel = null;
@@ -181,26 +186,67 @@ public class MainFrame extends JFrame implements Labels
       settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
       /*----------------------------End Of Settings Control Panel----------------------------*/
 
+      /*-------------------------------Exam Mode Button----------------------------------*/
+      examModeButton = new JCheckBox("Exam Mode");
+
+      examModeButton.addItemListener(new ItemListener()
+      {
+         @Override
+         public void itemStateChanged(ItemEvent e)
+         {
+            if (e.getStateChange() == ItemEvent.SELECTED)
+            {
+               passControlPanel.setExamMode();
+
+               translationDirectionControlPanel.setExamMode();
+
+               listConfigurationControlPanel.setExamMode();
+
+               shuffleControlPanel.setExamMode();
+            }
+            if (e.getStateChange() == ItemEvent.DESELECTED)
+            {
+               passControlPanel.unsetExamMode();
+
+               translationDirectionControlPanel.unsetExamMode();
+
+               listConfigurationControlPanel.unsetExamMode();
+
+               shuffleControlPanel.unsetExamMode();
+            }
+         }
+      });
+
+      /*-----------------------------End Of Exam Mode Button-----------------------------*/
+
       /*-------------------------------Button Control Panel-------------------------------*/
-      JPanel buttonPanel = new JPanel();
+      JPanel buttonsPanel = new JPanel();
 
-      buttonPanel.setLayout(new BorderLayout());
+      buttonsPanel.setLayout(new BorderLayout());
 
-      buttonPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
+      buttonsPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
 
       JPanel functionButtonPanel = new JPanel();
 
-      functionButtonPanel.add(startButton, BorderLayout.WEST);
+      functionButtonPanel.setLayout(new BorderLayout());
 
-      functionButtonPanel.add(stopButton, BorderLayout.EAST);
+      JPanel startStopButtonPanel = new JPanel();
 
-      buttonPanel.add(functionButtonPanel, BorderLayout.NORTH);
+      startStopButtonPanel.add(startButton, BorderLayout.WEST);
+
+      startStopButtonPanel.add(stopButton, BorderLayout.EAST);
+
+      functionButtonPanel.add(startStopButtonPanel, BorderLayout.NORTH);
 
       JPanel exitButtonPanel = new JPanel();
 
       exitButtonPanel.add(exitButton);
 
-      buttonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
+      functionButtonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
+
+      buttonsPanel.add(functionButtonPanel, BorderLayout.CENTER);
+
+      buttonsPanel.add(examModeButton, BorderLayout.EAST);
       /*----------------------------End Of Button Control Panel----------------------------*/
 
       mainFrame.setLayout(new BorderLayout());
@@ -209,7 +255,7 @@ public class MainFrame extends JFrame implements Labels
 
       mainFrame.add(settingsPanel, BorderLayout.EAST);
 
-      mainFrame.add(buttonPanel, BorderLayout.SOUTH);
+      mainFrame.add(buttonsPanel, BorderLayout.SOUTH);
 
       mainFrame.pack();
 
