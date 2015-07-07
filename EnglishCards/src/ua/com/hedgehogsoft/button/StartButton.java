@@ -5,16 +5,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 
-import javax.swing.JButton;
-
-import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.listener.AbstractListener;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.view.MainFrame;
 
-public class StartButton extends JButton implements Observer, Labels
+public class StartButton extends AbstractButton implements Observer
 {
-   private static final long serialVersionUID = 2553030150325461637L;
+   private static final long serialVersionUID = 1L;
    private Timer timer = null;
    private MainFrame mainFrame = null;
 

@@ -22,7 +22,13 @@ import javax.swing.JProgressBar;
 import ua.com.hedgehogsoft.Dictionary;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.ProviderManager;
+import ua.com.hedgehogsoft.button.ExitButton;
 import ua.com.hedgehogsoft.button.StartButton;
+import ua.com.hedgehogsoft.button.StopButton;
+import ua.com.hedgehogsoft.button.exam.NextExamButton;
+import ua.com.hedgehogsoft.button.exam.StartExamButton;
+import ua.com.hedgehogsoft.button.exam.StopExamButton;
+import ua.com.hedgehogsoft.button.exam.TranslateExamButton;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
@@ -46,6 +52,10 @@ public class MainFrame extends JFrame implements Labels
    private JButton startButton = null;
    private JButton stopButton = null;
    private JButton exitButton = null;
+   private JButton startExamButton = null;
+   private JButton nextExamButton = null;
+   private JButton translateExamButton = null;
+   private JButton stopExamButton = null;
    private JComboBox<Integer> listIntervals = null;
    private JCheckBox examModeButton = null;
    private StopTaskMessage stopMessage = null;
@@ -97,13 +107,29 @@ public class MainFrame extends JFrame implements Labels
 
       startButton.addActionListener(new StartAction(this, null));
 
-      stopButton = new JButton(stopButtonName);
+      stopButton = new StopButton(stopButtonName);
 
       stopButton.addActionListener(new StopAction(this));
 
-      exitButton = new JButton(exitButtonName);
+      exitButton = new ExitButton(exitButtonName);
 
       exitButton.addActionListener(new ExitAction());
+
+      startExamButton = new StartExamButton("Start");
+
+      startExamButton.setVisible(false);
+
+      nextExamButton = new NextExamButton("Next");
+
+      nextExamButton.setVisible(false);
+
+      translateExamButton = new TranslateExamButton("Translate");
+
+      translateExamButton.setVisible(false);
+
+      stopExamButton = new StopExamButton("Stop");
+
+      stopExamButton.setVisible(false);
       /*-------------------------End Of Buttons initialization--------------------------*/
 
       /*----------------------------Stop Task Message initialization-----------------------------*/
@@ -203,6 +229,18 @@ public class MainFrame extends JFrame implements Labels
                listConfigurationControlPanel.setExamMode();
 
                shuffleControlPanel.setExamMode();
+
+               startExamButton.setVisible(true);
+
+               nextExamButton.setVisible(true);
+
+               translateExamButton.setVisible(true);
+
+               stopExamButton.setVisible(true);
+
+               startButton.setVisible(false);
+
+               stopButton.setVisible(false);
             }
             if (e.getStateChange() == ItemEvent.DESELECTED)
             {
@@ -213,6 +251,18 @@ public class MainFrame extends JFrame implements Labels
                listConfigurationControlPanel.unsetExamMode();
 
                shuffleControlPanel.unsetExamMode();
+
+               startExamButton.setVisible(false);
+
+               nextExamButton.setVisible(false);
+
+               translateExamButton.setVisible(false);
+
+               stopExamButton.setVisible(false);
+
+               startButton.setVisible(true);
+
+               stopButton.setVisible(true);
             }
          }
       });
@@ -232,13 +282,21 @@ public class MainFrame extends JFrame implements Labels
 
       JPanel startStopButtonPanel = new JPanel();
 
-      startStopButtonPanel.add(startButton, BorderLayout.WEST);
+      startStopButtonPanel.add(startButton);
 
-      startStopButtonPanel.add(stopButton, BorderLayout.EAST);
+      startStopButtonPanel.add(stopButton);
+
+      startStopButtonPanel.add(nextExamButton);
+
+      startStopButtonPanel.add(translateExamButton);
 
       functionButtonPanel.add(startStopButtonPanel, BorderLayout.NORTH);
 
       JPanel exitButtonPanel = new JPanel();
+
+      exitButtonPanel.add(startExamButton);
+
+      exitButtonPanel.add(stopExamButton);
 
       exitButtonPanel.add(exitButton);
 
