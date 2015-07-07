@@ -22,7 +22,7 @@ import javax.swing.JProgressBar;
 import ua.com.hedgehogsoft.Dictionary;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.ProviderManager;
-import ua.com.hedgehogsoft.StartButton;
+import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;

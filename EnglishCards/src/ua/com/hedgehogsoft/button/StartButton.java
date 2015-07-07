@@ -1,4 +1,4 @@
-package ua.com.hedgehogsoft;
+package ua.com.hedgehogsoft.button;
 
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -7,6 +7,7 @@ import java.util.Timer;
 
 import javax.swing.JButton;
 
+import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.listener.AbstractListener;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.view.MainFrame;

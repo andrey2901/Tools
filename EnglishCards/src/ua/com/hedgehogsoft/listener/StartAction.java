@@ -3,7 +3,7 @@ package ua.com.hedgehogsoft.listener;
 import java.awt.event.ActionEvent;
 import java.util.Timer;
 
-import ua.com.hedgehogsoft.StartButton;
+import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
@@ -41,11 +41,8 @@ public class StartAction extends AbstractListener
       ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
             mainFrame.getSettingComponents());
 
-      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(),
-            mainFrame.getPrgBar(),
-            mainFrame.getWords(),
-                                                 settings,
-                                                 state);
+      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getPrgBar(), mainFrame.getWords(),
+            settings, state);
 
       startButton.addActionListener(new PauseAction(mainFrame, state, task));
 
