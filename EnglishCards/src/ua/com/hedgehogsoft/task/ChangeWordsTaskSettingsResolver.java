@@ -3,6 +3,7 @@ package ua.com.hedgehogsoft.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JRadioButton;
@@ -10,6 +11,7 @@ import javax.swing.JRadioButton;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.config.enums.ListConfig;
+import ua.com.hedgehogsoft.task.config.enums.Mode;
 import ua.com.hedgehogsoft.task.config.enums.PassConfig;
 import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 import ua.com.hedgehogsoft.task.config.enums.TranslationDirection;
@@ -18,6 +20,7 @@ public class ChangeWordsTaskSettingsResolver implements Labels
 {
    private List<JRadioButton> selectedRadioButtons = null;
    private List<JComboBox<?>> comboBoxList = null;
+   private List<JCheckBox> checkBoxList = null;
    private StopTaskMessage stopMessage = null;
 
    public ChangeWordsTaskSettingsResolver(ChangeWordsTaskSettings settings)
@@ -42,6 +45,10 @@ public class ChangeWordsTaskSettingsResolver implements Labels
          if (component instanceof JComboBox)
          {
             comboBoxList.add((JComboBox<?>) component);
+         }
+         if (component instanceof JCheckBox)
+         {
+            checkBoxList.add((JCheckBox) component);
          }
       }
       stopMessage = settings.getStopMessage();
@@ -106,6 +113,17 @@ public class ChangeWordsTaskSettingsResolver implements Labels
       taskConfig.setTimePeriod(timePeriod);
 
       taskConfig.setStopMessage(stopMessage);
+
+      JCheckBox modeCheckBox = checkBoxList.get(0);
+
+      if (modeCheckBox.isSelected())
+      {
+         taskConfig.setMode(Mode.EXAM);
+      }
+      else
+      {
+         taskConfig.setMode(Mode.TRAINING);
+      }
 
       return taskConfig;
    }

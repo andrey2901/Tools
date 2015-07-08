@@ -2,6 +2,7 @@ package ua.com.hedgehogsoft.task.config;
 
 import ua.com.hedgehogsoft.task.StopTaskMessage;
 import ua.com.hedgehogsoft.task.config.enums.ListConfig;
+import ua.com.hedgehogsoft.task.config.enums.Mode;
 import ua.com.hedgehogsoft.task.config.enums.PassConfig;
 import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 import ua.com.hedgehogsoft.task.config.enums.TranslationDirection;
@@ -12,6 +13,7 @@ public class TaskConfig
    private PassConfig passConfig;
    private ShuffleConfig shuffleConfig;
    private TranslationDirection translationDirection;
+   private Mode mode;
    private StopTaskMessage stopMessage = null;
    private int timePeriod = 0;
 
@@ -53,6 +55,16 @@ public class TaskConfig
    public void setTranslationDirection(TranslationDirection translationDirection)
    {
       this.translationDirection = translationDirection;
+   }
+
+   public Mode getMode()
+   {
+      return mode;
+   }
+
+   public void setMode(Mode mode)
+   {
+      this.mode = mode;
    }
 
    public StopTaskMessage getStopMessage()
