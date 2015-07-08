@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import ua.com.hedgehogsoft.provider.Provider;
+import ua.com.hedgehogsoft.provider.IProvider;
 
-public class PlainTextProvider implements Provider
+public class PlainTextProvider implements IProvider
 {
    String path = null;
 

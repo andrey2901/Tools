@@ -1,12 +1,12 @@
 package ua.com.hedgehogsoft;
 
-import ua.com.hedgehogsoft.provider.Provider;
+import ua.com.hedgehogsoft.provider.IProvider;
 import ua.com.hedgehogsoft.provider.ProviderType;
 import ua.com.hedgehogsoft.provider.impl.PlainTextProvider;
 
 public class ProviderManager
 {
-   private Provider provider = null;
+   private IProvider provider = null;
 
    public ProviderManager()
    {
@@ -21,12 +21,12 @@ public class ProviderManager
       }
    }
 
-   public Provider getProvider()
+   public IProvider getProvider()
    {
       return provider;
    }
 
-   public Provider getProvider(String path)
+   public IProvider getProvider(String path)
    {
       provider = new PlainTextProvider(path);
 
