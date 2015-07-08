@@ -23,12 +23,10 @@ import ua.com.hedgehogsoft.Dictionary;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.ProviderManager;
 import ua.com.hedgehogsoft.button.ExitButton;
+import ua.com.hedgehogsoft.button.NextButton;
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.button.StopButton;
-import ua.com.hedgehogsoft.button.exam.NextExamButton;
-import ua.com.hedgehogsoft.button.exam.StartExamButton;
-import ua.com.hedgehogsoft.button.exam.StopExamButton;
-import ua.com.hedgehogsoft.button.exam.TranslateExamButton;
+import ua.com.hedgehogsoft.button.TranslateButton;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
@@ -115,19 +113,19 @@ public class MainFrame extends JFrame implements Labels
 
       exitButton.addActionListener(new ExitAction());
 
-      startExamButton = new StartExamButton("Start");
+      startExamButton = new StartButton("Start", null);
 
       startExamButton.setVisible(false);
 
-      nextExamButton = new NextExamButton("Next");
+      nextExamButton = new NextButton("Next");
 
       nextExamButton.setVisible(false);
 
-      translateExamButton = new TranslateExamButton("Translate");
+      translateExamButton = new TranslateButton("Translate");
 
       translateExamButton.setVisible(false);
 
-      stopExamButton = new StopExamButton("Stop");
+      stopExamButton = new StopButton("Stop");
 
       stopExamButton.setVisible(false);
       /*-------------------------End Of Buttons initialization--------------------------*/
