@@ -2,7 +2,7 @@ package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
 
-import ua.com.hedgehogsoft.StartButton;
+import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 import ua.com.hedgehogsoft.view.MainFrame;

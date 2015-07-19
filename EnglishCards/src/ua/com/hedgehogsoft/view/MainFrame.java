@@ -15,10 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+
 import ua.com.hedgehogsoft.Dictionary;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.ProviderManager;
-import ua.com.hedgehogsoft.StartButton;
+import ua.com.hedgehogsoft.button.ExitButton;
+import ua.com.hedgehogsoft.button.StartButton;
+import ua.com.hedgehogsoft.button.StopButton;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
@@ -92,11 +95,11 @@ public class MainFrame extends JFrame implements Labels
 
       startButton.addActionListener(new StartAction(this, null));
 
-      stopButton = new JButton(stopButtonName);
+      stopButton = new StopButton(stopButtonName);
 
       stopButton.addActionListener(new StopAction(this));
 
-      exitButton = new JButton(exitButtonName);
+      exitButton = new ExitButton(exitButtonName);
 
       exitButton.addActionListener(new ExitAction());
       /*-------------------------End Of Buttons initialization--------------------------*/

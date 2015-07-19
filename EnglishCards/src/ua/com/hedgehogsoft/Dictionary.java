@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import ua.com.hedgehogsoft.provider.Provider;
+import ua.com.hedgehogsoft.provider.IProvider;
 
 public class Dictionary
 {
    private Map<String, Map<String, String>> words;
 
-   public Dictionary(Provider provider)
+   public Dictionary(IProvider provider)
    {
       words = provider.getWords();
    }
