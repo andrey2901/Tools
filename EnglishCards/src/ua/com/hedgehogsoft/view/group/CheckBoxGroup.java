@@ -1,4 +1,4 @@
-package ua.com.hedgehogsoft;
+package ua.com.hedgehogsoft.view.group;
 
 import java.awt.Component;
 import java.util.ArrayList;

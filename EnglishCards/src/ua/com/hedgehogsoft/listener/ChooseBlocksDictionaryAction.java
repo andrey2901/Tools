@@ -13,9 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import ua.com.hedgehogsoft.CheckBoxGroup;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.view.MainFrame;
+import ua.com.hedgehogsoft.view.group.CheckBoxGroup;
 
 public class ChooseBlocksDictionaryAction implements ActionListener, Labels
 {
@@ -53,7 +53,7 @@ public class ChooseBlocksDictionaryAction implements ActionListener, Labels
 
                for (String selection : blocksGroup.getSelectedItems())
                {
-                  words.putAll(mainFrame.getDictionary().getBlock(selection));
+                  words.putAll(mainFrame.getDictionary().getBlockWords(selection));
                }
 
                mainFrame.setWords(words);

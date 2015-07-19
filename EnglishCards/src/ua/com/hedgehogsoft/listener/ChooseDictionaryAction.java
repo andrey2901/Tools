@@ -41,7 +41,7 @@ public class ChooseDictionaryAction implements ActionListener
 
          mainFrame.setDictionary(dictionary);
 
-         Map<String, String> words = dictionary.getAllBlocks();
+         Map<String, String> words = dictionary.getAllWords();
 
          mainFrame.setWords(words);
       }

@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements Labels
 
       dictionary = new Dictionary(new ProviderManager().getProvider());
 
-      words = dictionary.getAllBlocks();
+      words = dictionary.getAllWords();
 
       final JFrame mainFrame = new JFrame(mainFrameTitle);
 

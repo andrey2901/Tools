@@ -11,23 +11,23 @@ import ua.com.hedgehogsoft.provider.IProvider;
 
 public class Dictionary
 {
-   private Map<String, Map<String, String>> words;
+   private Map<String, Map<String, String>> blocks;
 
    public Dictionary(IProvider provider)
    {
-      words = provider.getWords();
+      blocks = provider.getWords();
    }
 
-   public Map<String, String> getBlock(String blockName)
+   public Map<String, String> getBlockWords(String blockName)
    {
-      return words.get(blockName);
+      return blocks.get(blockName);
    }
 
-   public Map<String, String> getAllBlocks()
+   public Map<String, String> getAllWords()
    {
       Map<String, String> result = new LinkedHashMap<String, String>();
 
-      for (Entry<String, Map<String, String>> entry : words.entrySet())
+      for (Entry<String, Map<String, String>> entry : blocks.entrySet())
       {
          result.putAll(entry.getValue());
       }
@@ -37,9 +37,9 @@ public class Dictionary
 
    public List<String> getBlockNames()
    {
-      List<String> names = new ArrayList<String>(words.size());
+      List<String> names = new ArrayList<String>(blocks.size());
 
-      for (String name : words.keySet())
+      for (String name : blocks.keySet())
       {
          names.add(name);
       }
