@@ -27,6 +27,7 @@ import ua.com.hedgehogsoft.button.TranslateButton;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
+import ua.com.hedgehogsoft.listener.NextAction;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.listener.StopAction;
 import ua.com.hedgehogsoft.task.StopTaskMessage;
@@ -99,7 +100,8 @@ public class MainFrame extends JFrame implements Labels
 
       startButton.addActionListener(new StartAction(this, null));
 
-      nextButton = new NextButton("Next");
+      nextButton = new NextButton("Next", (StartButton) startButton);
+      nextButton.addActionListener(new NextAction(this, null));
 
       translateButton = new TranslateButton("Translate");
 
