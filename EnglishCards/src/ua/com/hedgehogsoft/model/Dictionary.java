@@ -1,6 +1,8 @@
 package ua.com.hedgehogsoft.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -70,14 +72,14 @@ public class Dictionary
       }
       else
       {
-         blocks.put(blockName, new Block(blockName, words));
+         blocks.put(blockName, new Block(blockName, this, words));
 
          logger.info("New block [" + blockName + "] was added to dictionary [" + name + "].");
       }
    }
 
    /**
-    * Adds an existing block to current dictionary.
+    * Adds an existing block to the current dictionary.
     * 
     * @param block
     *           An existing block
@@ -123,9 +125,37 @@ public class Dictionary
     * 
     * @return all block from current dictionary.
     */
-   public Map<String, Block> getBlocks()
+   public List<Block> getBlocks()
    {
+      List<Block> blocks = new ArrayList<Block>();
+
+      for (Map.Entry<String, Block> block : this.blocks.entrySet())
+      {
+         blocks.add(block.getValue());
+      }
+
       return blocks;
+   }
+
+   /**
+    * Get all words in the same order as they was added to the current
+    * dictionary.
+    * 
+    * @return All words from the current dictionary.
+    */
+   public List<Word> getWords()
+   {
+      List<Word> words = new ArrayList<Word>();
+
+      for (Map.Entry<String, Block> block : blocks.entrySet())
+      {
+         for (Word word : block.getValue().getWords())
+         {
+            words.add(word);
+         }
+      }
+
+      return words;
    }
 
    /**
