@@ -1,10 +1,10 @@
 package ua.com.hedgehogsoft.task.strategy;
 
-import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
+import ua.com.hedgehogsoft.model.Dictionary;
+import ua.com.hedgehogsoft.model.Word;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 
@@ -12,28 +12,30 @@ public class DoubleListTaskStrategy extends AbstractTaskStrategy
 {
 
    public DoubleListTaskStrategy(JLabel wordLabel,
+                                 JLabel blockLabel,
                                  JProgressBar prgBar,
-                                 Map<String, String> dictionary,
+                                 Dictionary dictionary,
                                  ChangeWordsTaskSettings settings,
                                  ChangeWordsTaskState state)
    {
-      super(wordLabel, prgBar, dictionary, settings, state);
+      super(wordLabel, blockLabel, prgBar, dictionary, settings, state);
    }
 
    protected void directTranslationDirectionTask()
    {
-      if (counter < keys.size())
+      if (counter < dictionary.getWords().size())
       {
-         word = keys.get(counter++);
+         Word word = dictionary.getWords().get(counter++);
 
-         String translation = dictionary.get(word);
+         wordLabel.setFont(getFontSize(word.getValue() + "/n" + word.getTranslation()));
 
-         wordLabel.setFont(getFontSize(word + "/n" + translation));
+         wordLabel.setText("<html><p style=\"line-height: 400%;text-align: center;font-size:100\">" + word.getValue()
+               + "<br>" + word.getTranslation() + "</p></html>");
 
-         wordLabel.setText("<html><p style=\"line-height: 400%;text-align: center;font-size:100\">" + word + "<br>"
-               + translation + "</p></html>");
+         blockLabel.setText(word.getBlock().getName());
 
          prgBar.setValue((int) (progressBarStep * counter));
+
          checkForFinishElement();
       }
       else
@@ -44,16 +46,16 @@ public class DoubleListTaskStrategy extends AbstractTaskStrategy
 
    protected void reverseTranslationDirectionTask()
    {
-      if (counter < keys.size())
+      if (counter < dictionary.getWords().size())
       {
-         word = keys.get(counter++);
+         Word word = dictionary.getWords().get(counter++);
 
-         String translation = dictionary.get(word);
+         wordLabel.setFont(getFontSize(word.getTranslation() + "/n" + word.getValue()));
 
-         wordLabel.setFont(getFontSize(translation + "/n" + word));
+         wordLabel.setText("<html><p style=\"line-height: 400%;text-align: center;font-size:100\">"
+               + word.getTranslation() + "<br>" + word.getValue() + "</p></html>");
 
-         wordLabel.setText("<html><p style=\"line-height: 400%;text-align: center;font-size:100\">" + translation
-               + "<br>" + word + "</p></html>");
+         blockLabel.setText(word.getBlock().getName());
 
          prgBar.setValue((int) (progressBarStep * counter));
 

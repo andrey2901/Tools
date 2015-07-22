@@ -42,8 +42,9 @@ public class StartAction extends AbstractListener
             mainFrame.getSettingComponents());
 
       ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(),
-            mainFrame.getPrgBar(),
-            mainFrame.getWords(),
+                                                 mainFrame.getBlockLabel(),
+                                                 mainFrame.getPrgBar(),
+                                                 mainFrame.getDictionary(),
                                                  settings,
                                                  state);
 

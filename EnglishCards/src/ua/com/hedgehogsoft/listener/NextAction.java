@@ -35,8 +35,12 @@ public class NextAction extends AbstractListener
       ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
             mainFrame.getSettingComponents());
 
-      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getPrgBar(), mainFrame.getWords(),
-            settings, state);
+      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(),
+                                                 mainFrame.getBlockLabel(),
+                                                 mainFrame.getPrgBar(),
+                                                 mainFrame.getDictionary(),
+                                                 settings,
+                                                 state);
 
       nextButton.getStartButton().getTimer().schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
    }

@@ -3,14 +3,11 @@ package ua.com.hedgehogsoft.task.strategy;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
+import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettingsResolver;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
@@ -21,21 +18,24 @@ import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 public abstract class AbstractTaskStrategy implements ITaskStrategy
 {
    protected JLabel wordLabel = null;
+   protected JLabel blockLabel = null;
    protected JProgressBar prgBar = null;
-   protected Map<String, String> dictionary = null;
-   protected List<String> keys = null;
-   protected String word = null;
+   protected Dictionary dictionary = null;
    protected int counter = 0;
+   protected boolean translated = true;
    protected double progressBarStep = 0.0;
    protected TaskConfig taskConfig = null;
 
    public AbstractTaskStrategy(JLabel wordLabel,
+                               JLabel blockLabel,
                                JProgressBar prgBar,
-                               Map<String, String> dictionary,
+                               Dictionary dictionary,
                                ChangeWordsTaskSettings settings,
                                ChangeWordsTaskState state)
    {
       this.wordLabel = wordLabel;
+
+      this.blockLabel = blockLabel;
 
       this.prgBar = prgBar;
 
@@ -45,25 +45,17 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
       if (state == null)
       {
-         keys = new ArrayList<String>(this.dictionary.keySet());
-
          if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE)
          {
-            Collections.shuffle(keys);
+            Collections.shuffle(this.dictionary.getWords());
          }
-
-         progressBarStep = new BigDecimal(100 / keys.size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
       }
       else
       {
-         keys = state.getKeys();
-
-         word = state.getWord();
-
          counter = state.getCounter();
-
-         progressBarStep = state.getProgressBarStep();
       }
+
+      progressBarStep = new BigDecimal(100 / dictionary.getWords().size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
    }
 
    protected abstract void directTranslationDirectionTask();
@@ -109,7 +101,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
          if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
-            Collections.shuffle(keys);
+            Collections.shuffle(dictionary.getWords());
          }
       }
    }
@@ -124,7 +116,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
    protected void checkForFinishElement()
    {
-      if (counter == keys.size())
+      if (counter == dictionary.getWords().size())
       {
          prgBar.setValue(100);
 
@@ -135,7 +127,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
    @Override
    public ChangeWordsTaskState getState()
    {
-      return new ChangeWordsTaskState(keys, word, counter, progressBarStep);
+      return new ChangeWordsTaskState(counter, translated);
    }
 
    @Override

@@ -3,7 +3,6 @@ package ua.com.hedgehogsoft.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.Map;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
@@ -16,14 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import ua.com.hedgehogsoft.Dictionary;
+import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.Labels;
-import ua.com.hedgehogsoft.ProviderManager;
 import ua.com.hedgehogsoft.button.ExitButton;
 import ua.com.hedgehogsoft.button.NextButton;
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.button.StopButton;
 import ua.com.hedgehogsoft.button.TranslateButton;
+import ua.com.hedgehogsoft.io.DictionaryManager;
+import ua.com.hedgehogsoft.io.reader.impl.PlainTextDictionaryReader;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
@@ -41,7 +41,6 @@ public class MainFrame extends JFrame implements Labels
 {
    private static final long serialVersionUID = 1L;
    private Dictionary dictionary = null;
-   private Map<String, String> words = null;
    private JLabel wordLabel = null;
    private JLabel blockLabel = null;
    private JProgressBar prgBar = null;
@@ -61,9 +60,7 @@ public class MainFrame extends JFrame implements Labels
    {
       super(title);
 
-      dictionary = new Dictionary(new ProviderManager().getProvider());
-
-      words = dictionary.getAllWords();
+      dictionary = DictionaryManager.getInstance().loadDictionary(new PlainTextDictionaryReader());
 
       final JFrame mainFrame = new JFrame(mainFrameTitle);
 
@@ -246,6 +243,11 @@ public class MainFrame extends JFrame implements Labels
       return wordLabel;
    }
 
+   public JLabel getBlockLabel()
+   {
+      return blockLabel;
+   }
+
    public JProgressBar getPrgBar()
    {
       return prgBar;
@@ -270,15 +272,5 @@ public class MainFrame extends JFrame implements Labels
    public void setDictionary(Dictionary dictionary)
    {
       this.dictionary = dictionary;
-   }
-
-   public Map<String, String> getWords()
-   {
-      return words;
-   }
-
-   public void setWords(Map<String, String> words)
-   {
-      this.words = words;
    }
 }

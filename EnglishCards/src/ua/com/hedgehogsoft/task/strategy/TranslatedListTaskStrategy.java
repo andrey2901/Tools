@@ -1,10 +1,10 @@
 package ua.com.hedgehogsoft.task.strategy;
 
-import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
+import ua.com.hedgehogsoft.model.Dictionary;
+import ua.com.hedgehogsoft.model.Word;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 
@@ -12,44 +12,47 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
 {
 
    public TranslatedListTaskStrategy(JLabel wordLabel,
+                                     JLabel blockLabel,
                                      JProgressBar prgBar,
-                                     Map<String, String> dictionary,
+                                     Dictionary dictionary,
                                      ChangeWordsTaskSettings settings,
                                      ChangeWordsTaskState state)
    {
-      super(wordLabel, prgBar, dictionary, settings, state);
+      super(wordLabel, blockLabel, prgBar, dictionary, settings, state);
    }
 
    @Override
    protected void directTranslationDirectionTask()
    {
-      if (counter < keys.size())
+      if (counter < dictionary.getWords().size())
       {
-         if (word == null)
+         Word word = dictionary.getWords().get(counter);
+
+         blockLabel.setText(word.getBlock().getName());
+
+         if (translated)
          {
-            word = keys.get(counter);
+            wordLabel.setFont(getFontSize(word.getValue()));
 
-            wordLabel.setFont(getFontSize(word));
-
-            wordLabel.setText(word);
+            wordLabel.setText(word.getValue());
 
             prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
+
+            translated = false;
          }
          else
          {
-            String translation = dictionary.get(word);
+            wordLabel.setFont(getFontSize(word.getTranslation()));
 
-            wordLabel.setFont(getFontSize(translation));
-
-            wordLabel.setText(translation);
-
-            word = null;
+            wordLabel.setText(word.getTranslation());
 
             counter++;
 
             prgBar.setValue((int) (progressBarStep * counter));
 
             checkForFinishElement();
+
+            translated = true;
          }
       }
       else
@@ -61,33 +64,35 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
    @Override
    protected void reverseTranslationDirectionTask()
    {
-      if (counter < keys.size())
+      if (counter < dictionary.getWords().size())
       {
-         if (word == null)
+         Word word = dictionary.getWords().get(counter);
+
+         blockLabel.setText(word.getBlock().getName());
+
+         if (translated)
          {
-            word = keys.get(counter);
+            wordLabel.setFont(getFontSize(word.getTranslation()));
 
-            String translation = dictionary.get(word);
-
-            wordLabel.setFont(getFontSize(translation));
-
-            wordLabel.setText(translation);
+            wordLabel.setText(word.getTranslation());
 
             prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
+
+            translated = false;
          }
          else
          {
-            wordLabel.setFont(getFontSize(word));
+            wordLabel.setFont(getFontSize(word.getValue()));
 
-            wordLabel.setText(word);
-
-            word = null;
+            wordLabel.setText(word.getValue());
 
             counter++;
 
             prgBar.setValue((int) (progressBarStep * counter));
 
             checkForFinishElement();
+
+            translated = true;
          }
       }
       else

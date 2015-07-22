@@ -27,15 +27,19 @@ public class Word
     * @param translation
     *           Translation of new word
     */
-   public Word(Block block, String value, String translation)
+   public Word(String value, String translation, Block block)
    {
-      this.block = block;
       this.value = value;
+
       this.translation = translation;
+
+      this.block = block;
+
+      this.block.addWord(this);
    }
 
    /**
-    * Get a value of the word.
+    * Returns a value of the word.
     * 
     * @return Value of the word.
     */
@@ -45,7 +49,7 @@ public class Word
    }
 
    /**
-    * Get a translation of the word.
+    * Returns a translation of the word.
     * 
     * @return Translation of the word.
     */
@@ -55,12 +59,23 @@ public class Word
    }
 
    /**
-    * Get the parent block of the dictionary.
+    * Returns the parent block of the dictionary.
     * 
     * @return Reference to the parent section of the dictionary.
     */
    public Block getBlock()
    {
       return block;
+   }
+
+   /**
+    * Sets the parent block of the dictionary.
+    * 
+    * @param block
+    *           Reference to the parent section of the dictionary.
+    */
+   public void setBlock(Block block)
+   {
+      this.block = block;
    }
 }

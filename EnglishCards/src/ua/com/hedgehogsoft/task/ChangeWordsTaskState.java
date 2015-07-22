@@ -1,30 +1,19 @@
 package ua.com.hedgehogsoft.task;
 
-import java.util.List;
-
 public class ChangeWordsTaskState
 {
-   private List<String> keys = null;
-   private String word = null;
    private int counter = 0;
-   private double progressBarStep = 0.0;
+   private boolean translated = false;
 
-   public ChangeWordsTaskState(List<String> keys, String word, int counter, double progressBarStep)
+   public ChangeWordsTaskState(int counter)
    {
-      this.keys = keys;
-      this.word = word;
       this.counter = counter;
-      this.progressBarStep = progressBarStep;
    }
 
-   public List<String> getKeys()
+   public ChangeWordsTaskState(int counter, boolean translated)
    {
-      return keys;
-   }
-
-   public String getWord()
-   {
-      return word;
+      this.counter = counter;
+      this.translated = translated;
    }
 
    public int getCounter()
@@ -32,8 +21,8 @@ public class ChangeWordsTaskState
       return counter;
    }
 
-   public double getProgressBarStep()
+   public boolean isTranslated()
    {
-      return progressBarStep;
+      return translated;
    }
 }

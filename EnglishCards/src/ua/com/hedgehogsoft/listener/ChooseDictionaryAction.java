@@ -3,14 +3,13 @@ package ua.com.hedgehogsoft.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Map;
-
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import ua.com.hedgehogsoft.Dictionary;
-import ua.com.hedgehogsoft.ProviderManager;
+import ua.com.hedgehogsoft.io.DictionaryManager;
+import ua.com.hedgehogsoft.io.reader.impl.PlainTextDictionaryReader;
+import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 public class ChooseDictionaryAction implements ActionListener
@@ -37,13 +36,10 @@ public class ChooseDictionaryAction implements ActionListener
       {
          File file = fc.getSelectedFile();
 
-         Dictionary dictionary = new Dictionary(new ProviderManager().getProvider(file.getAbsolutePath()));
+         Dictionary dictionary = DictionaryManager.getInstance().loadDictionary(
+               new PlainTextDictionaryReader(file.getAbsolutePath()));
 
          mainFrame.setDictionary(dictionary);
-
-         Map<String, String> words = dictionary.getAllWords();
-
-         mainFrame.setWords(words);
       }
    }
 }

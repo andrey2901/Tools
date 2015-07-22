@@ -21,8 +21,8 @@ import org.apache.log4j.Logger;
  */
 public class Dictionary
 {
-   private String name;
-   private Map<String, Block> blocks;
+   private String name = null;
+   private Map<String, Block> blocks = null;
    private static final Logger logger = Logger.getLogger(Dictionary.class);
 
    /**
@@ -65,17 +65,9 @@ public class Dictionary
     */
    public void addBlock(String blockName, Map<String, Word> words)
    {
-      if (blocks.containsKey(blockName))
-      {
-         logger.error("Block [" + blockName + "] wasn't added to dictionary [" + name
-               + "]. Block with such name already exists");
-      }
-      else
-      {
-         blocks.put(blockName, new Block(blockName, this, words));
+      Block block = new Block(blockName, this, words);
 
-         logger.info("New block [" + blockName + "] was added to dictionary [" + name + "].");
-      }
+      addBlock(block);
    }
 
    /**
@@ -93,6 +85,8 @@ public class Dictionary
       }
       else
       {
+         block.setDictionary(this);
+
          blocks.put(block.getName(), block);
 
          logger.info("New block [" + block.getName() + "] was added to dictionary [" + name + "].");
@@ -104,7 +98,7 @@ public class Dictionary
     * 
     * @param blockName
     *           Name of dictionary's section.
-    * @return the block with specified name.
+    * @return The block with specified name.
     */
    public Block getBlock(String blockName)
    {
@@ -121,9 +115,9 @@ public class Dictionary
    }
 
    /**
-    * Get all sections from current dictionary.
+    * Returns all sections from current dictionary.
     * 
-    * @return all block from current dictionary.
+    * @return All block from current dictionary.
     */
    public List<Block> getBlocks()
    {
@@ -138,7 +132,7 @@ public class Dictionary
    }
 
    /**
-    * Get all words in the same order as they was added to the current
+    * Returns all words in the same order as they was added to the current
     * dictionary.
     * 
     * @return All words from the current dictionary.
@@ -159,9 +153,31 @@ public class Dictionary
    }
 
    /**
-    * Get a name of the current dictionary.
+    * Returns a copy of the current dictionary.
     * 
-    * @return a name of the current dictionary.
+    * @return A copy of the current dictionary.
+    */
+   public Dictionary copy()
+   {
+      Dictionary copyDictionary = new Dictionary("copy_" + this.getName());
+
+      for (Block block : this.getBlocks())
+      {
+         Block copyBlock = new Block(block.getName(), copyDictionary);
+
+         for (Word word : block.getWords())
+         {
+            new Word(new String(word.getValue()), new String(word.getTranslation()), copyBlock);
+         }
+      }
+
+      return copyDictionary;
+   }
+
+   /**
+    * Returns a name of the current dictionary.
+    * 
+    * @return A name of the current dictionary.
     */
    public String getName()
    {

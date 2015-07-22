@@ -19,10 +19,24 @@ import org.apache.log4j.Logger;
  */
 public class Block
 {
-   private String name;
-   private Map<String, Word> words;
-   private Dictionary dictionary;
+   private String name = null;
+   private Map<String, Word> words = null;
+   private Dictionary dictionary = null;
    private static final Logger logger = Logger.getLogger(Block.class);
+
+   /**
+    * Creates a new dictionary's section. This instance should be added to
+    * dictionary.
+    * 
+    * @param name
+    *           Unique name for block inside the dictionary.
+    */
+   public Block(String name)
+   {
+      this.name = name;
+
+      words = new LinkedHashMap<String, Word>();
+   }
 
    /**
     * Creates a new dictionary's section.
@@ -37,6 +51,8 @@ public class Block
       this.name = name;
 
       this.dictionary = dictionary;
+
+      this.dictionary.addBlock(this);
 
       words = new LinkedHashMap<String, Word>();
    }
@@ -57,6 +73,8 @@ public class Block
 
       this.dictionary = dictionary;
 
+      this.dictionary.addBlock(this);
+
       this.words = new LinkedHashMap<String, Word>();
 
       this.words.putAll(words);
@@ -72,18 +90,9 @@ public class Block
     */
    public void addWord(String value, String translation)
    {
-      if (words.containsKey(value))
-      {
-         logger.error("Word [" + value + "] wasn't added to block [" + this.name + "] from dictionary ["
-               + this.dictionary.getName() + "]. Such word already exists");
-      }
-      else
-      {
-         words.put(value, new Word(this, value, translation));
+      Word word = new Word(value, translation, this);
 
-         logger.info("New word [" + value + "] was added to block [" + this.name + "] from dictionary ["
-               + this.dictionary.getName() + "].");
-      }
+      addWord(word);
    }
 
    /**
@@ -101,6 +110,8 @@ public class Block
       }
       else
       {
+         word.setBlock(this);
+
          words.put(word.getValue(), word);
 
          logger.info("New word [" + word.getValue() + "] was added to block [" + this.name + "] from dictionary ["
@@ -135,8 +146,8 @@ public class Block
    }
 
    /**
-    * Get list of the words in the same order as they was added to the current
-    * block.
+    * Returns list of the words in the same order as they was added to the
+    * current block.
     * 
     * @return All words from the current block.
     */
@@ -153,7 +164,7 @@ public class Block
    }
 
    /**
-    * Get a name of the current block.
+    * Returns a name of the current block.
     * 
     * @return a name of the current block.
     */
@@ -163,12 +174,23 @@ public class Block
    }
 
    /**
-    * Get the parent dictionary for the current block.
+    * Returns the parent dictionary for the current block.
     * 
     * @return Parent dictionary for the current block.
     */
    public Dictionary getDictionary()
    {
       return dictionary;
+   }
+
+   /**
+    * Sets the reference to parent dictionary
+    * 
+    * @param dictionary
+    *           Parent dictionary
+    */
+   public void setDictionary(Dictionary dictionary)
+   {
+      this.dictionary = dictionary;
    }
 }

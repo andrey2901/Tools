@@ -1,12 +1,12 @@
 package ua.com.hedgehogsoft.task;
 
-import java.util.Map;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.Labels;
+import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.strategy.DoubleListTaskStrategy;
 import ua.com.hedgehogsoft.task.strategy.SimpleListTaskStrategy;
@@ -18,8 +18,9 @@ public class ChangeWordsTask extends TimerTask implements Labels
    private ITaskStrategy taskStrategy = null;
 
    public ChangeWordsTask(JLabel wordLabel,
+                          JLabel blockLabel,
                           JProgressBar prgBar,
-                          Map<String, String> dictionary,
+                          Dictionary dictionary,
                           ChangeWordsTaskSettings settings,
                           ChangeWordsTaskState state)
    {
@@ -27,15 +28,15 @@ public class ChangeWordsTask extends TimerTask implements Labels
       switch (taskConfig.getListConfig())
       {
          case SIMPLE:
-            taskStrategy = new SimpleListTaskStrategy(wordLabel, prgBar, dictionary, settings, state);
+            taskStrategy = new SimpleListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
             break;
 
          case WITH_TRANSLATION:
-            taskStrategy = new TranslatedListTaskStrategy(wordLabel, prgBar, dictionary, settings, state);
+            taskStrategy = new TranslatedListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
             break;
 
          case DOUBLE_VIEW:
-            taskStrategy = new DoubleListTaskStrategy(wordLabel, prgBar, dictionary, settings, state);
+            taskStrategy = new DoubleListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
             break;
       }
 
