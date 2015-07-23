@@ -1,10 +1,7 @@
 package ua.com.hedgehogsoft.model;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -20,23 +17,10 @@ import org.apache.log4j.Logger;
 public class Block
 {
    private String name = null;
-   private Map<String, Word> words = null;
+   private List<Word> words = null;
    private Dictionary dictionary = null;
+   private int index;
    private static final Logger logger = Logger.getLogger(Block.class);
-
-   /**
-    * Creates a new dictionary's section. This instance should be added to
-    * dictionary.
-    * 
-    * @param name
-    *           Unique name for block inside the dictionary.
-    */
-   public Block(String name)
-   {
-      this.name = name;
-
-      words = new LinkedHashMap<String, Word>();
-   }
 
    /**
     * Creates a new dictionary's section.
@@ -46,15 +30,15 @@ public class Block
     * @param dictionary
     *           Parent dictionary
     */
-   public Block(String name, Dictionary dictionary)
+   public Block(int index, String name, Dictionary dictionary)
    {
+      this.index = index;
+
       this.name = name;
 
       this.dictionary = dictionary;
 
-      this.dictionary.addBlock(this);
-
-      words = new LinkedHashMap<String, Word>();
+      words = new ArrayList<Word>();
    }
 
    /**
@@ -67,17 +51,17 @@ public class Block
     * @param words
     *           Words from dictionary's section that will be added.
     */
-   public Block(String name, Dictionary dictionary, Map<String, Word> words)
+   public Block(int index, String name, Dictionary dictionary, List<Word> words)
    {
+      this.index = index;
+
       this.name = name;
 
       this.dictionary = dictionary;
 
-      this.dictionary.addBlock(this);
+      this.words = new ArrayList<Word>();
 
-      this.words = new LinkedHashMap<String, Word>();
-
-      this.words.putAll(words);
+      addWords(words);
    }
 
    /**
@@ -90,7 +74,7 @@ public class Block
     */
    public void addWord(String value, String translation)
    {
-      Word word = new Word(value, translation, this);
+      Word word = new Word(size(), value, translation, this);
 
       addWord(word);
    }
@@ -103,7 +87,7 @@ public class Block
     */
    public void addWord(Word word)
    {
-      if (words.containsKey(word.getValue()))
+      if (words.contains(word))
       {
          logger.error("Word [" + word.getValue() + "] wasn't added to block [" + this.name + "] from dictionary ["
                + this.dictionary.getName() + "]. Such word already exists");
@@ -112,7 +96,9 @@ public class Block
       {
          word.setBlock(this);
 
-         words.put(word.getValue(), word);
+         word.setIndex(size());
+
+         words.add(word);
 
          logger.info("New word [" + word.getValue() + "] was added to block [" + this.name + "] from dictionary ["
                + this.dictionary.getName() + "].");
@@ -125,11 +111,11 @@ public class Block
     * @param words
     *           Collection of words for adding.
     */
-   public void addWords(Map<String, Word> words)
+   public void addWords(List<Word> words)
    {
-      for (Map.Entry<String, Word> word : words.entrySet())
+      for (Word word : words)
       {
-         addWord(word.getValue());
+         addWord(word);
       }
    }
 
@@ -142,7 +128,25 @@ public class Block
     */
    public Word getWord(String word)
    {
-      return words.get(word);
+      Word result = null;
+
+      for (Word wrd : words)
+      {
+         if (wrd.getValue() == word)
+         {
+            result = wrd;
+
+            break;
+         }
+      }
+
+      if (result == null)
+      {
+         logger.error("Word [" + word + "] wasn't found in the block [" + name + "] from the dictionary["
+               + dictionary.getName() + "].");
+      }
+
+      return result;
    }
 
    /**
@@ -153,13 +157,6 @@ public class Block
     */
    public List<Word> getWords()
    {
-      List<Word> words = new ArrayList<Word>();
-
-      for (Map.Entry<String, Word> word : this.words.entrySet())
-      {
-         words.add(word.getValue());
-      }
-
       return words;
    }
 
@@ -171,6 +168,28 @@ public class Block
    public String getName()
    {
       return name;
+   }
+
+   /**
+    * Returns an index of the current block inside the dictionary.
+    * 
+    * @return An index of the current block.
+    */
+
+   public int getIndex()
+   {
+      return index;
+   }
+
+   /**
+    * Sets an index of the current block inside the dictionary.
+    * 
+    * @param index
+    *           An index of the current block.
+    */
+   public void setIndex(int index)
+   {
+      this.index = index;
    }
 
    /**
@@ -192,5 +211,15 @@ public class Block
    public void setDictionary(Dictionary dictionary)
    {
       this.dictionary = dictionary;
+   }
+
+   /**
+    * Returns the amount of words in the current block.
+    * 
+    * @return The amount of words in the current block.
+    */
+   public int size()
+   {
+      return words.size();
    }
 }

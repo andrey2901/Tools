@@ -1,10 +1,7 @@
 package ua.com.hedgehogsoft.model;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -22,7 +19,7 @@ import org.apache.log4j.Logger;
 public class Dictionary
 {
    private String name = null;
-   private Map<String, Block> blocks = null;
+   private List<Block> blocks = null;
    private static final Logger logger = Logger.getLogger(Dictionary.class);
 
    /**
@@ -35,7 +32,7 @@ public class Dictionary
    {
       this.name = name;
 
-      blocks = new LinkedHashMap<String, Block>();
+      blocks = new ArrayList<Block>();
    }
 
    /**
@@ -46,13 +43,13 @@ public class Dictionary
     * @param blocks
     *           Sections of the dictionary.
     */
-   public Dictionary(String name, Map<String, Block> blocks)
+   public Dictionary(String name, List<Block> blocks)
    {
       this.name = name;
 
-      this.blocks = new LinkedHashMap<String, Block>();
+      this.blocks = new ArrayList<Block>();
 
-      this.blocks.putAll(blocks);
+      addBlocks(blocks);
    }
 
    /**
@@ -63,9 +60,9 @@ public class Dictionary
     * @param words
     *           Words for new section.
     */
-   public void addBlock(String blockName, Map<String, Word> words)
+   public void addBlock(String blockName, List<Word> words)
    {
-      Block block = new Block(blockName, this, words);
+      Block block = new Block(size(), blockName, this, words);
 
       addBlock(block);
    }
@@ -78,7 +75,7 @@ public class Dictionary
     */
    public void addBlock(Block block)
    {
-      if (blocks.containsKey(block.getName()))
+      if (blocks.contains(block))
       {
          logger.error("Block [" + block.getName() + "] wasn't added to dictionary [" + name
                + "]. Block with such name already exists.");
@@ -87,9 +84,25 @@ public class Dictionary
       {
          block.setDictionary(this);
 
-         blocks.put(block.getName(), block);
+         block.setIndex(size());
+
+         blocks.add(block);
 
          logger.info("New block [" + block.getName() + "] was added to dictionary [" + name + "].");
+      }
+   }
+
+   /**
+    * Adds collection of blocks to the current dictionary.
+    * 
+    * @param blocks
+    *           Collection of blocks to the current dictionary.
+    */
+   public void addBlocks(List<Block> blocks)
+   {
+      for (Block block : blocks)
+      {
+         addBlock(block);
       }
    }
 
@@ -102,16 +115,24 @@ public class Dictionary
     */
    public Block getBlock(String blockName)
    {
-      if (blocks.containsKey(blockName))
+      Block result = null;
+
+      for (Block block : blocks)
       {
-         return blocks.get(blockName);
+         if (block.getName() == blockName)
+         {
+            result = block;
+
+            break;
+         }
       }
-      else
+
+      if (result == null)
       {
          logger.error("Block [" + blockName + "] wasn't found in the dictionary [" + name + "].");
-
-         return null;
       }
+
+      return result;
    }
 
    /**
@@ -121,13 +142,6 @@ public class Dictionary
     */
    public List<Block> getBlocks()
    {
-      List<Block> blocks = new ArrayList<Block>();
-
-      for (Map.Entry<String, Block> block : this.blocks.entrySet())
-      {
-         blocks.add(block.getValue());
-      }
-
       return blocks;
    }
 
@@ -141,9 +155,9 @@ public class Dictionary
    {
       List<Word> words = new ArrayList<Word>();
 
-      for (Map.Entry<String, Block> block : blocks.entrySet())
+      for (Block block : blocks)
       {
-         for (Word word : block.getValue().getWords())
+         for (Word word : block.getWords())
          {
             words.add(word);
          }
@@ -163,16 +177,24 @@ public class Dictionary
 
       for (Block block : this.getBlocks())
       {
-         Block copyBlock = new Block(block.getName(), copyDictionary);
+         Block copyBlock = new Block(copyDictionary.size(), block.getName(), copyDictionary);
 
          for (Word word : block.getWords())
          {
-            new Word(new String(word.getValue()), new String(word.getTranslation()), copyBlock);
+            new Word(copyBlock.size(), new String(word.getValue()), new String(word.getTranslation()), copyBlock);
          }
       }
 
       return copyDictionary;
    }
+
+   public void sort()
+   {
+   };
+
+   public void shuffle()
+   {
+   };
 
    /**
     * Returns a name of the current dictionary.
@@ -182,5 +204,15 @@ public class Dictionary
    public String getName()
    {
       return name;
+   }
+
+   /**
+    * Returns the amount of blocks in the current dictionary.
+    * 
+    * @return The amount of blocks in the current dictionary.
+    */
+   public int size()
+   {
+      return blocks.size();
    }
 }

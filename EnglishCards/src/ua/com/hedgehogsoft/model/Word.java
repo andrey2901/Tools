@@ -16,26 +16,51 @@ public class Word
    private String value;
    private String translation;
    private Block block;
+   private int index;
 
    /**
     * Creates a new word with its value and translation.
     * 
-    * @param block
-    *           Reference to the parent section of the dictionary.
+    * @param index
+    *           Ordinal number of the current word inside the dictionary's
+    *           section.
     * @param value
     *           Value of new word.
     * @param translation
     *           Translation of new word
+    * @param block
+    *           Reference to the parent section of the dictionary.
     */
-   public Word(String value, String translation, Block block)
+   public Word(int index, String value, String translation, Block block)
    {
+      this.index = index;
+
       this.value = value;
 
       this.translation = translation;
 
       this.block = block;
+   }
 
-      this.block.addWord(this);
+   /**
+    * Returns an index of the current word inside dictionary's section.
+    * 
+    * @return An index of the current word.
+    */
+   public int getIndex()
+   {
+      return index;
+   }
+
+   /**
+    * Sets an index of the current word inside dictionary's section.
+    * 
+    * @param index
+    *           An index of the current word.
+    */
+   public void setIndex(int index)
+   {
+      this.index = index;
    }
 
    /**

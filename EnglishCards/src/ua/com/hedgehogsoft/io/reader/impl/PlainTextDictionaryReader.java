@@ -49,18 +49,24 @@ public class PlainTextDictionaryReader implements IDictionaryReader
             {
                if (currentLine.startsWith("[") && currentLine.endsWith("]"))
                {
-                  block = new Block(currentLine.substring(1, currentLine.length() - 1), dictionary);
+                  block = new Block(0, currentLine.substring(1, currentLine.length() - 1), dictionary);
+
+                  dictionary.addBlock(block);
                }
                else if (currentLine.endsWith(";"))
                {
                   if (block == null)
                   {
-                     block = new Block("Default", dictionary);
+                     block = new Block(0, "Default", dictionary);
+
+                     dictionary.addBlock(block);
                   }
 
                   String[] words = currentLine.split(":");
 
-                  new Word(words[0].trim(), (words[1].substring(0, words[1].length() - 1)).trim(), block);
+                  Word word = new Word(0, words[0].trim(), (words[1].substring(0, words[1].length() - 1)).trim(), block);
+
+                  block.addWord(word);
                }
             }
          }

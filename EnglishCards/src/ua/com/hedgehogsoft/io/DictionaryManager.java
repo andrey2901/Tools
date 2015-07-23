@@ -32,7 +32,7 @@ public class DictionaryManager
 
       dictionaries.add(dictionary);
 
-      return dictionary.copy();
+      return dictionary;
    }
 
    public Dictionary getDictionary(String name)
@@ -48,6 +48,6 @@ public class DictionaryManager
          }
       }
 
-      return result.copy();
+      return result;
    }
 }
