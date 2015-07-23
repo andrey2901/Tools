@@ -1,7 +1,9 @@
 package ua.com.hedgehogsoft.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -210,4 +212,12 @@ public class Block
    {
       return words.size();
    }
+
+   /**
+    * Randomly permutes the words in the specified block.
+    */
+   public void shuffle()
+   {
+      Collections.shuffle(words);
+   };
 }

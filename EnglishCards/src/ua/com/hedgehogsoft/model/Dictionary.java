@@ -1,7 +1,9 @@
 package ua.com.hedgehogsoft.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -196,8 +198,17 @@ public class Dictionary
    {
    };
 
+   
+   /**
+    * Randomly permutes the specified dictionary.
+    */
    public void shuffle()
    {
+      for (Block block : blocks)
+      {
+         block.shuffle();
+      }
+      Collections.shuffle(blocks);
    };
 
    /**

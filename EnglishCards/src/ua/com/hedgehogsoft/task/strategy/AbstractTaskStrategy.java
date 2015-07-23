@@ -3,7 +3,6 @@ package ua.com.hedgehogsoft.task.strategy;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
@@ -47,7 +46,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
       {
          if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE)
          {
-            Collections.shuffle(this.dictionary.getWords());
+            dictionary.shuffle();
          }
       }
       else
@@ -101,7 +100,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
          if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
-            Collections.shuffle(dictionary.getWords());
+            dictionary.shuffle();
          }
       }
    }
