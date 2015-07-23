@@ -21,25 +21,16 @@ public class Word
    /**
     * Creates a new word with its value and translation.
     * 
-    * @param index
-    *           Ordinal number of the current word inside the dictionary's
-    *           section.
     * @param value
     *           Value of new word.
     * @param translation
     *           Translation of new word
-    * @param block
-    *           Reference to the parent section of the dictionary.
     */
-   public Word(int index, String value, String translation, Block block)
+   public Word(String value, String translation)
    {
-      this.index = index;
-
       this.value = value;
 
       this.translation = translation;
-
-      this.block = block;
    }
 
    /**

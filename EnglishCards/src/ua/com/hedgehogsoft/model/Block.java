@@ -27,16 +27,10 @@ public class Block
     * 
     * @param name
     *           Unique name for block inside the dictionary.
-    * @param dictionary
-    *           Parent dictionary
     */
-   public Block(int index, String name, Dictionary dictionary)
+   public Block(String name)
    {
-      this.index = index;
-
       this.name = name;
-
-      this.dictionary = dictionary;
 
       words = new ArrayList<Word>();
    }
@@ -46,18 +40,12 @@ public class Block
     * 
     * @param name
     *           Unique name for block inside the dictionary.
-    * @param dictionary
-    *           Parent dictionary
     * @param words
     *           Words from dictionary's section that will be added.
     */
-   public Block(int index, String name, Dictionary dictionary, List<Word> words)
+   public Block(String name, List<Word> words)
    {
-      this.index = index;
-
       this.name = name;
-
-      this.dictionary = dictionary;
 
       this.words = new ArrayList<Word>();
 
@@ -74,7 +62,7 @@ public class Block
     */
    public void addWord(String value, String translation)
    {
-      Word word = new Word(size(), value, translation, this);
+      Word word = new Word(value, translation);
 
       addWord(word);
    }
@@ -100,7 +88,7 @@ public class Block
 
          words.add(word);
 
-         logger.info("New word [" + word.getValue() + "] was added to block [" + this.name + "] from dictionary ["
+         logger.trace("New word [" + word.getValue() + "] was added to block [" + this.name + "] from dictionary ["
                + this.dictionary.getName() + "].");
       }
    }

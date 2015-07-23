@@ -62,7 +62,7 @@ public class Dictionary
     */
    public void addBlock(String blockName, List<Word> words)
    {
-      Block block = new Block(size(), blockName, this, words);
+      Block block = new Block(blockName, words);
 
       addBlock(block);
    }
@@ -88,7 +88,7 @@ public class Dictionary
 
          blocks.add(block);
 
-         logger.info("New block [" + block.getName() + "] was added to dictionary [" + name + "].");
+         logger.trace("New block [" + block.getName() + "] was added to dictionary [" + name + "].");
       }
    }
 
@@ -177,11 +177,15 @@ public class Dictionary
 
       for (Block block : this.getBlocks())
       {
-         Block copyBlock = new Block(copyDictionary.size(), block.getName(), copyDictionary);
+         Block copyBlock = new Block(block.getName());
+
+         copyDictionary.addBlock(copyBlock);
 
          for (Word word : block.getWords())
          {
-            new Word(copyBlock.size(), new String(word.getValue()), new String(word.getTranslation()), copyBlock);
+            Word copyWord = new Word(new String(word.getValue()), new String(word.getTranslation()));
+
+            copyBlock.addWord(copyWord);
          }
       }
 
