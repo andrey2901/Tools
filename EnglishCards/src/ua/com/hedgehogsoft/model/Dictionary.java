@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ua.com.hedgehogsoft.model.enums.SortType;
+
 /**
  * 
  * The class <code>Dictionary</code> emulates the dictionary.
@@ -194,11 +196,35 @@ public class Dictionary
       return copyDictionary;
    }
 
-   public void sort()
+   /**
+    * Sorts the blocks inside a dictionary according to the order induced by the
+    * specified sorting type.
+    *
+    * @param type
+    *           Sorting type
+    */
+   public void sort(SortType type)
    {
+      switch (type)
+      {
+         case INITIAL:
+
+            Collections.sort(blocks, (Block block1, Block block2) -> block1.getIndex() - block2.getIndex());
+            break;
+
+         case ALPHABETIC:
+
+            Collections.sort(blocks,
+                  (Block block1, Block block2) -> block1.getName().compareToIgnoreCase(block1.getName()));
+            break;
+      }
+
+      for (Block block : blocks)
+      {
+         block.sort(type);
+      }
    };
 
-   
    /**
     * Randomly permutes the specified dictionary.
     */

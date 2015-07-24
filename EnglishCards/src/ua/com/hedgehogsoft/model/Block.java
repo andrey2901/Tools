@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ua.com.hedgehogsoft.model.enums.SortType;
+
 /**
  * 
  * The class <code>Block</code> emulates the dictionary's sections with words.
@@ -212,6 +214,35 @@ public class Block
    {
       return words.size();
    }
+
+   /**
+    * Sorts the words inside a block according to the order induced by the
+    * specified sorting type.
+    *
+    * @param type
+    *           Sorting type
+    */
+   public void sort(SortType type)
+   {
+      switch (type)
+      {
+         case INITIAL:
+            Collections.sort(words, (Word word1, Word word2) -> word1.getIndex() - word2.getIndex());
+            break;
+
+         case ALPHABETIC:
+            Collections.sort(words, (Word word1, Word word2) -> word1.getValue().compareToIgnoreCase(word2.getValue()));
+            break;
+      }
+
+      // Collections.sort(words, new Comparator<Word>()
+      // {
+      // public int compare(Word word1, Word word2)
+      // {
+      // return word1.getValue().compareToIgnoreCase(word2.getValue());
+      // }
+      // });
+   };
 
    /**
     * Randomly permutes the words in the specified block.
