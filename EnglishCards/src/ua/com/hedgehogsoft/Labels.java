@@ -9,10 +9,14 @@ package ua.com.hedgehogsoft;
  */
 public interface Labels
 {
+   String defualtBlockLabelText = "Block: ";
    String mainFrameTitle = "Cards";
    String startButtonName = "Start";
    String stopButtonName = "Stop";
    String pauseButtonName = "Pause";
+   String nextButtonName = "Next";
+   String sortButtonName = "Sort";
+   String translateButtonName = "Translate";
    String exitButtonName = "Exit";
    String singlePassRadioButtonName = "Single";
    String nonStopPassRadioButtonName = "Non-stop";
@@ -28,6 +32,9 @@ public interface Labels
    String onceShuffleRadioButtonName = "Once";
    String eachPassShuffleRadioButtonName = "Each pass";
    String shuffleControlTitledBorderName = "Shuffle";
+   String sortControlTitledBorderName = "Sort";
+   String initialRadioButtonName = "Initial";
+   String alphabeticRadioButtonName = "Alphabetic";
    String timeUnitLabelText = "s";
    String timeIntervalControlTitledBorderName = "Interval";
    String chooseDictionaryButtonName = "Dictionary...";

@@ -17,6 +17,8 @@ public class StartAction extends AbstractListener
 
       if (state == null)
       {
+         mainFrame.getBlockLabel().setText(defualtBlockLabelText);
+
          mainFrame.getWordLabel().setText("");
 
          mainFrame.getPrgBar().setValue(0);
@@ -27,8 +29,6 @@ public class StartAction extends AbstractListener
    public void actionPerformed(ActionEvent e)
    {
       StartButton startButton = (StartButton) e.getSource();
-
-      System.out.println(startButtonName);
 
       startButton.removeActionListener(this);
 
@@ -41,12 +41,8 @@ public class StartAction extends AbstractListener
       ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
             mainFrame.getSettingComponents());
 
-      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(),
-                                                 mainFrame.getBlockLabel(),
-                                                 mainFrame.getPrgBar(),
-                                                 mainFrame.getDictionary(),
-                                                 settings,
-                                                 state);
+      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(),
+            mainFrame.getPrgBar(), mainFrame.getDictionary(), settings, state);
 
       startButton.addActionListener(new PauseAction(mainFrame, state, task));
 

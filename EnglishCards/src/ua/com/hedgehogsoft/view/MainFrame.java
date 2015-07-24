@@ -3,7 +3,6 @@ package ua.com.hedgehogsoft.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,8 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 
 import ua.com.hedgehogsoft.model.Dictionary;
+import ua.com.hedgehogsoft.model.enums.SortType;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.button.ExitButton;
 import ua.com.hedgehogsoft.button.NextButton;
@@ -28,13 +29,16 @@ import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.NextAction;
+import ua.com.hedgehogsoft.listener.SortAction;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.listener.StopAction;
+import ua.com.hedgehogsoft.task.StartTaskMessage;
 import ua.com.hedgehogsoft.task.StopTaskMessage;
 import ua.com.hedgehogsoft.view.group.AbstractRadioButtonGroupPanel;
 import ua.com.hedgehogsoft.view.group.ListConfigurationControlPanel;
 import ua.com.hedgehogsoft.view.group.PassControlPanel;
 import ua.com.hedgehogsoft.view.group.ShuffleControlPanel;
+import ua.com.hedgehogsoft.view.group.SortControlPanel;
 import ua.com.hedgehogsoft.view.group.TranslationDirectionControlPanel;
 
 public class MainFrame extends JFrame implements Labels
@@ -44,17 +48,16 @@ public class MainFrame extends JFrame implements Labels
    private JLabel wordLabel = null;
    private JLabel blockLabel = null;
    private JProgressBar prgBar = null;
-   private JButton startButton = null;
    private JButton nextButton = null;
    private JButton translateButton = null;
-   private JButton stopButton = null;
-   private JButton exitButton = null;
    private JComboBox<Integer> listIntervals = null;
+   private StartTaskMessage startMessage = null;
    private StopTaskMessage stopMessage = null;
    private AbstractRadioButtonGroupPanel passControlPanel = null;
    private AbstractRadioButtonGroupPanel translationDirectionControlPanel = null;
    private AbstractRadioButtonGroupPanel listConfigurationControlPanel = null;
    private AbstractRadioButtonGroupPanel shuffleControlPanel = null;
+   private AbstractRadioButtonGroupPanel sortControlPanel = null;
 
    public MainFrame(String title)
    {
@@ -64,7 +67,7 @@ public class MainFrame extends JFrame implements Labels
 
       final JFrame mainFrame = new JFrame(mainFrameTitle);
 
-      /*-------------------------------Word Label Panel-------------------------------*/
+      /*--------------------------------Word Label Panel--------------------------------*/
       JPanel wordLabelControlPanel = new JPanel();
 
       wordLabelControlPanel.setLayout(new BorderLayout());
@@ -90,50 +93,74 @@ public class MainFrame extends JFrame implements Labels
       wordLabelControlPanel.add(wordsPanel, BorderLayout.CENTER);
 
       wordLabelControlPanel.add(prgBar, BorderLayout.SOUTH);
-      /*----------------------------End Of Word Label Panel----------------------------*/
+      /*----------------------------End Of Word Label Panel-----------------------------*/
 
-      /*----------------------------Buttons initialization-----------------------------*/
-      startButton = new StartButton(startButtonName, this);
+      /*-----------------------------Buttons initialization-----------------------------*/
+      StartButton startButton = new StartButton(startButtonName, this);
 
       startButton.addActionListener(new StartAction(this, null));
 
-      nextButton = new NextButton("Next", (StartButton) startButton);
+      nextButton = new NextButton(nextButtonName, startButton);
+
       nextButton.addActionListener(new NextAction(this, null));
 
-      translateButton = new TranslateButton("Translate");
+      translateButton = new TranslateButton(translateButtonName);
 
-      stopButton = new StopButton(stopButtonName);
+      StopButton stopButton = new StopButton(stopButtonName);
 
       stopButton.addActionListener(new StopAction(this));
 
-      exitButton = new ExitButton(exitButtonName);
+      ExitButton exitButton = new ExitButton(exitButtonName);
 
       exitButton.addActionListener(new ExitAction());
       /*-------------------------End Of Buttons initialization--------------------------*/
 
-      /*----------------------------Stop Task Message initialization-----------------------------*/
+      /*------------------Start and Stop Task Message initialization--------------------*/
+      startMessage = new StartTaskMessage();
+
       stopMessage = new StopTaskMessage();
 
-      stopMessage.addObserver((Observer) startButton);
-      /*-------------------------End Of Stop Task Message initialization--------------------------*/
+      stopMessage.addObserver(startButton);
+      /*----------------End Of Start and Stop Task Message initialization---------------*/
 
       /*-------------------------------Pass Control Panel-------------------------------*/
       passControlPanel = new PassControlPanel();
-      /*----------------------------End Of Pass Control Panel----------------------------*/
+      /*----------------------------End Of Pass Control Panel---------------------------*/
 
-      /*------------------------Translation Direction Control Panel------------------------*/
+      /*-----------------------Translation Direction Control Panel----------------------*/
       translationDirectionControlPanel = new TranslationDirectionControlPanel();
-      /*---------------------End Of Translation Direction Control Panel---------------------*/
+      /*-------------------End Of Translation Direction Control Panel-------------------*/
 
       /*------------------------List Configuration Control Panel------------------------*/
       listConfigurationControlPanel = new ListConfigurationControlPanel();
       /*---------------------End Of List Configuration Control Panel--------------------*/
 
-      /*-------------------------------Shuffle Control Panel-------------------------------*/
+      /*------------------------------Shuffle Control Panel-----------------------------*/
       shuffleControlPanel = new ShuffleControlPanel();
-      /*----------------------------End Of Shuffle Control Panel---------------------------*/
+      /*--------------------------End Of Shuffle Control Panel--------------------------*/
 
-      /*----------------------------Time Interval Control Panel----------------------------*/
+      /*-------------------------------Sort Control Panel-------------------------------*/
+      sortControlPanel = new SortControlPanel();
+
+      GridLayout layout = (GridLayout) sortControlPanel.getLayout();
+
+      layout.setRows(layout.getRows() + 1);
+
+      JButton sortButton = new JButton(sortButtonName);
+
+      sortButton.addActionListener(event ->
+      {
+         JRadioButton b = ((SortControlPanel) ((JButton) event.getSource()).getParent()).getSelected();
+
+         SortType type = SortType.valueOf(b.getText().toUpperCase());
+
+         getDictionary().sort(type);
+      });
+
+      sortControlPanel.add(sortButton);
+      /*-----------------------------End Of Sort Control Panel--------------------------*/
+
+      /*----------------------------Time Interval Control Panel-------------------------*/
       JPanel timeIntervalControlPanel = new JPanel();
 
       timeIntervalControlPanel.setLayout(new GridLayout(1, 2));
@@ -149,7 +176,7 @@ public class MainFrame extends JFrame implements Labels
       timeIntervalControlPanel.add(timeUnitLabel);
 
       timeIntervalControlPanel.setBorder(BorderFactory.createTitledBorder(timeIntervalControlTitledBorderName));
-      /*-------------------------End Of Time Interval Control Panel------------------------*/
+      /*------------------------End Of Time Interval Control Panel----------------------*/
 
       /*-----------------------------Dictionary Control Panel---------------------------*/
 
@@ -171,7 +198,7 @@ public class MainFrame extends JFrame implements Labels
 
       /*-------------------------End Of Dictionary Control Panel------------------------*/
 
-      /*-------------------------------Settings Control Panel-------------------------------*/
+      /*-----------------------------Settings Control Panel-----------------------------*/
       JPanel settingsPanel = new JPanel();
 
       settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
@@ -184,14 +211,16 @@ public class MainFrame extends JFrame implements Labels
 
       settingsPanel.add(shuffleControlPanel);
 
+      settingsPanel.add(sortControlPanel);
+
       settingsPanel.add(timeIntervalControlPanel);
 
       settingsPanel.add(dictionaryControlPanel);
 
       settingsPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.black));
-      /*----------------------------End Of Settings Control Panel----------------------------*/
+      /*--------------------------End Of Settings Control Panel-------------------------*/
 
-      /*-------------------------------Button Control Panel-------------------------------*/
+      /*------------------------------Button Control Panel------------------------------*/
       JPanel buttonPanel = new JPanel();
 
       buttonPanel.setLayout(new BorderLayout());
@@ -215,7 +244,7 @@ public class MainFrame extends JFrame implements Labels
       exitButtonPanel.add(exitButton);
 
       buttonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
-      /*----------------------------End Of Button Control Panel----------------------------*/
+      /*--------------------------End Of Button Control Panel---------------------------*/
 
       mainFrame.setLayout(new BorderLayout());
 
@@ -229,7 +258,7 @@ public class MainFrame extends JFrame implements Labels
 
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      mainFrame.setSize(900, 534);
+      mainFrame.setSize(900, 635);
 
       mainFrame.setResizable(false);
 
