@@ -11,6 +11,19 @@ public class ShuffleControlPanel extends AbstractRadioButtonGroupPanel
       setTitledBorder(shuffleControlTitledBorderName);
    }
 
+   public void setUnshuffleMode()
+   {
+      for (int i = 0; i < radioButtons.length; i++)
+      {
+         if (radioButtons[i].getText() == nonShuffleRadioButtonName)
+         {
+            radioButtons[i].setSelected(true);
+
+            break;
+         }
+      }
+   }
+
    @Override
    void setExamMode()
    {

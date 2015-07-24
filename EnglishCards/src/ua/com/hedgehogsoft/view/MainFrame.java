@@ -13,8 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
-
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.model.enums.SortType;
 import ua.com.hedgehogsoft.Labels;
@@ -29,7 +27,6 @@ import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.NextAction;
-import ua.com.hedgehogsoft.listener.SortAction;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.listener.StopAction;
 import ua.com.hedgehogsoft.task.StartTaskMessage;
@@ -150,11 +147,9 @@ public class MainFrame extends JFrame implements Labels
 
       sortButton.addActionListener(event ->
       {
-         JRadioButton b = ((SortControlPanel) ((JButton) event.getSource()).getParent()).getSelected();
+         getDictionary().sort(SortType.valueOf(sortControlPanel.getSelected().getText().toUpperCase()));
 
-         SortType type = SortType.valueOf(b.getText().toUpperCase());
-
-         getDictionary().sort(type);
+         ((ShuffleControlPanel) shuffleControlPanel).setUnshuffleMode();
       });
 
       sortControlPanel.add(sortButton);
@@ -165,7 +160,7 @@ public class MainFrame extends JFrame implements Labels
 
       timeIntervalControlPanel.setLayout(new GridLayout(1, 2));
 
-      Integer[] intervals = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+      Integer[] intervals = new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
       listIntervals = new JComboBox<Integer>(intervals);
 
@@ -284,8 +279,11 @@ public class MainFrame extends JFrame implements Labels
 
    public JComponent[] getSettingComponents()
    {
-      return new JComponent[] { passControlPanel.getSelected(), translationDirectionControlPanel.getSelected(),
-            listConfigurationControlPanel.getSelected(), shuffleControlPanel.getSelected(), listIntervals };
+      return new JComponent[] {passControlPanel.getSelected(),
+                               translationDirectionControlPanel.getSelected(),
+                               listConfigurationControlPanel.getSelected(),
+                               shuffleControlPanel.getSelected(),
+                               listIntervals};
    }
 
    public StopTaskMessage getStopMessage()
