@@ -12,8 +12,6 @@ public class ExitAction extends AbstractListener
    @Override
    public void actionPerformed(ActionEvent e)
    {
-      System.out.println(exitButtonName);
-
       System.exit(0);
    }
 }

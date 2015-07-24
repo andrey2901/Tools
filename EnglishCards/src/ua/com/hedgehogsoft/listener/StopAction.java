@@ -14,8 +14,6 @@ public class StopAction extends AbstractListener
    @Override
    public void actionPerformed(ActionEvent e)
    {
-      System.out.println(stopButtonName);
-
       mainFrame.getStopMessage().send();
    }
 }

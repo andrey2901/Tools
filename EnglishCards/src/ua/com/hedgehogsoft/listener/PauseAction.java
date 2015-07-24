@@ -25,8 +25,6 @@ public class PauseAction extends AbstractListener
    {
       StartButton startButton = (StartButton) e.getSource();
 
-      System.out.println(pauseButtonName);
-
       startButton.setText(startButtonName);
 
       startButton.removeActionListener(this);
