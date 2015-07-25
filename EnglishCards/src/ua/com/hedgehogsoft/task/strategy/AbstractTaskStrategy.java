@@ -44,7 +44,8 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
       if (state == null)
       {
-         if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE)
+         if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE
+               || taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
             dictionary.shuffle();
          }
@@ -54,7 +55,8 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
          counter = state.getCounter();
       }
 
-      progressBarStep = new BigDecimal(100 / dictionary.getWords().size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+      progressBarStep = new BigDecimal(100 / dictionary.getWords().size()).setScale(2, RoundingMode.HALF_UP)
+            .doubleValue();
    }
 
    protected abstract void directTranslationDirectionTask();
