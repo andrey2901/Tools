@@ -46,6 +46,8 @@ public class StartAction extends AbstractListener
 
       startButton.addActionListener(new PauseAction(mainFrame, state, task));
 
+      mainFrame.getStartMessage().send();
+
       timer.schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
    }
 }

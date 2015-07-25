@@ -13,11 +13,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.model.enums.SortType;
 import ua.com.hedgehogsoft.Labels;
+import ua.com.hedgehogsoft.button.BlocksButton;
+import ua.com.hedgehogsoft.button.ChooseDictionaryButton;
 import ua.com.hedgehogsoft.button.ExitButton;
 import ua.com.hedgehogsoft.button.NextButton;
+import ua.com.hedgehogsoft.button.SortButton;
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.button.StopButton;
 import ua.com.hedgehogsoft.button.TranslateButton;
@@ -25,10 +29,8 @@ import ua.com.hedgehogsoft.io.DictionaryManager;
 import ua.com.hedgehogsoft.io.reader.impl.PlainTextDictionaryReader;
 import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
-import ua.com.hedgehogsoft.listener.ExitAction;
 import ua.com.hedgehogsoft.listener.NextAction;
 import ua.com.hedgehogsoft.listener.StartAction;
-import ua.com.hedgehogsoft.listener.StopAction;
 import ua.com.hedgehogsoft.task.StartTaskMessage;
 import ua.com.hedgehogsoft.task.StopTaskMessage;
 import ua.com.hedgehogsoft.view.group.AbstractRadioButtonGroupPanel;
@@ -105,20 +107,18 @@ public class MainFrame extends JFrame implements Labels
 
       StopButton stopButton = new StopButton(stopButtonName);
 
-      stopButton.addActionListener(new StopAction(this));
+      stopButton.addActionListener(event ->
+      {
+         getStopMessage().send();
+      });
 
       ExitButton exitButton = new ExitButton(exitButtonName);
 
-      exitButton.addActionListener(new ExitAction());
+      exitButton.addActionListener(event ->
+      {
+         System.exit(0);
+      });
       /*-------------------------End Of Buttons initialization--------------------------*/
-
-      /*------------------Start and Stop Task Message initialization--------------------*/
-      startMessage = new StartTaskMessage();
-
-      stopMessage = new StopTaskMessage();
-
-      stopMessage.addObserver(startButton);
-      /*----------------End Of Start and Stop Task Message initialization---------------*/
 
       /*-------------------------------Pass Control Panel-------------------------------*/
       passControlPanel = new PassControlPanel();
@@ -143,7 +143,7 @@ public class MainFrame extends JFrame implements Labels
 
       layout.setRows(layout.getRows() + 1);
 
-      JButton sortButton = new JButton(sortButtonName);
+      SortButton sortButton = new SortButton(sortButtonName);
 
       sortButton.addActionListener(event ->
       {
@@ -179,13 +179,13 @@ public class MainFrame extends JFrame implements Labels
 
       dictionaryControlPanel.setLayout(new GridLayout(2, 1));
 
-      JButton chooseDictionaryButton = new JButton(chooseDictionaryButtonName);
+      ChooseDictionaryButton chooseDictionaryButton = new ChooseDictionaryButton(chooseDictionaryButtonName);
 
       dictionaryControlPanel.add(chooseDictionaryButton);
 
       chooseDictionaryButton.addActionListener(new ChooseDictionaryAction(this));
 
-      JButton blocksButton = new JButton(chooseBlockDictionaryButtonName);
+      BlocksButton blocksButton = new BlocksButton(chooseBlockDictionaryButtonName);
 
       dictionaryControlPanel.add(blocksButton);
 
@@ -241,6 +241,26 @@ public class MainFrame extends JFrame implements Labels
       buttonPanel.add(exitButtonPanel, BorderLayout.SOUTH);
       /*--------------------------End Of Button Control Panel---------------------------*/
 
+      /*------------------Start and Stop Task Message initialization--------------------*/
+      startMessage = new StartTaskMessage();
+
+      startMessage.addObserver(chooseDictionaryButton);
+
+      startMessage.addObserver(blocksButton);
+
+      startMessage.addObserver(sortButton);
+
+      stopMessage = new StopTaskMessage();
+
+      stopMessage.addObserver(startButton);
+
+      stopMessage.addObserver(chooseDictionaryButton);
+
+      stopMessage.addObserver(blocksButton);
+
+      stopMessage.addObserver(sortButton);
+      /*----------------End Of Start and Stop Task Message initialization---------------*/
+
       mainFrame.setLayout(new BorderLayout());
 
       mainFrame.add(wordLabelControlPanel, BorderLayout.CENTER);
@@ -284,6 +304,11 @@ public class MainFrame extends JFrame implements Labels
                                listConfigurationControlPanel.getSelected(),
                                shuffleControlPanel.getSelected(),
                                listIntervals};
+   }
+
+   public StartTaskMessage getStartMessage()
+   {
+      return startMessage;
    }
 
    public StopTaskMessage getStopMessage()

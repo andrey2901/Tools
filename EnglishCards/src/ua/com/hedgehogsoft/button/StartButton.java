@@ -2,14 +2,13 @@ package ua.com.hedgehogsoft.button;
 
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Timer;
 
 import ua.com.hedgehogsoft.listener.AbstractListener;
 import ua.com.hedgehogsoft.listener.StartAction;
 import ua.com.hedgehogsoft.view.MainFrame;
 
-public class StartButton extends AbstractButton implements Observer
+public class StartButton extends ObserverButton
 {
    private static final long serialVersionUID = 1L;
    private Timer timer = null;
