@@ -23,9 +23,11 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
    @Override
    protected void directTranslationDirectionTask()
    {
-      if (counter < dictionary.getWords().size())
+      if (state.getCounter() < dictionary.getWords().size())
       {
-         Word word = dictionary.getWords().get(counter++);
+         Word word = dictionary.getWords().get(state.getCounter());
+
+         state.setCounter(state.getCounter() + 1);
 
          wordLabel.setFont(getFontSize(word.getValue()));
 
@@ -33,7 +35,7 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
 
          blockLabel.setText(word.getBlock().getName());
 
-         prgBar.setValue((int) (progressBarStep * counter));
+         prgBar.setValue((int) (progressBarStep * state.getCounter()));
 
          checkForFinishElement();
       }
@@ -46,9 +48,11 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
    @Override
    protected void reverseTranslationDirectionTask()
    {
-      if (counter < dictionary.getWords().size())
+      if (state.getCounter() < dictionary.getWords().size())
       {
-         Word word = dictionary.getWords().get(counter++);
+         Word word = dictionary.getWords().get(state.getCounter());
+
+         state.setCounter(state.getCounter() + 1);
 
          wordLabel.setFont(getFontSize(word.getTranslation()));
 
@@ -56,7 +60,7 @@ public class SimpleListTaskStrategy extends AbstractTaskStrategy
 
          blockLabel.setText(word.getBlock().getName());
 
-         prgBar.setValue((int) (progressBarStep * counter));
+         prgBar.setValue((int) (progressBarStep * state.getCounter()));
 
          checkForFinishElement();
       }

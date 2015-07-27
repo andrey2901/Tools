@@ -97,11 +97,11 @@ public class MainFrame extends JFrame implements Labels
       /*-----------------------------Buttons initialization-----------------------------*/
       StartButton startButton = new StartButton(startButtonName, this);
 
-      startButton.addActionListener(new StartAction(this, null));
+      startButton.addActionListener(new StartAction(this));
 
       nextButton = new NextButton(nextButtonName, startButton);
 
-      nextButton.addActionListener(new NextAction(this, null));
+      nextButton.addActionListener(new NextAction(this));
 
       translateButton = new TranslateButton(translateButtonName);
 

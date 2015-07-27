@@ -24,21 +24,21 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
    @Override
    protected void directTranslationDirectionTask()
    {
-      if (counter < dictionary.getWords().size())
+      if (state.getCounter() < dictionary.getWords().size())
       {
-         Word word = dictionary.getWords().get(counter);
+         Word word = dictionary.getWords().get(state.getCounter());
 
          blockLabel.setText(word.getBlock().getName());
 
-         if (translated)
+         if (state.isTranslated())
          {
             wordLabel.setFont(getFontSize(word.getValue()));
 
             wordLabel.setText(word.getValue());
 
-            prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
+            prgBar.setValue((int) (progressBarStep * (state.getCounter() + 0.5)));
 
-            translated = false;
+            state.setTranslated(false);
          }
          else
          {
@@ -46,13 +46,13 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
 
             wordLabel.setText(word.getTranslation());
 
-            counter++;
+            state.setCounter(state.getCounter() + 1);
 
-            prgBar.setValue((int) (progressBarStep * counter));
+            prgBar.setValue((int) (progressBarStep * state.getCounter()));
 
             checkForFinishElement();
 
-            translated = true;
+            state.setTranslated(true);
          }
       }
       else
@@ -64,21 +64,21 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
    @Override
    protected void reverseTranslationDirectionTask()
    {
-      if (counter < dictionary.getWords().size())
+      if (state.getCounter() < dictionary.getWords().size())
       {
-         Word word = dictionary.getWords().get(counter);
+         Word word = dictionary.getWords().get(state.getCounter());
 
          blockLabel.setText(word.getBlock().getName());
 
-         if (translated)
+         if (state.isTranslated())
          {
             wordLabel.setFont(getFontSize(word.getTranslation()));
 
             wordLabel.setText(word.getTranslation());
 
-            prgBar.setValue((int) (progressBarStep * (counter + 0.5)));
+            prgBar.setValue((int) (progressBarStep * (state.getCounter() + 0.5)));
 
-            translated = false;
+            state.setTranslated(false);
          }
          else
          {
@@ -86,13 +86,13 @@ public class TranslatedListTaskStrategy extends AbstractTaskStrategy
 
             wordLabel.setText(word.getValue());
 
-            counter++;
+            state.setCounter(state.getCounter() + 1);
 
-            prgBar.setValue((int) (progressBarStep * counter));
+            prgBar.setValue((int) (progressBarStep * state.getCounter()));
 
             checkForFinishElement();
 
-            translated = true;
+            state.setTranslated(true);
          }
       }
       else

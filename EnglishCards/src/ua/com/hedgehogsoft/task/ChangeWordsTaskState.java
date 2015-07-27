@@ -13,6 +13,7 @@ public class ChangeWordsTaskState
    public ChangeWordsTaskState(int counter, boolean translated)
    {
       this.counter = counter;
+
       this.translated = translated;
    }
 
@@ -21,8 +22,18 @@ public class ChangeWordsTaskState
       return counter;
    }
 
+   public void setCounter(int counter)
+   {
+      this.counter = counter;
+   }
+
    public boolean isTranslated()
    {
       return translated;
+   }
+
+   public void setTranslated(boolean translated)
+   {
+      this.translated = translated;
    }
 }

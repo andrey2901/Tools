@@ -20,8 +20,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
    protected JLabel blockLabel = null;
    protected JProgressBar prgBar = null;
    protected Dictionary dictionary = null;
-   protected int counter = 0;
-   protected boolean translated = true;
+   protected ChangeWordsTaskState state = null;
    protected double progressBarStep = 0.0;
    protected TaskConfig taskConfig = null;
 
@@ -42,17 +41,17 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
       this.taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
 
+      this.state = state;
+
       if (state == null)
       {
+         this.state = new ChangeWordsTaskState(0, true);
+
          if (taskConfig.getShuffleConfig() == ShuffleConfig.ONCE
                || taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
             dictionary.shuffle();
          }
-      }
-      else
-      {
-         counter = state.getCounter();
       }
 
       progressBarStep = new BigDecimal(100 / dictionary.getWords().size()).setScale(2, RoundingMode.HALF_UP)
@@ -98,7 +97,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
    {
       if (taskConfig.getPassConfig() == PassConfig.NON_STOP)
       {
-         counter = 0;
+         state.setCounter(0);
 
          if (taskConfig.getShuffleConfig() == ShuffleConfig.EACH_PASS)
          {
@@ -117,7 +116,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
 
    protected void checkForFinishElement()
    {
-      if (counter == dictionary.getWords().size())
+      if (state.getCounter() == dictionary.getWords().size())
       {
          prgBar.setValue(100);
 
@@ -128,7 +127,7 @@ public abstract class AbstractTaskStrategy implements ITaskStrategy
    @Override
    public ChangeWordsTaskState getState()
    {
-      return new ChangeWordsTaskState(counter, translated);
+      return state;
    }
 
    @Override

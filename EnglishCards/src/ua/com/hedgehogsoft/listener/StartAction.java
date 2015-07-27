@@ -6,16 +6,20 @@ import java.util.Timer;
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
-import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 public class StartAction extends AbstractListener
 {
-   public StartAction(MainFrame mainFrame, ChangeWordsTaskState state)
+   public StartAction(MainFrame mainFrame)
    {
-      super(mainFrame, state);
+      this(mainFrame, null);
+   }
 
-      if (state == null)
+   public StartAction(MainFrame mainFrame, ChangeWordsTask task)
+   {
+      super(mainFrame, task);
+
+      if (task == null)
       {
          mainFrame.getBlockLabel().setText(defualtBlockLabelText);
 
@@ -30,7 +34,19 @@ public class StartAction extends AbstractListener
    {
       StartButton startButton = (StartButton) e.getSource();
 
-      startButton.removeActionListener(this);
+      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
+            mainFrame.getSettingComponents());
+
+      if (task == null)
+      {
+         task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(), mainFrame.getPrgBar(),
+               mainFrame.getDictionary(), settings, null);
+      }
+      else
+      {
+         task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(), mainFrame.getPrgBar(),
+               mainFrame.getDictionary(), settings, task.getState());
+      }
 
       startButton.setText(pauseButtonName);
 
@@ -38,13 +54,9 @@ public class StartAction extends AbstractListener
 
       Timer timer = startButton.getTimer();
 
-      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
-            mainFrame.getSettingComponents());
+      startButton.removeActionListener(this);
 
-      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(),
-            mainFrame.getPrgBar(), mainFrame.getDictionary(), settings, state);
-
-      startButton.addActionListener(new PauseAction(mainFrame, state, task));
+      startButton.addActionListener(new PauseAction(mainFrame, task));
 
       mainFrame.getStartMessage().send();
 

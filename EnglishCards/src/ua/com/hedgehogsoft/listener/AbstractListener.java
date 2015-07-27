@@ -1,11 +1,8 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionListener;
-import java.util.TimerTask;
-
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
-import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 /**
@@ -19,23 +16,21 @@ import ua.com.hedgehogsoft.view.MainFrame;
 public abstract class AbstractListener implements ActionListener, Labels
 {
    protected MainFrame mainFrame = null;
-   protected ChangeWordsTaskState state = null;
    protected ChangeWordsTask task = null;
 
-   public AbstractListener(MainFrame mainFrame, ChangeWordsTaskState state)
+   public AbstractListener(MainFrame mainFrame)
    {
-      this.mainFrame = mainFrame;
-      this.state = state;
+      this(mainFrame, null);
    }
 
-   public AbstractListener(MainFrame mainFrame, ChangeWordsTaskState state, ChangeWordsTask task)
+   public AbstractListener(MainFrame mainFrame, ChangeWordsTask task)
    {
       this.mainFrame = mainFrame;
-      this.state = state;
+
       this.task = task;
    }
 
-   public TimerTask getTask()
+   public ChangeWordsTask getTask()
    {
       return task;
    }

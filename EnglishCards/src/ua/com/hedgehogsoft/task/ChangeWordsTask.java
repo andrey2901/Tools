@@ -25,18 +25,25 @@ public class ChangeWordsTask extends TimerTask implements Labels
                           ChangeWordsTaskState state)
    {
       TaskConfig taskConfig = new ChangeWordsTaskSettingsResolver(settings).getTaskConfig();
+
       switch (taskConfig.getListConfig())
       {
          case SIMPLE:
+
             taskStrategy = new SimpleListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
+
             break;
 
          case WITH_TRANSLATION:
+
             taskStrategy = new TranslatedListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
+
             break;
 
          case DOUBLE_VIEW:
+
             taskStrategy = new DoubleListTaskStrategy(wordLabel, blockLabel, prgBar, dictionary, settings, state);
+
             break;
       }
 

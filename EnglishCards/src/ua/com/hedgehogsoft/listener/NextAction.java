@@ -1,24 +1,24 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Timer;
 
 import ua.com.hedgehogsoft.button.NextButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
-import ua.com.hedgehogsoft.task.ChangeWordsTaskState;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 public class NextAction extends AbstractListener
 {
-   public NextAction(MainFrame mainFrame, ChangeWordsTaskState state)
+   public NextAction(MainFrame mainFrame)
    {
-      super(mainFrame, state);
+      this(mainFrame, null);
    }
 
-   public NextAction(MainFrame mainFrame, ChangeWordsTaskState state, ChangeWordsTask task)
+   public NextAction(MainFrame mainFrame, ChangeWordsTask task)
    {
-      super(mainFrame, state, task);
+      super(mainFrame, task);
    }
 
    @Override
@@ -26,16 +26,42 @@ public class NextAction extends AbstractListener
    {
       NextButton nextButton = (NextButton) e.getSource();
 
-      nextButton.getStartButton().getTimer().cancel();
+      ActionListener[] listeners = nextButton.getStartButton().getActionListeners();
 
-      nextButton.getStartButton().setTimer(new Timer());
+      AbstractListener listener = null;
 
-      ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
-            mainFrame.getSettingComponents());
+      for (int i = 0; i < listeners.length; i++)
+      {
+         if (listeners[i] instanceof AbstractListener)
+         {
+            listener = (AbstractListener) listeners[i];
 
-      ChangeWordsTask task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(),
-            mainFrame.getPrgBar(), mainFrame.getDictionary(), settings, state);
+            break;
+         }
+      }
 
-      nextButton.getStartButton().getTimer().schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
+      task = listener.getTask();
+
+      if (listener instanceof StartAction)
+      {
+         task.run();
+      }
+
+      if (listener instanceof PauseAction)
+      {
+         nextButton.getStartButton().getTimer().cancel();
+
+         nextButton.getStartButton().setTimer(null);
+
+         nextButton.getStartButton().setTimer(new Timer());
+
+         ChangeWordsTaskSettings settings = new ChangeWordsTaskSettings(mainFrame.getStopMessage(),
+               mainFrame.getSettingComponents());
+
+         task = new ChangeWordsTask(mainFrame.getWordLabel(), mainFrame.getBlockLabel(), mainFrame.getPrgBar(),
+               mainFrame.getDictionary(), settings, task.getState());
+
+         nextButton.getStartButton().getTimer().schedule(task, 0, task.getTaskConfig().getTimePeriod() * 1000);
+      }
    }
 }
