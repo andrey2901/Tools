@@ -6,7 +6,7 @@ public class SortControlPanel extends AbstractRadioButtonGroupPanel
 
    public SortControlPanel()
    {
-      super(initialRadioButtonName, alphabeticRadioButtonName);
+      super(initialRadioButtonName, alphabeticRadioButtonName, translationRadioButtonName);
 
       setTitledBorder(sortControlTitledBorderName);
    }

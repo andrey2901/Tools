@@ -35,6 +35,7 @@ public interface Labels
    String sortControlTitledBorderName = "Sort";
    String initialRadioButtonName = "Initial";
    String alphabeticRadioButtonName = "Alphabetic";
+   String translationRadioButtonName = "Translation";
    String timeUnitLabelText = "s";
    String timeIntervalControlTitledBorderName = "Interval";
    String chooseDictionaryButtonName = "Dictionary...";
