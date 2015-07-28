@@ -217,6 +217,11 @@ public class Dictionary
             Collections.sort(blocks,
                   (Block block1, Block block2) -> block1.getName().compareToIgnoreCase(block1.getName()));
             break;
+
+         case TRANSLATION:
+            Collections.sort(blocks,
+                  (Block block1, Block block2) -> block1.getName().compareToIgnoreCase(block1.getName()));
+            break;
       }
 
       for (Block block : blocks)

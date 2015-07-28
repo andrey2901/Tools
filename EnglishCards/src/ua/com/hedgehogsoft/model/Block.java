@@ -233,6 +233,11 @@ public class Block
          case ALPHABETIC:
             Collections.sort(words, (Word word1, Word word2) -> word1.getValue().compareToIgnoreCase(word2.getValue()));
             break;
+
+         case TRANSLATION:
+            Collections.sort(words,
+                  (Word word1, Word word2) -> word1.getTranslation().compareToIgnoreCase(word2.getTranslation()));
+            break;
       }
 
       // Collections.sort(words, new Comparator<Word>()

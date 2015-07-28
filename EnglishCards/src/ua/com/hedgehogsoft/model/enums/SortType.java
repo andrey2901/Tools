@@ -22,5 +22,12 @@ public enum SortType
     * dictionary.
     * 
     */
-   ALPHABETIC;
+   ALPHABETIC,
+
+   /**
+    * The sorting constant used to specify the alphabetic order for translation
+    * values.
+    * 
+    */
+   TRANSLATION;
 }
