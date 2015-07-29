@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -48,8 +47,6 @@ public class MainFrame extends JFrame implements Labels
    private JLabel wordLabel = null;
    private JLabel blockLabel = null;
    private JProgressBar prgBar = null;
-   private JButton nextButton = null;
-   private JButton translateButton = null;
    private JComboBox<Integer> listIntervals = null;
    private StartTaskMessage startMessage = null;
    private StopTaskMessage stopMessage = null;
@@ -100,13 +97,17 @@ public class MainFrame extends JFrame implements Labels
 
       startButton.addActionListener(new StartAction(this));
 
-      nextButton = new NextButton(nextButtonName, startButton);
+      NextButton nextButton = new NextButton(nextButtonName, startButton);
 
       nextButton.addActionListener(new NextAction(this));
 
-      translateButton = new TranslateButton(translateButtonName, startButton);
+      nextButton.setEnabled(false);
+
+      TranslateButton translateButton = new TranslateButton(translateButtonName, startButton);
 
       translateButton.addActionListener(new TranslateAction(this));
+
+      translateButton.setEnabled(false);
 
       StopButton stopButton = new StopButton(stopButtonName);
 
@@ -253,6 +254,10 @@ public class MainFrame extends JFrame implements Labels
 
       startMessage.addObserver(sortButton);
 
+      startMessage.addObserver(nextButton);
+
+      startMessage.addObserver(translateButton);
+
       stopMessage = new StopTaskMessage();
 
       stopMessage.addObserver(startButton);
@@ -262,6 +267,10 @@ public class MainFrame extends JFrame implements Labels
       stopMessage.addObserver(blocksButton);
 
       stopMessage.addObserver(sortButton);
+
+      stopMessage.addObserver(nextButton);
+
+      stopMessage.addObserver(translateButton);
       /*----------------End Of Start and Stop Task Message initialization---------------*/
 
       mainFrame.setLayout(new BorderLayout());
@@ -276,7 +285,7 @@ public class MainFrame extends JFrame implements Labels
 
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      mainFrame.setSize(900, 635);
+      mainFrame.setSize(900, 661);
 
       mainFrame.setResizable(false);
 

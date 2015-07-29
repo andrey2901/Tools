@@ -1,9 +1,12 @@
 package ua.com.hedgehogsoft.listener;
 
 import java.awt.event.ActionEvent;
+
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.button.TranslateButton;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
+import ua.com.hedgehogsoft.task.config.TaskConfig;
+import ua.com.hedgehogsoft.task.config.enums.ListConfig;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 public class TranslateAction extends AbstractListener
@@ -35,19 +38,36 @@ public class TranslateAction extends AbstractListener
 
       task = ((AbstractListener) startButton.getActionListeners()[0]).getTask();
 
-      if (mainFrame.getWordLabel().getText()
-            .equals(mainFrame.getDictionary().getWords().get(task.getState().getCounter() - 1).getTranslation()))
+      TaskConfig config = task.getTaskConfig();
+
+      if (config.getListConfig() == ListConfig.SIMPLE)
       {
-         mainFrame.getWordLabel().setText(
-               mainFrame.getDictionary().getWords().get(task.getState().getCounter() - 1).getValue());
+         translate(task.getState().getCounter() - 1);
       }
-      else
+      else if (config.getListConfig() == ListConfig.WITH_TRANSLATION)
       {
-         mainFrame.getWordLabel().setText(
-               mainFrame.getDictionary().getWords().get(task.getState().getCounter() - 1).getTranslation());
+         if (task.getState().isTranslated())
+         {
+            translate(task.getState().getCounter() - 1);
+         }
+         else
+         {
+            translate(task.getState().getCounter());
+         }
       }
 
       startButton.addActionListener(new StartAction(mainFrame, task));
    }
 
+   private void translate(int index)
+   {
+      if (mainFrame.getWordLabel().getText().equals(mainFrame.getDictionary().getWords().get(index).getTranslation()))
+      {
+         mainFrame.getWordLabel().setText(mainFrame.getDictionary().getWords().get(index).getValue());
+      }
+      else
+      {
+         mainFrame.getWordLabel().setText(mainFrame.getDictionary().getWords().get(index).getTranslation());
+      }
+   }
 }

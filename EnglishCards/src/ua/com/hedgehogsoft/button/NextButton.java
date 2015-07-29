@@ -1,8 +1,11 @@
 package ua.com.hedgehogsoft.button;
 
-import ua.com.hedgehogsoft.button.AbstractButton;
+import java.util.Observable;
 
-public class NextButton extends AbstractButton
+import ua.com.hedgehogsoft.task.StartTaskMessage;
+import ua.com.hedgehogsoft.task.StopTaskMessage;
+
+public class NextButton extends ObserverButton
 {
    private static final long serialVersionUID = 1L;
 
@@ -18,5 +21,18 @@ public class NextButton extends AbstractButton
    public StartButton getStartButton()
    {
       return startButton;
+   }
+
+   @Override
+   public void update(Observable o, Object arg)
+   {
+      if (o instanceof StartTaskMessage)
+      {
+         this.setEnabled(true);
+      }
+      if (o instanceof StopTaskMessage)
+      {
+         this.setEnabled(false);
+      }
    }
 }
