@@ -6,8 +6,17 @@ public class TranslateButton extends AbstractButton
 {
    private static final long serialVersionUID = 1L;
 
-   public TranslateButton(String text)
+   private StartButton startButton = null;
+
+   public TranslateButton(String text, StartButton startButton)
    {
       super(text);
+
+      this.startButton = startButton;
+   }
+
+   public StartButton getStartButton()
+   {
+      return startButton;
    }
 }

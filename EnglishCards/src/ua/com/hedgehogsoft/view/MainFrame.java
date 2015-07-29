@@ -31,6 +31,7 @@ import ua.com.hedgehogsoft.listener.ChooseBlocksDictionaryAction;
 import ua.com.hedgehogsoft.listener.ChooseDictionaryAction;
 import ua.com.hedgehogsoft.listener.NextAction;
 import ua.com.hedgehogsoft.listener.StartAction;
+import ua.com.hedgehogsoft.listener.TranslateAction;
 import ua.com.hedgehogsoft.task.StartTaskMessage;
 import ua.com.hedgehogsoft.task.StopTaskMessage;
 import ua.com.hedgehogsoft.view.group.AbstractRadioButtonGroupPanel;
@@ -103,7 +104,9 @@ public class MainFrame extends JFrame implements Labels
 
       nextButton.addActionListener(new NextAction(this));
 
-      translateButton = new TranslateButton(translateButtonName);
+      translateButton = new TranslateButton(translateButtonName, startButton);
+
+      translateButton.addActionListener(new TranslateAction(this));
 
       StopButton stopButton = new StopButton(stopButtonName);
 
