@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.model.Block;
 import ua.com.hedgehogsoft.model.Dictionary;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.view.MainFrame;
 import ua.com.hedgehogsoft.view.group.CheckBoxGroup;
 
@@ -42,7 +43,7 @@ public class ChooseBlocksDictionaryAction implements ActionListener, Labels
          blocksGroup.add(new JCheckBox(name));
       }
 
-      JButton okay = new JButton(okButtonName);
+      JButton okay = new JButton(Properties.getProperty("cards.button.ok.name"));
 
       okay.addActionListener(new ActionListener()
       {

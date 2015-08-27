@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import ua.com.hedgehogsoft.button.StartButton;
 import ua.com.hedgehogsoft.button.TranslateButton;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.config.enums.ListConfig;
@@ -27,7 +28,7 @@ public class TranslateAction extends AbstractListener
    {
       StartButton startButton = ((TranslateButton) e.getSource()).getStartButton();
 
-      startButton.setText(startButtonName);
+      startButton.setText(Properties.getProperty("cards.button.start.name"));
 
       if (startButton.getTimer() != null)
       {

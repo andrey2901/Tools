@@ -6,6 +6,7 @@ import java.util.Timer;
 
 import ua.com.hedgehogsoft.listener.AbstractListener;
 import ua.com.hedgehogsoft.listener.StartAction;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.view.MainFrame;
 
 public class StartButton extends ObserverButton
@@ -41,7 +42,7 @@ public class StartButton extends ObserverButton
          timer = null;
       }
 
-      this.setText(startButtonName);
+      this.setText(Properties.getProperty("cards.button.start.name"));
 
       this.addActionListener(new StartAction(mainFrame, null));
    }

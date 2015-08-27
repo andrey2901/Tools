@@ -9,14 +9,6 @@ package ua.com.hedgehogsoft;
  */
 public interface Labels
 {
-   String defualtBlockLabelText = "Block: ";
-   String startButtonName = "Start";
-   String stopButtonName = "Stop";
-   String pauseButtonName = "Pause";
-   String nextButtonName = "Next";
-   String sortButtonName = "Sort";
-   String translateButtonName = "Translate";
-   String exitButtonName = "Exit";
    String singlePassRadioButtonName = "Single";
    String nonStopPassRadioButtonName = "Non-stop";
    String passControlTitledBorderName = "Pass";
@@ -40,6 +32,4 @@ public interface Labels
    String chooseDictionaryButtonName = "Dictionary...";
    String chooseBlockDictionaryButtonName = "Blocks...";
    String chooseBlockDictionaryWindowName = "Blocks";
-   String okButtonName = "Ok";
-   String cancelButtonName = "Cancel";
 }

@@ -15,6 +15,7 @@ import javax.swing.JProgressBar;
 
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.model.enums.SortType;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.button.BlocksButton;
 import ua.com.hedgehogsoft.button.ChooseDictionaryButton;
@@ -93,30 +94,31 @@ public class MainFrame extends JFrame implements Labels
       /*----------------------------End Of Word Label Panel-----------------------------*/
 
       /*-----------------------------Buttons initialization-----------------------------*/
-      StartButton startButton = new StartButton(startButtonName, this);
+      StartButton startButton = new StartButton(Properties.getProperty("cards.button.start.name"), this);
 
       startButton.addActionListener(new StartAction(this));
 
-      NextButton nextButton = new NextButton(nextButtonName, startButton);
+      NextButton nextButton = new NextButton(Properties.getProperty("cards.button.next.name"), startButton);
 
       nextButton.addActionListener(new NextAction(this));
 
       nextButton.setEnabled(false);
 
-      TranslateButton translateButton = new TranslateButton(translateButtonName, startButton);
+      TranslateButton translateButton = new TranslateButton(Properties.getProperty("cards.button.translate.name"),
+            startButton);
 
       translateButton.addActionListener(new TranslateAction(this));
 
       translateButton.setEnabled(false);
 
-      StopButton stopButton = new StopButton(stopButtonName);
+      StopButton stopButton = new StopButton(Properties.getProperty("cards.button.stop.name"));
 
       stopButton.addActionListener(event ->
       {
          getStopMessage().send();
       });
 
-      ExitButton exitButton = new ExitButton(exitButtonName);
+      ExitButton exitButton = new ExitButton(Properties.getProperty("cards.button.exit.name"));
 
       exitButton.addActionListener(event ->
       {
@@ -147,7 +149,7 @@ public class MainFrame extends JFrame implements Labels
 
       layout.setRows(layout.getRows() + 1);
 
-      SortButton sortButton = new SortButton(sortButtonName);
+      SortButton sortButton = new SortButton(Properties.getProperty("cards.button.sort.name"));
 
       sortButton.addActionListener(event ->
       {

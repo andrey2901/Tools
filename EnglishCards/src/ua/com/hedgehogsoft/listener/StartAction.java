@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.Timer;
 
 import ua.com.hedgehogsoft.button.StartButton;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.task.ChangeWordsTask;
 import ua.com.hedgehogsoft.task.ChangeWordsTaskSettings;
 import ua.com.hedgehogsoft.view.MainFrame;
@@ -21,7 +22,7 @@ public class StartAction extends AbstractListener
 
       if (task == null)
       {
-         mainFrame.getBlockLabel().setText(defualtBlockLabelText);
+         mainFrame.getBlockLabel().setText(Properties.getProperty("cards.block.label.text"));
 
          mainFrame.getWordLabel().setText("");
 
@@ -48,7 +49,7 @@ public class StartAction extends AbstractListener
                mainFrame.getDictionary(), settings, task.getState());
       }
 
-      startButton.setText(pauseButtonName);
+      startButton.setText(Properties.getProperty("cards.button.pause.name"));
 
       startButton.setTimer(new Timer());
 
