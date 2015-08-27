@@ -10,7 +10,6 @@ package ua.com.hedgehogsoft;
 public interface Labels
 {
    String defualtBlockLabelText = "Block: ";
-   String mainFrameTitle = "Cards";
    String startButtonName = "Start";
    String stopButtonName = "Stop";
    String pauseButtonName = "Pause";

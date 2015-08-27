@@ -62,7 +62,7 @@ public class MainFrame extends JFrame implements Labels
 
       dictionary = DictionaryManager.getInstance().loadDictionary(new PlainTextDictionaryReader());
 
-      final JFrame mainFrame = new JFrame(mainFrameTitle);
+      final JFrame mainFrame = new JFrame(title);
 
       /*--------------------------------Word Label Panel--------------------------------*/
       JPanel wordLabelControlPanel = new JPanel();

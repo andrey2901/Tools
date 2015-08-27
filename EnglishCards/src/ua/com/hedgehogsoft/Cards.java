@@ -1,13 +1,15 @@
 package ua.com.hedgehogsoft;
 
 import java.awt.EventQueue;
+
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.view.MainFrame;
 
-public class Cards implements Labels
+public class Cards
 {
    public Cards()
    {
-      new MainFrame(mainFrameTitle);
+      new MainFrame(Properties.getProperty("cards.mainframe.title"));
    }
 
    public static void main(String[] args)
