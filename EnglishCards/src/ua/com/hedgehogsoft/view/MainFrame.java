@@ -94,31 +94,31 @@ public class MainFrame extends JFrame implements Labels
       /*----------------------------End Of Word Label Panel-----------------------------*/
 
       /*-----------------------------Buttons initialization-----------------------------*/
-      StartButton startButton = new StartButton(Properties.getProperty("cards.button.start.name"), this);
+      StartButton startButton = new StartButton(Properties.getProperty("cards.button.start.text"), this);
 
       startButton.addActionListener(new StartAction(this));
 
-      NextButton nextButton = new NextButton(Properties.getProperty("cards.button.next.name"), startButton);
+      NextButton nextButton = new NextButton(Properties.getProperty("cards.button.next.text"), startButton);
 
       nextButton.addActionListener(new NextAction(this));
 
       nextButton.setEnabled(false);
 
-      TranslateButton translateButton = new TranslateButton(Properties.getProperty("cards.button.translate.name"),
+      TranslateButton translateButton = new TranslateButton(Properties.getProperty("cards.button.translate.text"),
             startButton);
 
       translateButton.addActionListener(new TranslateAction(this));
 
       translateButton.setEnabled(false);
 
-      StopButton stopButton = new StopButton(Properties.getProperty("cards.button.stop.name"));
+      StopButton stopButton = new StopButton(Properties.getProperty("cards.button.stop.text"));
 
       stopButton.addActionListener(event ->
       {
          getStopMessage().send();
       });
 
-      ExitButton exitButton = new ExitButton(Properties.getProperty("cards.button.exit.name"));
+      ExitButton exitButton = new ExitButton(Properties.getProperty("cards.button.exit.text"));
 
       exitButton.addActionListener(event ->
       {
@@ -149,7 +149,7 @@ public class MainFrame extends JFrame implements Labels
 
       layout.setRows(layout.getRows() + 1);
 
-      SortButton sortButton = new SortButton(Properties.getProperty("cards.button.sort.name"));
+      SortButton sortButton = new SortButton(Properties.getProperty("cards.button.sort.text"));
 
       sortButton.addActionListener(event ->
       {
@@ -177,7 +177,7 @@ public class MainFrame extends JFrame implements Labels
       timeIntervalControlPanel.add(timeUnitLabel);
 
       timeIntervalControlPanel
-            .setBorder(BorderFactory.createTitledBorder(Properties.getProperty("cards.panel.time.interval.name")));
+            .setBorder(BorderFactory.createTitledBorder(Properties.getProperty("cards.panel.time.interval.title")));
             /*------------------------End Of Time Interval Control Panel----------------------*/
 
       /*-----------------------------Dictionary Control Panel---------------------------*/
@@ -187,13 +187,13 @@ public class MainFrame extends JFrame implements Labels
       dictionaryControlPanel.setLayout(new GridLayout(2, 1));
 
       ChooseDictionaryButton chooseDictionaryButton = new ChooseDictionaryButton(
-            Properties.getProperty("cards.button.choose.dictionary.name"));
+            Properties.getProperty("cards.button.choose.dictionary.text"));
 
       dictionaryControlPanel.add(chooseDictionaryButton);
 
       chooseDictionaryButton.addActionListener(new ChooseDictionaryAction(this));
 
-      BlocksButton blocksButton = new BlocksButton(Properties.getProperty("cards.button.choose.blocks.name"));
+      BlocksButton blocksButton = new BlocksButton(Properties.getProperty("cards.button.choose.blocks.text"));
 
       dictionaryControlPanel.add(blocksButton);
 

@@ -42,7 +42,7 @@ public class StartButton extends ObserverButton
          timer = null;
       }
 
-      this.setText(Properties.getProperty("cards.button.start.name"));
+      this.setText(Properties.getProperty("cards.button.start.text"));
 
       this.addActionListener(new StartAction(mainFrame, null));
    }

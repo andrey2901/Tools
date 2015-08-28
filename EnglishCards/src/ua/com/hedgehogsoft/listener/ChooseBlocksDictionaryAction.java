@@ -43,7 +43,7 @@ public class ChooseBlocksDictionaryAction implements ActionListener, Labels
          blocksGroup.add(new JCheckBox(name));
       }
 
-      JButton okay = new JButton(Properties.getProperty("cards.button.ok.name"));
+      JButton okay = new JButton(Properties.getProperty("cards.button.ok.text"));
 
       okay.addActionListener(new ActionListener()
       {
@@ -72,7 +72,7 @@ public class ChooseBlocksDictionaryAction implements ActionListener, Labels
 
       JOptionPane.showOptionDialog(null,
                                    new JScrollPane(blocksGroup),
-                                   Properties.getProperty("cards.window.choose.blocks.name"),
+                                   Properties.getProperty("cards.window.choose.blocks.title"),
                                    JOptionPane.OK_OPTION,
                                    JOptionPane.QUESTION_MESSAGE,
                                    null,

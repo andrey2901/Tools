@@ -54,47 +54,47 @@ public class ChangeWordsTaskSettingsResolver implements Labels
 
       for (JRadioButton button : selectedRadioButtons)
       {
-         if (button.getText() == Properties.getProperty("cards.radiobutton.singlepass.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.pass.single.text"))
          {
             taskConfig.setPassConfig(PassConfig.SINGLE);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.nonstoppass.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.pass.nonstop.text"))
          {
             taskConfig.setPassConfig(PassConfig.NON_STOP);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.directtranslation.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.translation.direct.text"))
          {
             taskConfig.setTranslationDirection(TranslationDirection.DIRECT);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.reversetranslation.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.translation.reverse.text"))
          {
             taskConfig.setTranslationDirection(TranslationDirection.REVERSE);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.simplelist.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.list.simple.text"))
          {
             taskConfig.setListConfig(ListConfig.SIMPLE);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.translatedlist.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.list.translated.text"))
          {
             taskConfig.setListConfig(ListConfig.WITH_TRANSLATION);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.doublelist.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.list.double.text"))
          {
             taskConfig.setListConfig(ListConfig.DOUBLE_VIEW);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.onceshuffle.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.shuffle.once.text"))
          {
             taskConfig.setShuffleConfig(ShuffleConfig.ONCE);
          }
 
-         if (button.getText() == Properties.getProperty("cards.radiobutton.eachpassshuffle.name"))
+         if (button.getText() == Properties.getProperty("cards.radiobutton.shuffle.eachpass.text"))
          {
             taskConfig.setShuffleConfig(ShuffleConfig.EACH_PASS);
          }

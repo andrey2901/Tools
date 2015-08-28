@@ -8,11 +8,11 @@ public class ListConfigurationControlPanel extends AbstractRadioButtonGroupPanel
 
    public ListConfigurationControlPanel()
    {
-      super(Properties.getProperty("cards.radiobutton.simplelist.name"),
-            Properties.getProperty("cards.radiobutton.translatedlist.name"),
-            Properties.getProperty("cards.radiobutton.doublelist.name"));
+      super(Properties.getProperty("cards.radiobutton.list.simple.text"),
+            Properties.getProperty("cards.radiobutton.list.translated.text"),
+            Properties.getProperty("cards.radiobutton.list.double.text"));
 
-      setTitledBorder(Properties.getProperty("cards.panel.listconfiguration.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.list.title"));
    }
 
    @Override

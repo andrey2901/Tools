@@ -8,18 +8,18 @@ public class ShuffleControlPanel extends AbstractRadioButtonGroupPanel
 
    public ShuffleControlPanel()
    {
-      super(Properties.getProperty("cards.radiobutton.nonshuffle.name"),
-            Properties.getProperty("cards.radiobutton.onceshuffle.name"),
-            Properties.getProperty("cards.radiobutton.eachpassshuffle.name"));
+      super(Properties.getProperty("cards.radiobutton.shuffle.non.text"),
+            Properties.getProperty("cards.radiobutton.shuffle.once.text"),
+            Properties.getProperty("cards.radiobutton.shuffle.eachpass.text"));
 
-      setTitledBorder(Properties.getProperty("cards.panel.shuffle.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.shuffle.title"));
    }
 
    public void setUnshuffleMode()
    {
       for (int i = 0; i < radioButtons.length; i++)
       {
-         if (radioButtons[i].getText() == Properties.getProperty("cards.radiobutton.nonshuffle.name"))
+         if (radioButtons[i].getText() == Properties.getProperty("cards.radiobutton.shuffle.non.text"))
          {
             radioButtons[i].setSelected(true);
 

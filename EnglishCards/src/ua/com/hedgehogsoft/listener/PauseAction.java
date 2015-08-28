@@ -24,7 +24,7 @@ public class PauseAction extends AbstractListener
    {
       StartButton startButton = (StartButton) e.getSource();
 
-      startButton.setText(Properties.getProperty("cards.button.start.name"));
+      startButton.setText(Properties.getProperty("cards.button.start.text"));
 
       startButton.getTimer().cancel();
 

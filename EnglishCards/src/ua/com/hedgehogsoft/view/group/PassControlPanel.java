@@ -8,15 +8,15 @@ public class PassControlPanel extends AbstractRadioButtonGroupPanel
 
    public PassControlPanel()
    {
-      super(Properties.getProperty("cards.radiobutton.singlepass.name"),
-            Properties.getProperty("cards.radiobutton.nonstoppass.name"));
+      super(Properties.getProperty("cards.radiobutton.pass.single.text"),
+            Properties.getProperty("cards.radiobutton.pass.nonstop.text"));
 
-      setTitledBorder(Properties.getProperty("cards.panel.pass.title.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.pass.title"));
    }
 
    @Override
    public void setExamMode()
    {
-      setExamMode(Properties.getProperty("cards.radiobutton.singlepass.name"));
+      setExamMode(Properties.getProperty("cards.radiobutton.pass.single.text"));
    }
 }

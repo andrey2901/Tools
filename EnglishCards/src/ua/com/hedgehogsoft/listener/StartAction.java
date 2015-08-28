@@ -22,7 +22,7 @@ public class StartAction extends AbstractListener
 
       if (task == null)
       {
-         mainFrame.getBlockLabel().setText(Properties.getProperty("cards.block.label.text"));
+         mainFrame.getBlockLabel().setText(Properties.getProperty("cards.window.main.block.label"));
 
          mainFrame.getWordLabel().setText("");
 
@@ -49,7 +49,7 @@ public class StartAction extends AbstractListener
                mainFrame.getDictionary(), settings, task.getState());
       }
 
-      startButton.setText(Properties.getProperty("cards.button.pause.name"));
+      startButton.setText(Properties.getProperty("cards.button.pause.text"));
 
       startButton.setTimer(new Timer());
 

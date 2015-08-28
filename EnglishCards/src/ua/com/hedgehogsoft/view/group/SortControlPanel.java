@@ -8,11 +8,11 @@ public class SortControlPanel extends AbstractRadioButtonGroupPanel
 
    public SortControlPanel()
    {
-      super(Properties.getProperty("cards.radiobutton.sort.initial.name"),
-            Properties.getProperty("cards.radiobutton.sort.alphabetic.name"),
-            Properties.getProperty("cards.radiobutton.sort.translation.name"));
+      super(Properties.getProperty("cards.radiobutton.sort.initial.text"),
+            Properties.getProperty("cards.radiobutton.sort.alphabetic.text"),
+            Properties.getProperty("cards.radiobutton.sort.translation.text"));
 
-      setTitledBorder(Properties.getProperty("cards.panel.sort.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.sort.title"));
    }
 
    @Override

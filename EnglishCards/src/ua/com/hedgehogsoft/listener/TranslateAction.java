@@ -28,7 +28,7 @@ public class TranslateAction extends AbstractListener
    {
       StartButton startButton = ((TranslateButton) e.getSource()).getStartButton();
 
-      startButton.setText(Properties.getProperty("cards.button.start.name"));
+      startButton.setText(Properties.getProperty("cards.button.start.text"));
 
       if (startButton.getTimer() != null)
       {
