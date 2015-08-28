@@ -13,14 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.model.Block;
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.view.MainFrame;
 import ua.com.hedgehogsoft.view.group.CheckBoxGroup;
 
-public class ChooseBlocksDictionaryAction implements ActionListener, Labels
+public class ChooseBlocksDictionaryAction implements ActionListener
 {
    private MainFrame mainFrame = null;
 

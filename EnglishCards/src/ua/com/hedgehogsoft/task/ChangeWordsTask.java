@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.strategy.DoubleListTaskStrategy;
@@ -13,7 +12,7 @@ import ua.com.hedgehogsoft.task.strategy.SimpleListTaskStrategy;
 import ua.com.hedgehogsoft.task.strategy.ITaskStrategy;
 import ua.com.hedgehogsoft.task.strategy.TranslatedListTaskStrategy;
 
-public class ChangeWordsTask extends TimerTask implements Labels
+public class ChangeWordsTask extends TimerTask
 {
    private ITaskStrategy taskStrategy = null;
 

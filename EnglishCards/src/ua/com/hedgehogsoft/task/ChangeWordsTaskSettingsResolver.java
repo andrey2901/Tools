@@ -7,7 +7,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
-import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.config.enums.ListConfig;
@@ -15,7 +14,7 @@ import ua.com.hedgehogsoft.task.config.enums.PassConfig;
 import ua.com.hedgehogsoft.task.config.enums.ShuffleConfig;
 import ua.com.hedgehogsoft.task.config.enums.TranslationDirection;
 
-public class ChangeWordsTaskSettingsResolver implements Labels
+public class ChangeWordsTaskSettingsResolver
 {
    private List<JRadioButton> selectedRadioButtons = null;
    private List<JComboBox<?>> comboBoxList = null;

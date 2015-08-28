@@ -7,9 +7,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import ua.com.hedgehogsoft.Labels;
-
-public abstract class AbstractRadioButtonGroupPanel extends JPanel implements Labels
+public abstract class AbstractRadioButtonGroupPanel extends JPanel
 {
    private static final long serialVersionUID = 1L;
    protected JRadioButton[] radioButtons = null;

@@ -16,7 +16,6 @@ import javax.swing.JProgressBar;
 import ua.com.hedgehogsoft.model.Dictionary;
 import ua.com.hedgehogsoft.model.enums.SortType;
 import ua.com.hedgehogsoft.props.Properties;
-import ua.com.hedgehogsoft.Labels;
 import ua.com.hedgehogsoft.button.BlocksButton;
 import ua.com.hedgehogsoft.button.ChooseDictionaryButton;
 import ua.com.hedgehogsoft.button.ExitButton;
@@ -41,7 +40,7 @@ import ua.com.hedgehogsoft.view.group.ShuffleControlPanel;
 import ua.com.hedgehogsoft.view.group.SortControlPanel;
 import ua.com.hedgehogsoft.view.group.TranslationDirectionControlPanel;
 
-public class MainFrame extends JFrame implements Labels
+public class MainFrame extends JFrame
 {
    private static final long serialVersionUID = 1L;
    private Dictionary dictionary = null;

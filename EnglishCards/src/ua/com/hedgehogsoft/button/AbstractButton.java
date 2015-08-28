@@ -6,9 +6,7 @@ import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
 
-import ua.com.hedgehogsoft.Labels;
-
-public abstract class AbstractButton extends JButton implements Labels
+public abstract class AbstractButton extends JButton
 {
    private static final long serialVersionUID = 1L;
    private static final Logger logger = Logger.getLogger(AbstractButton.class);
