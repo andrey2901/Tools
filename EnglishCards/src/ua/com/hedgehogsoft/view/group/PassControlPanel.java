@@ -11,7 +11,7 @@ public class PassControlPanel extends AbstractRadioButtonGroupPanel
       super(Properties.getProperty("cards.radiobutton.singlepass.name"),
             Properties.getProperty("cards.radiobutton.nonstoppass.name"));
 
-      setTitledBorder(Properties.getProperty("cards.control.pass.title.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.pass.title.name"));
    }
 
    @Override

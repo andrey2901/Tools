@@ -89,12 +89,12 @@ public class ChangeWordsTaskSettingsResolver implements Labels
             taskConfig.setListConfig(ListConfig.DOUBLE_VIEW);
          }
 
-         if (button.getText() == onceShuffleRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.onceshuffle.name"))
          {
             taskConfig.setShuffleConfig(ShuffleConfig.ONCE);
          }
 
-         if (button.getText() == eachPassShuffleRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.eachpassshuffle.name"))
          {
             taskConfig.setShuffleConfig(ShuffleConfig.EACH_PASS);
          }

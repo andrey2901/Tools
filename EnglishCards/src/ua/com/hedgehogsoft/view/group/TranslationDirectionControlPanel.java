@@ -11,7 +11,7 @@ public class TranslationDirectionControlPanel extends AbstractRadioButtonGroupPa
       super(Properties.getProperty("cards.radiobutton.directtranslation.name"),
             Properties.getProperty("cards.radiobutton.reversetranslation.name"));
 
-      setTitledBorder(Properties.getProperty("cards.control.direction.title.name"));
+      setTitledBorder(Properties.getProperty("cards.panel.direction.title.name"));
    }
 
    @Override

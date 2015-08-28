@@ -72,7 +72,7 @@ public class ChooseBlocksDictionaryAction implements ActionListener, Labels
 
       JOptionPane.showOptionDialog(null,
                                    new JScrollPane(blocksGroup),
-                                   chooseBlockDictionaryWindowName,
+                                   Properties.getProperty("cards.window.choose.blocks.name"),
                                    JOptionPane.OK_OPTION,
                                    JOptionPane.QUESTION_MESSAGE,
                                    null,

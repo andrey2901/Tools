@@ -9,7 +9,7 @@ public class Cards
 {
    public Cards()
    {
-      new MainFrame(Properties.getProperty("cards.mainframe.title"));
+      new MainFrame(Properties.getProperty("cards.window.main.title"));
    }
 
    public static void main(String[] args)

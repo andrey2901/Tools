@@ -170,14 +170,15 @@ public class MainFrame extends JFrame implements Labels
 
       listIntervals = new JComboBox<Integer>(intervals);
 
-      JLabel timeUnitLabel = new JLabel(timeUnitLabelText);
+      JLabel timeUnitLabel = new JLabel(Properties.getProperty("cards.time.unit.label"));
 
       timeIntervalControlPanel.add(listIntervals);
 
       timeIntervalControlPanel.add(timeUnitLabel);
 
-      timeIntervalControlPanel.setBorder(BorderFactory.createTitledBorder(timeIntervalControlTitledBorderName));
-      /*------------------------End Of Time Interval Control Panel----------------------*/
+      timeIntervalControlPanel
+            .setBorder(BorderFactory.createTitledBorder(Properties.getProperty("cards.panel.time.interval.name")));
+            /*------------------------End Of Time Interval Control Panel----------------------*/
 
       /*-----------------------------Dictionary Control Panel---------------------------*/
 
@@ -185,13 +186,14 @@ public class MainFrame extends JFrame implements Labels
 
       dictionaryControlPanel.setLayout(new GridLayout(2, 1));
 
-      ChooseDictionaryButton chooseDictionaryButton = new ChooseDictionaryButton(chooseDictionaryButtonName);
+      ChooseDictionaryButton chooseDictionaryButton = new ChooseDictionaryButton(
+            Properties.getProperty("cards.button.choose.dictionary.name"));
 
       dictionaryControlPanel.add(chooseDictionaryButton);
 
       chooseDictionaryButton.addActionListener(new ChooseDictionaryAction(this));
 
-      BlocksButton blocksButton = new BlocksButton(chooseBlockDictionaryButtonName);
+      BlocksButton blocksButton = new BlocksButton(Properties.getProperty("cards.button.choose.blocks.name"));
 
       dictionaryControlPanel.add(blocksButton);
 
