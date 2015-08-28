@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
 import ua.com.hedgehogsoft.Labels;
+import ua.com.hedgehogsoft.props.Properties;
 import ua.com.hedgehogsoft.task.config.TaskConfig;
 import ua.com.hedgehogsoft.task.config.enums.ListConfig;
 import ua.com.hedgehogsoft.task.config.enums.PassConfig;
@@ -53,37 +54,37 @@ public class ChangeWordsTaskSettingsResolver implements Labels
 
       for (JRadioButton button : selectedRadioButtons)
       {
-         if (button.getText() == singlePassRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.singlepass.name"))
          {
             taskConfig.setPassConfig(PassConfig.SINGLE);
          }
 
-         if (button.getText() == nonStopPassRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.nonstoppass.name"))
          {
             taskConfig.setPassConfig(PassConfig.NON_STOP);
          }
 
-         if (button.getText() == directTranslationRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.directtranslation.name"))
          {
             taskConfig.setTranslationDirection(TranslationDirection.DIRECT);
          }
 
-         if (button.getText() == reverseTranslationRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.reversetranslation.name"))
          {
             taskConfig.setTranslationDirection(TranslationDirection.REVERSE);
          }
 
-         if (button.getText() == simpleListConfigurationRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.simplelist.name"))
          {
             taskConfig.setListConfig(ListConfig.SIMPLE);
          }
 
-         if (button.getText() == translatedListConfigurationRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.translatedlist.name"))
          {
             taskConfig.setListConfig(ListConfig.WITH_TRANSLATION);
          }
 
-         if (button.getText() == doubleListConfigurationRadioButtonName)
+         if (button.getText() == Properties.getProperty("cards.radiobutton.doublelist.name"))
          {
             taskConfig.setListConfig(ListConfig.DOUBLE_VIEW);
          }

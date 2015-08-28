@@ -1,19 +1,22 @@
 package ua.com.hedgehogsoft.view.group;
 
+import ua.com.hedgehogsoft.props.Properties;
+
 public class PassControlPanel extends AbstractRadioButtonGroupPanel
 {
    private static final long serialVersionUID = 1L;
 
    public PassControlPanel()
    {
-      super(singlePassRadioButtonName, nonStopPassRadioButtonName);
+      super(Properties.getProperty("cards.radiobutton.singlepass.name"),
+            Properties.getProperty("cards.radiobutton.nonstoppass.name"));
 
-      setTitledBorder(passControlTitledBorderName);
+      setTitledBorder(Properties.getProperty("cards.control.pass.title.name"));
    }
 
    @Override
    public void setExamMode()
    {
-      setExamMode(singlePassRadioButtonName);
+      setExamMode(Properties.getProperty("cards.radiobutton.singlepass.name"));
    }
 }

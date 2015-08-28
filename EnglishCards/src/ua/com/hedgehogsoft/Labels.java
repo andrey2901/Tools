@@ -9,16 +9,6 @@ package ua.com.hedgehogsoft;
  */
 public interface Labels
 {
-   String singlePassRadioButtonName = "Single";
-   String nonStopPassRadioButtonName = "Non-stop";
-   String passControlTitledBorderName = "Pass";
-   String directTranslationRadioButtonName = "Direct";
-   String reverseTranslationRadioButtonName = "Reverse";
-   String translationDirectionControlTitledBorderName = "Translation";
-   String simpleListConfigurationRadioButtonName = "Simple";
-   String translatedListConfigurationRadioButtonName = "With translation";
-   String doubleListConfigurationRadioButtonName = "Double view";
-   String listConfigurationControlTitledBorderName = "List Configuration";
    String nonShuffleRadioButtonName = "Non-shuffle";
    String onceShuffleRadioButtonName = "Once";
    String eachPassShuffleRadioButtonName = "Each pass";
